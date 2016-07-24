@@ -1,0 +1,7 @@
+one:
+  owner_id: <%= ActiveRecord::FixtureSet.identify(:dunmer) %>
+  owner_type: 'Race'
+  property_id: <%= ActiveRecord::FixtureSet.identify(:str) %>
+  operator: '+'
+  value: '5'
+

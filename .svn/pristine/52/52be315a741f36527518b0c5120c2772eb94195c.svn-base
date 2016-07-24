@@ -1,0 +1,41 @@
+<div class="char-attributes">
+  <div class="char-attributes-table">
+    <div>
+      <h4 class="icon-col"></h4>
+      <h4>Attribut</h4>
+      <div class="value-col" title="Startwert bei Charactererstellung">
+        <h4 class="value-col vertical">Start</h4>
+      </div>
+      <div class="value-col" title="Aktueller Wert ohne Buffs">
+        <h4 class="value-col vertical">Wert</h4>
+      </div>
+      <div class="value-col" title="Temporäre Buffs">
+        <h4 class="value-col vertical">Buff</h4>
+      </div>
+      <div class="value-col" title="Aktueller Gesamtwert">
+        <h4 class="value-col vertical">Atm</h4>
+      </div>
+    </div>
+    <div class="char-attribute" ng-repeat="attr in char.attributes">
+      <div>
+        <img ng-src="{{ attr.icon }}" alt="{{ attr.name }}" />
+      </div>
+      <h4 class="inline">{{ attr.name }}
+        <span class="multipliers">{{ formatMultiplier(attr.multiplier) }}</span>
+      </h4>
+      <div>{{ attr.points_base }}</div>
+      <div class="value-col" editable="true" model="attr.points_gained"
+           number="true" offset="attr.points_base">
+        {{ attr.points_base + attr.points_gained }}
+      </div>
+      <div data-editable="true" model="attr.points_buff" number="true">
+        {{ attr.points_buff }}
+      </div>
+      <div>{{ attr.points }}</div>
+      <button class="btn-wood level-up-attribute-btn" type="button" ng-click="addLevelUpAttribute(attr)"
+              ng-if="char.level_up_mode && levelUpAttributes.length < 3 && !attr.levelUpSelected">
+        +{{ attr.points_to_add }}
+      </button>
+    </div>
+  </div>
+</div>

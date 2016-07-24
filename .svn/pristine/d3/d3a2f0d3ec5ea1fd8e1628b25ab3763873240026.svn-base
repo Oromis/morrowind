@@ -1,0 +1,50 @@
+<div class="char-items" ng-init="itemTypeFilter = '!invalid'">
+  <div>
+    <div class="btn-group" button-group="true" model="itemTypeFilter"
+         on-change="cancelItemEdit()">
+      <button type="button" class="btn active" data-value="!invalid">Alle</button>
+      <button type="button" class="btn" data-value="melee_weapon">Nahkampf</button>
+      <button type="button" class="btn" data-value="ranged_weapon">Fernkampf</button>
+      <button type="button" class="btn" data-value="armor">Rüstung</button>
+      <button type="button" class="btn" data-value="consumable">Verbrauch</button>
+      <button type="button" class="btn" data-value="accessory">Kleidung</button>
+      <button type="button" class="btn" data-value="generic">Sonst</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <select class="items-sort form-control selectpicker no-margin" selectpicker=""
+              ng-model="itemOrder" title="Sortieren">
+        <option value="manual" label="Manuell" selected="selected">Manuell</option>
+        <option value="name" label="Nach Namen">Nach Namen</option>
+        <option value="weight" label="Nach Gewicht">Nach Gewicht</option>
+        <option value="value" label="Nach Wert">Nach Wert</option>
+      </select>
+    </div>
+    <div class="col-sm-6">
+      <label class="checkbox inline" for="hideEmpty">
+        <input type="checkbox" ng-model="hideEmpty" id="hideEmpty" />
+        <span style="font-size: 15px;">Leere Items verstecken</span>
+      </label>
+    </div>
+  </div>
+  <div ng-if="itemPrototypesEngine">
+    <item-editor item="editingItem"
+                 item-prototypes="itemPrototypesEngine"
+                 publish-url="<%= rule_set_item_prototypes_path(@character.rule_set, format: :json) %>"
+                 on-destroy="destroyItem(item)" on-change="updateItem(item)" on-cancel="cancelItemEdit(item)">
+    </item-editor>
+  </div>
+  <div ng-show="itemTypeFilter == '!invalid'">
+    <%= render 'inventory_container',
+               collection: 'container.items',
+               searchTerm: 'searchStrings[container.name]',
+               itemType: 'null' %>
+  </div>
+  <div ng-repeat="itemType in itemTypes" ng-show="itemTypeFilter == itemType.id">
+    <%= render 'inventory_container',
+               collection: 'container.itemsByType[itemType.id]',
+               searchTerm: 'searchStrings[container.name]',
+               itemType: 'itemType.id' %>
+  </div>
+</div>

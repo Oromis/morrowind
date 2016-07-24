@@ -1,0 +1,53 @@
+<div class="char-resis">
+  <div class="char-resis-table">
+    <div>
+      <h4 class="icon-col"></h4>
+      <h4>Resistenz</h4>
+      <div class="value-col" title="Startwert">
+        <h4 class="value-col vertical">Start</h4>
+      </div>
+      <div class="value-col" title="Temporäre Buffs">
+        <h4 class="value-col vertical">Buff</h4>
+      </div>
+      <div class="value-col" title="Aktueller Gesamtwert">
+        <h4 class="value-col vertical">Wert</h4>
+      </div>
+      <div class="value-col" title="Eingehender Schaden">
+        <%= image_tag 'damage.png', class: 'icon-small', alt: 'Eingehender Schaden' %>
+      </div>
+      <div class="value-col" title="HP-Verlust">
+        <%= image_tag 'blood-drop-icon.png', class: 'icon-small', alt: 'HP-Verlust' %>
+      </div>
+    </div>
+    <div>
+      <div class="icon-col">
+        <%= image_tag 'armor.png', alt: 'Physisch' %>
+      </div>
+      <h4 class="inline">Physisch</h4>
+      <div class="value-col"></div>
+      <div class="value-col" data-editable="true" data-model="char.armor_buff" data-number="true">{{ char.armor_buff }}</div>
+      <div class="value-col">{{ char.total_armor | num }}</div>
+      <div class="value-col" data-editable="true" data-model="char.damage_incoming" data-number="true">{{ char.damage_incoming }}</div>
+      <div class="value-col" ng-click="takeDamage(char.hp_loss)"
+           ng-class="{'damage-button': char.hp_loss > 0}"
+           ng-mouseenter="physHover = true" ng-mouseleave="physHover = false">
+        {{ physHover && char.hp_loss > 0 ? '-' + Math.ceil(char.hp_loss) : char.hp_loss | num }}
+      </div>
+    </div>
+    <div ng-repeat="resi in char.resistances">
+      <div class="icon-col">
+        <img ng-src="{{ resi.icon }}" ng-if="resi.icon" alt="{{ resi.name }}" />
+      </div>
+      <h4 class="inline">{{ resi.name | stripResistance }}</h4>
+      <div class="value-col">{{ resi.points_base }}%</div>
+      <div class="value-col" data-editable="true" data-model="resi.points_buff" data-number="true">{{ resi.points_buff }}%</div>
+      <div class="value-col">{{ resi.points }}%</div>
+      <div class="value-col" data-editable="true" data-model="resi.dmg" data-number="true">{{ resi.dmg || 0 }}</div>
+      <div class="value-col" ng-click="takeDamage(resiHpLoss(resi))"
+           ng-class="{'damage-button':resiHpLoss(resi) > 0}"
+           ng-mouseenter="resi.hover = true" ng-mouseleave="resi.hover = false">
+        {{ resi.hover && resiHpLoss(resi) > 0 ? '-' + Math.ceil(resiHpLoss(resi)) : resiHpLoss(resi) }}
+      </div>
+    </div>
+  </div>
+</div>

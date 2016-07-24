@@ -1,0 +1,49 @@
+<h1>Items</h1>
+
+<% if current_user.has_role?(:gm) %>
+  <div class="row">
+    <div class="col-md-4">
+      <%= link_to 'Neues Item', new_rule_set_item_prototype_path(@rule_set), class: 'btn' %>
+    </div>
+    <%= form_tag import_rule_set_item_prototypes_path(@rule_set), multipart: true, class: 'col-md-8 row' do %>
+      <div class="col-md-6">
+        <%= file_field_tag :file, class: 'form-control' %>
+      </div>
+      <div class="col-md-6">
+        <%= submit_tag 'Importieren aus Excel', class: 'btn col-md-6' %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<div ng-controller="ItemDisplayCtrl"
+  ng-init='init("<%= rule_set_path(@rule_set) %>"); columns = [0,1,2]'>
+  <input type="text" placeholder="Filtern ..." ng-model="filter" class="form-control" />
+  <div class="col-md-4" ng-repeat="i in columns">
+    <div class="item-category" ng-repeat="(category, itemList) in items | filter:filter | groupBy: 'category'"
+         ng-if="$index % columns.length == i">
+      <h3>{{ category }}</h3>
+      <div class="item" ng-repeat="item in itemList" <%= current_user.has_role?(:gm) ? 'ng-click="onClick(item)" data-clickable="true"'.html_safe : 'data-clickable="false"'.html_safe %>
+           popover="true" data-popover-title="item.name" data-popover-content="item.desc" data-popover-condition="item.desc">
+        <img ng-src="{{ item.image }}" class="image" ng-if="!!item.image" />
+        <%= prop_tag 'weight.png', 'item.weight', alt: "Gewicht" %>
+        <h4>{{ item.name }}</h4>
+        <div>
+          <%= prop_tag 'value.png', 'item.value', alt: "Wert" %>
+          <%= prop_tag 'range.png', 'item.range', alt: "Reichweite" %>
+          <%= prop_tag 'speed.png', 'item.speed', alt: "Geschwindigkeit" %>
+          <%= prop_tag 'damage.png', 'item.damage', alt: "Schaden" %>
+          <%= prop_tag 'armor.png', 'item.armor', alt: "Rüstung" %>
+          <span class="ellipsis" ng-if="!!item.desc">{{ item.desc }}</span>
+          <div class="clear"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>
+
+<% if current_user.has_role?(:gm) %>
+  <%= link_to "Neues Item", new_rule_set_item_prototype_path(@rule_set), class: 'btn' %>
+<% end %>
+

@@ -1,0 +1,10 @@
+<% @characters.group_by(&:user).each do |user, chars| %>
+  <div class="characters-overview-user-container">
+    <h2>Charaktere von <%= user.name %></h2>
+    <% chars.each do |char| %>
+      <%= render 'shared/minitile', target: char, name: char.name,
+                 image: char.race.try(:image).try(:url, :small), delete: false %>
+    <% end %>
+  </div>
+<% end %>
+

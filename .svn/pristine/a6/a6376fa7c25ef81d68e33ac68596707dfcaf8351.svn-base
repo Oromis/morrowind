@@ -1,0 +1,6 @@
+<% provide(:title, 'Alle Benutzer') %>
+<h1>Alle Benutzer</h1>
+
+<ul class="users">
+  <%= render @users %>
+</ul>

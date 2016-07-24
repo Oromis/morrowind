@@ -1,0 +1,6 @@
+<h1>Resistenzen</h1>
+
+<%= render 'shared/property_index',
+  new_item_text: "Neue Resistenz",
+  class_name: Resistance.name.demodulize,
+  fields: {} %>

@@ -1,0 +1,19 @@
+claymore:
+  name: "Stahl Claymore der flammenden Sonne"
+  type: <%= Item.types[:melee_weapon] %>
+  quantity: 1
+  value: 100
+  weight: 30
+  index: 5
+  container: <%= Item.containers[:backpack] %>
+  range: 5
+  damage: "4+4d6"
+  speed: 1
+  slot: <%= Item.slots[:hand] %>
+  character: nazir
+
+broadsword:
+  quantity: 1
+  prototype: broadsword
+  character: nazir
+  container: <%= Item.containers[:backpack] %>

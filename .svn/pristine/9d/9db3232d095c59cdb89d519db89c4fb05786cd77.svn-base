@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  version: 1.0
+  activated: true
+
+one_one: 
+  version: 1.1
+  activated: true
+
+two:
+  version: 2.0
+  activated: false

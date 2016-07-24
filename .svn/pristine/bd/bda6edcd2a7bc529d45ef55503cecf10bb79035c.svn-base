@@ -1,0 +1,29 @@
+<%= form_for(@user) do |f| %>
+  <%= render 'shared/error_messages', model: @user %>
+
+  <%= f.label :name %>
+  <%= f.text_field :name, class: 'form-control' %>
+  <%= f.label :email %>
+  <%= f.email_field :email, class: 'form-control' %>
+
+  <%= f.label :password %>
+  <%= f.password_field :password, class: 'form-control' %>
+
+  <%= f.label :password_confirmation, 'Confirmation' %>
+  <%= f.password_field :password_confirmation, class: 'form-control' %>
+
+  <%= f.label :theme, 'Theme' %>
+  <%= f.select :theme,
+           options_for_select({'Normal' => '',
+                               'Black and White' => 'black_and_white' },
+               selected: @user.theme),
+           {},
+           class: 'selectpicker form-control', selectpicker: '' %>
+
+  <% if current_user && current_user.admin? && !@user.new_record? %>
+    <%= f.label :role %>
+    <%= f.select :role, User.roles.keys.to_a, {}, class: 'form-control', selectpicker: '' %>
+  <% end %>
+
+  <%= f.submit "Speichern", class: "btn btn-primary centered-button", style: "width: 150px" %>
+<% end %>

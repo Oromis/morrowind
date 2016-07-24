@@ -1,0 +1,44 @@
+<!--<div class="char-equip" ng-class="char.specialization.name">-->
+<div class="char-equip">
+  <!--<img ng-src="{{ char.specialization.avatar }}" alt="{{ char.specialization.name }}" />-->
+  <div ng-repeat="slot in char.slots">
+    <char-equip-slot slot="slot" char="char" items="char.itemsBySlot"
+                     index="{{ 400 - $index }}"
+                     weapon="slot.key == 'hand' && slot.identifier != 'shield_hand'"
+                     on-item-selected="itemSelected(slot, item)"
+                     on-update-item="updateItem(item)">
+    </char-equip-slot>
+  </div>
+  <div class="char-armor-box">
+    <h4 class="inline">HP-Verlust</h4>
+    <div class="char-property-group">
+      <%= character_property 'armor_buff.png', 'Rüstungsbuff', 'char.armor_buff',
+                             small: true, editable: true %>
+      <%= character_property 'armor.png', 'Gesamtrüstung', 'char.total_armor', small: true %>
+      <%= character_property 'damage.png', 'Schaden Eingang', 'char.damage_incoming',
+                             editable: true, small: true %>
+      <%= character_property 'blood-drop-icon.png', 'HP-Verlust', 'char.hp_loss', small: true %>
+    </div>
+  </div>
+  <div class="char-hand-to-hand-box">
+    <h4 class="inline">Faustkampf-Schaden</h4>
+    <div class="char-property-group">
+      <%= character_property 'stamina.png', 'Gegen Ausdauer', 'char.hand_to_hand_damage_stamina', small: true %>
+      <%= character_property 'blood-drop-icon.png', 'Gegen HP', 'char.hand_to_hand_damage_hp', small: true %>
+    </div>
+  </div>
+  <div class="char-initiative-box">
+    <h4 class="inline">Initiative</h4>
+    <div class="char-property-group">
+      <%= character_property 'dice.png', 'W6', 'char.initiative_roll', small: true, editable: true %>
+      <%= character_property 'initiative.png', 'Initiative', 'char.initiative', small: true %>
+    </div>
+  </div>
+  <div class="char-speed-box">
+    <h4 class="inline">Laufweg</h4>
+    <div class="char-property-group">
+      <%= character_property 'feet_buff.png', 'Buff', 'char.speed_buff', small: true, editable: true %>
+      <%= character_property 'feet.png', 'Laufweg', 'char.speed', small: true %>
+    </div>
+  </div>
+</div>

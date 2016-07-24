@@ -1,0 +1,16 @@
+<%= f.label :order %>
+<%= f.text_field :order, class: 'form-control', placeholder: 'Ordnungszahl für Sortierung' %>
+
+<%= f.label :icon %>
+<% if @property.icon.exists? %>
+  <%= image_tag @property.icon.url(:thumb) %>
+<% end %>
+<%= f.file_field :icon, class: 'form-control' %>
+
+<div class="actions">
+  <%= link_to "Zurück", polymorphic_path([@rule_set, ActiveModel::Naming.plural(@property)]), 
+        class: 'btn' %>
+  <%= f.submit "Speichern", class: 'btn' %>
+  <%= link_to "Löschen", polymorphic_path([@rule_set, @property]), 
+        class: 'btn', method: :delete, data: { confirm: 'Bist du dir ganz sicher?' } %>
+</div>

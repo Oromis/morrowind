@@ -1,0 +1,4 @@
+<h1>Spezialisierung bearbeiten</h1>
+
+<%= render 'form' %>
+

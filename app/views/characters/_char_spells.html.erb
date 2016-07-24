@@ -1,0 +1,111 @@
+<div class="char-spells" ng-init="spellPage = 0">
+  <div class="row char-spells-heading">
+    <h3 class="col-sm-6">Mein Zauberbuch</h3>
+    <div class="col-sm-6">
+      <div ng-show="spells">
+        <input id="new-spell-field" class="new-spell form-control" type="text" ng-model="newSpell"
+               sf-typeahead="true" data-options="{highlight:true}"
+               data-datasets="spellsEngine" placeholder="Neuer Zauberspruch..." />
+      </div>
+    </div>
+  </div>
+  <div class="all-char-spells">
+    <div class="char-spells-page" ng-repeat="school in char.schools"
+         ng-show="$index == spellPage">
+      <h3 class="spell-school-heading">
+        <span class="gradient-line gradient-line-left"></span>
+        {{ school.name }}
+        <span class="gradient-line gradient-line-right"></span>
+      </h3>
+      <div class="spell-school-checks">
+        <div>
+          <h4 class="check-column-label">Probe 1</h4>
+          <div class="check-column-value">
+            <%= character_property_dynamic 'char.property[school.check1].icon',
+                                           'char.property[school.check1].name',
+                                           ['char.property[school.check1].points', 'Math.floor(char.property[school.check1].points / 5)'] %>
+          </div>
+          <div></div>
+        </div>
+        <div>
+          <h4 class="check-column-label">Probe 2</h4>
+          <div class="check-column-value">
+            <%= character_property_dynamic 'char.property[school.check2].icon',
+                                           'char.property[school.check2].name',
+                                           ['char.property[school.check2].points', 'Math.floor(char.property[school.check2].points / 5)'] %>
+          </div>
+          <div></div>
+        </div>
+        <div>
+          <h4 class="check-column-label">Probe 3</h4>
+          <div class="check-column-value">
+            <%= character_property_dynamic 'school.icon',
+                                           'school.name',
+                                           ['school.points', 'Math.floor(school.points / 5)'] %>
+          </div>
+          <div></div>
+        </div>
+        <div>
+          <div></div>
+          <div class="check-column-value">
+            <%= character_property 'magic.png',
+                                   'Ausgleichspunkte',
+                                   'Math.floor(school.points / 5) - char.encumberance * 2' %>
+          </div>
+          <div></div>
+        </div>
+      </div>
+      <div class="char-spells-container">
+        <div class="char-spell" ng-repeat="spell in char.spells | filter:{school:{abbr: school.abbr}}"
+             title="{{ spell.desc }}">
+          <div class="column-icon">
+            <img ng-src="{{ spell.icon }}" ng-if="spell.icon" alt="{{ spell.name }}" />
+          </div>
+          <div>{{ spell.name }}</div>
+          <div class="column-mana" ng-class="{'text-danger': char.mana < spell.mana_cost}">
+            <%= character_property_minimal 'mana.png', 'spell.mana_cost', title: 'Manakosten' %>
+          </div>
+          <div class="column-range">
+            <%= character_property_minimal 'range.png', 'spell.range', title: 'Reichweite' %>
+          </div>
+          <div class="column-handicap">
+            <%= character_property_minimal 'handicap.png', 'spell.handicap', title: 'Erschwernis' %>
+          </div>
+          <div class="column-duration">
+            <%= character_property_minimal 'duration.png', 'spell.duration', title: 'Dauer in Runden' %>
+          </div>
+          <div class="column-effect">
+            <%= character_property_minimal 'magic.png', '{{spell.effect}} <small>({{spell.min_effect}}-{{spell.max_effect}})</small>',
+                                           title: 'Effektstärke', condition: 'spell.effect', raw_model: true %>
+          </div>
+          <div class="reveal-buttons">
+            <div class="btn-group">
+              <button type="button" class="btn btn-icon" title="Zauber erfolgreich" ng-click="spellSuccessful(spell)">
+                <%= image_tag 'magic_success.png' %>
+              </button>
+              <button type="button" class="btn btn-icon" title="Zauber misslungen" ng-click="spellFailed(spell)">
+                <%= image_tag 'magic_failure.png' %>
+              </button>
+              <button type="button" class="btn" title="Zauber Löschen" ng-click="removeSpell(spell)">
+                <span class="glyphicon glyphicon-trash"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="text-center">
+    <div class="btn-group pull-left" title="Vorherige Seite">
+      <button class="btn" type="button" ng-click="spellPage = mod(spellPage - 1, char.schools.length)">&lt;</button>
+    </div>
+    <div class="btn-group pull-right" title="Nächste Seite">
+      <button class="btn" type="button" ng-click="spellPage = (spellPage + 1) % char.schools.length">&gt;</button>
+    </div>
+    <span class="gradient-line gradient-line-left"></span>
+    &nbsp;
+    <h3 class="inline">{{ spellPage + 1}} / {{ char.schools.length }}</h3>
+    &nbsp;
+    <span class="gradient-line gradient-line-right"></span>
+  </div>
+</div>

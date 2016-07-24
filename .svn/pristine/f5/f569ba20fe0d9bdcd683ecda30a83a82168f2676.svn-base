@@ -1,0 +1,4 @@
+<h1>Rasse bearbeiten</h1>
+
+<%= render 'form' %>
+

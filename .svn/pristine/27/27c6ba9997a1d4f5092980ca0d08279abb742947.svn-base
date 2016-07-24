@@ -1,0 +1,6 @@
+<h1>Attribute</h1>
+
+<%= render 'shared/property_index', 
+  new_item_text: "Neues Attribut",
+  class_name: Attribute.name.demodulize,
+  fields: { "Standartwert" => :default_value } %>

@@ -1,0 +1,39 @@
+<div class="modifier-config">
+  <a class="btn" ng-click="addModifier()">{{ newText }}</a>
+  <ul>
+    <li ng-repeat="mod in modifiers" ng-class="{hidden: mod._destroy}">
+      <input type="text"
+             class="abbr" 
+             placeholder="Kürzel" 
+             ng-model="mod.property_abbr" 
+             ng-change="abbrChanged(mod)"
+             ng-style="mod.property_img" />
+      <input type="text"
+             class="operator"
+             placeholder="Op"
+             name="{{ nameStart }}[{{ mod.frontend_id }}][operator]{{ nameEnd }}"
+             ng-model="mod.operator" 
+             ng-pattern="/^[+\-\*\/]$/"
+             ng-required="true"/>
+      <input type="text"
+             class="value"
+             placeholder="Wert"
+             name="{{ nameStart }}[{{ mod.frontend_id }}][value]{{ nameEnd }}"
+             ng-model="mod.value"
+             ng-pattern="/^[+\-]?\d+(\.(\d+)*)?$/" 
+             ng-required="true" />
+      <input type="hidden" 
+             name="{{ nameStart }}[{{ mod.frontend_id }}][id]{{ nameEnd }}"
+             ng-value="mod.id" 
+             ng-if="mod.id" />
+      <input type="hidden" 
+             name="{{ nameStart }}[{{ mod.frontend_id }}][property_id]{{ nameEnd }}"
+             ng-value="mod.property_id" />
+      <input type="hidden"
+             name="{{ nameStart }}[{{ mod.frontend_id }}][_destroy]{{ nameEnd }}"
+             ng-if="mod._destroy"
+             ng-value="mod._destroy" />
+      <a class="btn" ng-click="removeModifier(mod)">{{ deleteText }}</a>
+    </li>
+  </ul>
+</div>

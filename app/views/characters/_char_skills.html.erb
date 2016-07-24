@@ -1,0 +1,38 @@
+<% {major: 'Hauptskills', minor: 'Nebenskills', other: 'Andere Skills'}.each do |key,name| %>
+  <div class="char-skills">
+    <h4 class="skill-heading skill-name"><%= name %></h4>
+    <h4 class="skill-heading skill-value">Start</h4>
+    <h4 class="skill-heading skill-value">Wert</h4>
+    <h4 class="skill-heading skill-value">Buff</h4>
+    <h4 class="skill-heading skill-value">Atm</h4>
+    <div class="char-skills-container" data-as-sortable="skillControlListeners"
+         data-ng-model="char.sortedSkills['<%= key %>']"
+         data-skill-type="<%= key %>" data-max="<%= @character.rule_set.skill_type_max(key) %>">
+      <div class="char-skill" ng-repeat="skill in char.sortedSkills['<%= key %>']"
+           data-as-sortable-item="true">
+        <div data-as-sortable-item-handle="true">
+          <img class="icon-col non-daggable" ng-src="{{ skill.icon }}" alt="{{ skill.name }}" />
+          <div class="name-col">
+            <span class="multipliers">{{ formatMultiplier(skill.multiplier) }}</span>
+            {{ skill.name }}
+          </div>
+          <div class="value-col">{{ skill.points_base }}</div>
+          <div class="value-col" editable="true" model="skill.points_gained"
+               number="true" offset="skill.points_base">
+            {{ skill.points_base + skill.points_gained }}
+          </div>
+          <div class="value-col" editable="true" model="skill.points_buff" number="true">
+            {{ skill.points_buff }}
+          </div>
+          <div class="value-col">{{ skill.points }}</div>
+          <div class="btn-col">
+            <button type="button" class="skill-btn" title="Skill erhöhen"
+                    ng-click="modifySkill(skill, 1)">+</button>
+            <button type="button" class="skill-btn" title="Skill vermindern"
+                    ng-click="modifySkill(skill, -1)">-</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

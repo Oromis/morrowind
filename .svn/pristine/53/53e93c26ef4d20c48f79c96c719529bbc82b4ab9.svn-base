@@ -1,0 +1,10 @@
+<div class="btn-group">
+  <%= link_to "Attribute (#{@rule_set.attrs.count})", rule_set_attributes_path(@rule_set), class: 'btn' %>
+  <%= link_to "Spezialisierungen (#{@rule_set.specializations.count})", rule_set_specializations_path(@rule_set), class: 'btn' %>
+  <%= link_to "Skills (#{@rule_set.skills.count})", rule_set_skills_path(@rule_set), class: 'btn' %>
+  <%= link_to "Rassen (#{@rule_set.races.count})", rule_set_races_path(@rule_set), class: 'btn' %>
+  <%= link_to "Sternzeichen (#{@rule_set.birthsigns.count})", rule_set_birthsigns_path(@rule_set), class: 'btn' %>
+  <%= link_to "Resistenzen (#{@rule_set.resistances.count})", rule_set_resistances_path(@rule_set), class: 'btn' %>
+  <%= link_to "Items (#{@rule_set.item_prototypes.count})", rule_set_item_prototypes_path(@rule_set), class: 'btn' %>
+  <%= link_to "Zaubersprüche (#{@rule_set.spells.count})", rule_set_spells_path(@rule_set), class: 'btn' %>
+</div>

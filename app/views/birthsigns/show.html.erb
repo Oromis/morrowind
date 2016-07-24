@@ -1,0 +1,23 @@
+<div>
+  <h2><%= @birthsign.name %></h2>
+  <%= image_tag @birthsign.image.url(:normal) %>
+
+  <%= render 'shared/property_display', modifiers: @birthsign.property_modifiers %>
+  <h2>Fähigkeiten</h2>
+  <div class="abilities">
+    <% @birthsign.abilities.each do |ability| %>
+      <div class="ability">
+        <h3><%= ability.name %></h3>
+        <p><%= ability.desc %></p>
+        <%= render 'shared/property_display', modifiers: ability.property_modifiers %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="actions">
+  <% if current_user.has_role?(:gm) %>
+    <%= link_to 'Bearbeiten', edit_rule_set_birthsign_path(@rule_set, @birthsign), class: 'btn' %>
+  <% end %>
+  <%= link_to 'Zurück', rule_set_birthsigns_path(@rule_set), class: 'btn' %>
+</div>

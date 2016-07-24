@@ -1,0 +1,23 @@
+<h1>Sternzeichen</h1>
+
+<div class="pseudo-table">
+  <div>
+    <h4>Bild</h4>
+    <h4>Name</h4>
+  </div>
+
+  <% @birthsigns.each do |birthsign| %>
+    <%= link_to current_user.has_role?(:gm) ? 
+        edit_rule_set_birthsign_path(@rule_set, birthsign) : 
+        rule_set_birthsign_path(@rule_set, birthsign) do %>
+      <div><%= image_tag birthsign.image.url(:thumb) %></div>
+      <div><%= birthsign.name %></div>
+    <% end %>
+  <% end %>
+</div>
+
+<% if current_user.has_role?(:gm) %>
+  <div class="actions">
+    <%= link_to 'Neues Sternzeichen', new_rule_set_birthsign_path(@rule_set), class: 'btn' %>
+  </div>
+<% end %>

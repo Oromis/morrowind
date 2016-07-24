@@ -1,0 +1,10 @@
+<h1>Neuer Character</h1>
+<%= form_for [@user, @character] do |f| %>
+  <%= render 'shared/error_messages', model: @character %>
+  <%= f.hidden_field :rule_set_id, value: @character.rule_set_id %>
+
+  <%= f.label :name %>
+  <%= f.text_field :name, class: 'form-control', placeholder: 'Name deines neuen Morrowind-Helden' %>
+
+  <%= f.submit 'Anlegen', class: 'btn' %>
+<% end %>

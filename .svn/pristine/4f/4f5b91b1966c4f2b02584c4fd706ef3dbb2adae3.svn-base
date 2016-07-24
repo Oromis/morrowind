@@ -1,0 +1,14 @@
+<table>
+  <% modifiers.each do |mod| %>
+    <tr class="modifier-display">
+      <td>
+        <%= image_tag mod.property.icon.url(:thumb) %>
+        <%= mod.property.name %>
+      </td>
+      <td>
+        <%= mod.operator %>
+        <%= mod.value %>
+      </td>
+    </tr>
+  <% end %>
+</table>

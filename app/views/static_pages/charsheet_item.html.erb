@@ -1,0 +1,66 @@
+<div class="item-editor" ng-show="!item._null">
+  <input class="item-quantity form-control" type="text" ng-model="item.quantity" placeholder="Anzahl" />x
+  <input class="item-name form-control" type="text" ng-model="item.name"
+         sf-typeahead="true" options="typeaheadOptions" datasets="itemPrototypes" placeholder="Name" />
+  <%= prop_input 'weight.png', 'item.weight', alt: 'Gewicht', class: 'item-value' %>
+
+  <select class="item-type form-control selectpicker" selectpicker=""
+          ng-model="item.type">
+    <option value="" label="Typ" selected="selected">Typ</option>
+    <% ItemPrototype.types.keys.collect do |type| %>
+      <option value="<%= type %>">
+        <%= t("activerecord.attributes.item_prototype.types.#{type}") %>
+      </option>
+    <% end %>
+  </select>
+  <span ng-show="item.type == 'armor'">
+    <select class="item-armor-type form-control selectpicker" selectpicker=""
+            ng-model="item.armor_type">
+      <option value="" label="Rüstungstyp" selected="selected">Rüstungstyp</option>
+      <% ItemPrototype.armor_types.keys.collect do |type| %>
+        <option value="<%= type %>">
+          <%= t("activerecord.attributes.item_prototype.armor_types.#{type}") %>
+        </option>
+      <% end %>
+    </select>
+  </span>
+  <span ng-show="item.type == 'armor' || item.type == 'accessory'">
+    <select class="item-slot form-control selectpicker" selectpicker=""
+            ng-model="item.slot">
+      <option value="" label="Slot" selected="selected">Slot</option>
+      <% ItemPrototype.slots.keys.collect do |slot| %>
+        <option value="<%= slot %>">
+          <%= t("activerecord.attributes.item_prototype.slots.#{slot}") %>
+        </option>
+      <% end %>
+    </select>
+  </span>
+  <%= prop_input 'value.png', 'item.value', alt: 'Wert in Gold', class: 'item-value' %>
+  <%= prop_input 'range.png', 'item.range', alt: 'Reichweite', class: 'item-value', title: '5',
+                 show: 'item.type == "ranged_weapon" || item.type == "melee_weapon"' %>
+  <%= prop_input 'arrow.png', 'item.arrow_dmg', alt: 'Pfeilschaden', class: 'item-value', title: 'Pfeilschaden',
+                 show: 'item.type == "ranged_weapon"' %>
+  <%= prop_input 'damage.png', 'item.damage', alt: 'Schaden', class: 'item-damage',
+                 show: 'item.type == "ranged_weapon" || item.type == "melee_weapon"' %>
+  <%= prop_input 'speed.png', 'item.speed', alt: 'Geschwindigkeit', class: 'item-value',
+                 show: 'item.type == "ranged_weapon" || item.type == "melee_weapon"' %>
+  <%= prop_input 'condition.png', 'item.condition', alt: 'Zustand', class: 'item-value',
+                 show: 'item.type == "ranged_weapon" || item.type == "melee_weapon"' %>
+  <%= prop_input 'armor.png', 'item.armor', alt: 'Rüstung', class: 'item-value',
+                 show: 'item.type == "armor"' %>
+
+  <textarea class="item-desc form-control" ng-model="item.desc" placeholder="Beschreibung">
+  </textarea>
+  <div class="actions">
+    <button class="btn" ng-click="confirm()" ng-disabled="!item.weight">OK</button>
+    <button class="btn" ng-click="cancel()" title="Schließen ohne zu speichern" ng-show="item.id">
+      Schließen
+    </button>
+    <button class="btn" ng-click="destroyItem()">Löschen</button>
+    <button class="btn" ng-click="publishItem()" ng-if="!item.prototype_id">In die Datenbank</button>
+    <span ng-if="item.prototype_id">
+      <span class="glyphicon glyphicon-ok"></span>
+      In der Datenbank
+    </span>
+  </div>
+</div>

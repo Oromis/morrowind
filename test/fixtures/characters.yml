@@ -1,0 +1,10 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+nazir:
+  name: Nazir
+  level: 1
+  level_count: 0
+  user: david
+  rule_set: one
+  race: redguard
+

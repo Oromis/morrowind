@@ -1,0 +1,18 @@
+<div class="center jumbotron">
+  <h1><%=t 'home.welcome.title' %></h1>
+  <h2><%=t 'home.welcome.subtitle' %></h2>
+
+  <% if logged_in? %>
+    <%= link_to 'Meine Charaktere', user_characters_path(@current_user), class: 'btn btn-lg btn-primary' %>
+  <% else %>
+    <div>
+      <%= link_to t('sessions.signup.signup_link'), signup_path, class: 'btn btn-lg btn-primary' %>
+    </div>
+    <div>oder</div>
+    <div>
+      <%= link_to 'Einloggen', login_path, class: 'btn btn-lg btn-primary' %>
+    </div>
+
+  <% end %>
+</div>
+

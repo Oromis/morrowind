@@ -1,0 +1,62 @@
+<%= form_for [@rule_set, @property] do |f| %>
+  <%= render 'shared/error_messages', model: @property %>
+
+  <%= f.label :name %>
+  <%= f.text_field :name, placeholder: 'z.B. Veränderung', class: 'form-control' %>
+
+  <%= f.label :abbr %>
+  <span class="help">Eindeutige Abkürzung für den Skill. Nur Kleinbuchstaben und Unterstrich ([a-z_])</span>
+  <%= f.text_field :abbr, placeholder: 'z.B. alt', class: 'form-control' %>
+
+  <%= f.label :attribute_id %>
+  <span class="help">Attribut, zu dem dieser Skill gehören soll</span>
+  <%= f.select :attribute_id, 
+    @rule_set.attrs.map {|c| [c.name, c.id, { :'data-content' => "<img src='#{c.icon.url(:thumb)}'> #{c.name}" }] }, 
+        {}, 
+      class: 'selectpicker form-control', selectpicker: '' %>
+
+  <%= f.label :specialization_id %>
+  <span class="help">Spezialisierung, die diesen Skill verbessert</span>
+  <%= f.collection_select :specialization_id, @rule_set.specializations, :id, :name, {}, 
+              class: 'selectpicker form-control', selectpicker: '' %>
+
+  <div ng-init="school = <%= @property.school_of_magic %>; weapon_skill = <%= @property.weapon_skill? %>;">
+    <%= f.label :school_of_magic, class: 'checkbox inline' do %>
+      <%= f.check_box :school_of_magic, 'ng-model' => 'school' %>
+      <span>Dies ist eine Magieschule</span>
+    <% end %>
+
+    <div ng-show="school">
+      <%= f.label :check1_id %>
+      <%= f.select :check1_id, 
+          @rule_set.attrs.map {|c| [c.name, c.id, { :'data-content' => "<img src='#{c.icon.url(:thumb)}'> #{c.name}" }] },
+          {},
+          class: 'selectpicker form-control', selectpicker: '' %>
+
+      <%= f.label :check2_id %>
+      <%= f.select :check2_id, 
+          @rule_set.attrs.map {|c| [c.name, c.id, { :'data-content' => "<img src='#{c.icon.url(:thumb)}'> #{c.name}" }] },
+          {},
+          class: 'selectpicker form-control', selectpicker: '' %>
+    </div>
+
+    <%= f.label :weapon_skill, class: 'checkbox inline' do %>
+      <%= f.check_box :weapon_skill, 'ng-model' => 'weapon_skill' %>
+      <span>Dies ist ein Kampfskill</span>
+    <% end %>
+
+    <div ng-show="weapon_skill">
+      <%= f.label :weapon_skill_mode %>
+      <%= f.select :weapon_skill_mode,
+                   options_for_select(
+                       Skill.weapon_skill_modes.keys.collect do |type|
+                         [t("activerecord.attributes.skill.weapon_skill_modes.#{type}"), type]
+                       end,
+                       selected: @property.weapon_skill_mode),
+                   {},
+                   class: 'selectpicker form-control', selectpicker: '' %>
+    </div>
+  </div>
+
+  <%= render 'shared/property_form', f: f %>
+<% end %>

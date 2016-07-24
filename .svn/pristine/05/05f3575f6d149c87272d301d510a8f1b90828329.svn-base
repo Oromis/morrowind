@@ -1,0 +1,25 @@
+<h1>Spezialisierungen</h1>
+
+<div class="pseudo-table">
+  <div>
+    <h4>Icon</h4>
+    <h4>Name</h4>
+  </div>
+
+  <% @specializations.each do |spec| %>
+    <%= link_if_permitted edit_rule_set_specialization_path(@rule_set, spec), :gm do %>
+      <div>
+        <% if spec.image.exists? %>
+          <%= image_tag spec.image.url(:thumb) %>
+        <% end %>
+      </div>
+      <div><%= spec.name %></div>
+    <% end %>
+  <% end %>
+</div>
+
+<% if current_user.has_role?(:gm) %>
+  <div class="actions">
+    <%= link_to "Neue Spezialisierung", new_rule_set_specialization_path(@rule_set), class: 'btn' %>
+  </div>
+<% end %>

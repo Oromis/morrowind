@@ -1,0 +1,33 @@
+<h1>Regelsätze</h1>
+
+<div class="pseudo-table">
+  <div>
+    <h4>Version</h4>
+    <h4>Attribute</h4>
+    <h4>Spezialisierungen</h4>
+    <h4>Rassen</h4>
+    <h4>Skills</h4>
+    <h4>Sternzeichen</h4>
+    <h4>Resistenzen</h4>
+  </div>
+
+  <% @rule_sets.each do |rule_set| %>
+    <%= link_to current_user.has_role?(:gm) ?
+                edit_rule_set_path(rule_set) :
+                rule_set_path(rule_set) do %>
+      <div><%= rule_set.version %></div>
+      <div><%= rule_set.attrs.count %></div>
+      <div><%= rule_set.specializations.count %></div>
+      <div><%= rule_set.races.count %></div>
+      <div><%= rule_set.skills.count %></div>
+      <div><%= rule_set.birthsigns.count %></div>
+      <div><%= rule_set.resistances.count %></div>
+    <% end %>
+  <% end %>
+</div>
+
+<% if current_user.has_role?(:gm) %>
+  <div class="actions">
+    <%= link_to 'Neuer Regelsatz', new_rule_set_path, class: 'btn btn-primary' %>
+  </div>
+<% end %>

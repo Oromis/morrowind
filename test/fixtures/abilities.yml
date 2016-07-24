@@ -1,0 +1,6 @@
+
+thunderfist:
+  name: Donnerfaust
+  desc: "25 Frostschaden"
+  owner_id: <%= ActiveRecord::FixtureSet.identify(:dunmer) %>
+  owner_type: "Race"

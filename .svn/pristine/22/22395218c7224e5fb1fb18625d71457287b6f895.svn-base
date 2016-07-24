@@ -1,0 +1,174 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+de:
+  user_mailer:
+    account_activation:
+      subject: "Accountaktivierung"
+    password_reset:
+      subject: "Passwort Zurücksetzen"
+  users:
+    create:
+      account_activation:
+        flash: "Bitte schaue in deinem Email-Postfach nach, um deinen Account zu aktivieren."
+        confirm: "Account aktiviert"
+        error: "Ungültiger Aktivierungslink"
+  sessions:
+    login:
+      login: "Einloggen"
+      logout: "Ausloggen"
+      remember_checkbox: "Mich auf diesem Rechner speichern"
+      not_activated: "Account nicht aktiviert. Prüfe dein Email-Postfach!"
+      invalid: "Ungülige Email-Addresse oder Passwort"
+      forgot_password: "(Passwort vergessen?)"
+    signup:
+      new_user: "Neuer Benutzer?"
+      signup_link: "Jetzt registrieren!"
+  pwreset:
+    headline: Passwort vergessen
+    submit: Abschicken
+    submit_pw: Passwort zurücksetzen!
+    flash:
+      success: "Email mit der Anleitung zum Zurücksetzen des Passwortes wurde verschickt!"
+      error: "Email-Addresse unbekannt."
+      expired: "Zurücksetzlink ist abgelaufen!"
+      reset_success: "Passwort erfolgreich zurück gesetzt!"
+  forms:
+    confirmation: "Passwort wiederholen"
+  months:
+    january: "Morgenstern"
+    february: "Sonnenaufgang"
+    march: "Erste Saat"
+    april: "Regenhand"
+    may: "Zweite Saat"
+    june: "Jahresmitte"
+    july: "Sonnenhöhe"
+    august: "Letzte Saat"
+    september: "Herzfeuer"
+    october: "Eisherbst"
+    november: "Sonnendämmerung"
+    december: "Abendstern"
+  home:
+    welcome: 
+      title: "Willkommen bei Morrowind PnP"
+      subtitle: "Deinem online charsheet"
+  contact: 
+    title: Kontakt
+    content: "Bei Fragen kontaktiere doch einfach den Entwickler: "
+  will_paginate:
+    previous_label: Zurück
+    next_label: Weiter
+  activerecord:
+    models: 
+      specialization: Spezialisierung
+    attributes:
+      item_prototype:
+        desc: Beschreibung
+        type: Typ
+        category: Kategorie
+        value: Wert
+        weight: Gewicht
+        image: Bild
+        slot: Sockel
+        damage: Schaden
+        speed: Geschwindigkeit
+        armor: Rüstung
+        range: Reichweite
+        types: 
+          generic: Sonstiges
+          melee_weapon: Nahkampfwaffe
+          ranged_weapon: Fernkampfwaffe
+          armor: Rüstung
+          accessory: Accessoire
+          consumable: Verbrauchsgegenstand
+        slots:
+          head: Kopf
+          chest: Oberkörper
+          shoulders: Schultern
+          arms: Arme
+          legs: Beine
+          feet: Füße
+          hand: Hand
+          back: Rücken
+          hip: Hüfte
+          finger: Finger
+          neck: Hals
+        armor_types:
+          unarmored: Ohne Rüstung
+          light_armor: Leichte Rüstung
+          medium_armor: Mittlere Rüstung
+          heavy_armor: Schwere Rüstung
+      item:
+        container:
+          backpack: Rucksack
+          body: Körper
+      user: 
+        email: "E-Mail"
+        name: "Name"
+        password: "Passwort"
+        password_confirmation: "Passwort wiederholen"
+        role: "Rolle"
+        roles:
+          guest: Gast
+          user: Spieler
+          gm: Game Master
+          admin: Admin
+      character:
+        rule_set: "Regelsatz"
+      attribute:
+        abbr: Kürzel
+        default_value: Standartwert
+        order: Sortierung
+      skill:
+        abbr: Kürzel
+        attr: Attribut
+        attr_id: Attribut
+        attribute_id: Attribut
+        specialization: Spezialisierung
+        specialization_id: Spezialisierung
+        check1_id: "Probe 1 Attribut"
+        check2_id: "Probe 2 Attribut"
+        order: Sortierung
+        weapon_skill_mode: Verteilung der Punkte
+        weapon_skill_modes:
+          both: Verteilbar
+          only_offensive: Nur offensiv
+          only_defensive: Nur defensiv
+      resistance:
+        order: Sortierung
+      spell:
+        desc: Beschreibung
+        min_effect: Mindesteffekt
+        max_effect: Maximaleffekt
+        mana_cost: Manakosten
+        duration: Dauer in Runden
+        range: Reichweite
+        school: Zauberschule
+    errors:
+      models: 
+      user:
+        attributes:
+          password:
+            blank: Das Passwort darf nicht leer sein!
+  number:
+    format:
+      delimiter: "."
+      separator: ","

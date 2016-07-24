@@ -1,0 +1,17 @@
+.morrowind-popover {
+  @include wooden;
+  @include wooden-shadowed;
+  position: absolute;
+  z-index: 1;
+  padding: 10px;
+  border-radius: 10px;
+
+  h4 {
+    margin: 0 0 10px 0;
+  }
+  p {
+    margin: 0;
+    font-size: 14px;
+  }
+}
+
