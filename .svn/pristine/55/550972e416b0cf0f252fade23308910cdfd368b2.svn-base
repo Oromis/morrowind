@@ -1,4 +1,0 @@
-<h1>Regelsatz bearbeiten</h1>
-
-<%= render 'links' %>
-<%= render 'form' %>

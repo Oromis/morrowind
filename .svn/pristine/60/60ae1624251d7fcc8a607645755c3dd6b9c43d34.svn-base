@@ -1,6 +1,0 @@
-Hi <%= @user.name %>,
-
-Willkommen bei Morrowind PnP, deinem online-charsheet für Arians PnP-Kracher! Klicke einfach den Link, um deinen Account zu aktivieren:
-
-<%= edit_account_activation_url(@user.activation_token, email: @user.email) %>
-

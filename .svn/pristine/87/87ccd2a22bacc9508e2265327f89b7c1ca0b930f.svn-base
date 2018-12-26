@@ -1,3 +1,0 @@
-<h1>Neuer Skill</h1>
-
-<%= render 'form' %>

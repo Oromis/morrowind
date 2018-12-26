@@ -1,9 +1,0 @@
-#!/bin/bash
-
-svn update
-bundle install
-rake db:migrate RAILS_ENV=production
-bower install
-rake assets:precompile RAILS_ENV=production
-touch tmp/restart.txt
-

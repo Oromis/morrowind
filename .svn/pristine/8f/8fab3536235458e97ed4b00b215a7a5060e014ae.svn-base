@@ -1,6 +1,0 @@
-left_hand:
-  name: 'Linke Hand'
-  key: :hand
-  identifier: :left_hand
-  primary_type: :melee_weapon
-  character: nazir

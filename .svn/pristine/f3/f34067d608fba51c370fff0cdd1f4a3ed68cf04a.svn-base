@@ -1,3 +1,0 @@
-<h1>Neues Attribut</h1>
-
-<%= render 'form' %>

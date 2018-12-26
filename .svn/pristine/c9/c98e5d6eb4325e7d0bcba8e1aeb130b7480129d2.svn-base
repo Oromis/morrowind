@@ -1,9 +1,0 @@
-<h1>Skills</h1>
-
-<%= render 'shared/property_index',
-  new_item_text: "Neuer Skill",
-  class_name: Skill.name.demodulize,
-  fields: { "Spezialisierung" => [:specialization, :name],
-            "Attribut" => { attr: ->(v) { 
-                "<img src=\"#{v.icon.url(:thumb)}\" alt=\"#{v.name}\" title=\"#{v.name}\" />".html_safe } },
-            "Zauberschule?" => { school_of_magic: ->(v) { v ? 'Ja' : '' } } } %>

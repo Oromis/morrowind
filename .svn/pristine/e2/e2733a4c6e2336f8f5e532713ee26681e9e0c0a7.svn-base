@@ -1,3 +1,0 @@
-<h1>Skill bearbeiten</h1>
-
-<%= render 'form' %>

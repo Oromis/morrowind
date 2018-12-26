@@ -1,3 +1,0 @@
-<h1>Zauberspruch bearbeiten</h1>
-
-<%= render 'form' %>

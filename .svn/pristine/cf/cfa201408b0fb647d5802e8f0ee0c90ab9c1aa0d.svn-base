@@ -1,3 +1,0 @@
-<h1>Item bearbeiten</h1>
-
-<%= render 'form' %>
