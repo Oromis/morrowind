@@ -1,6 +1,6 @@
 #!/bin/bash
 
-svn update
+git clone
 bundle install
 rake db:migrate RAILS_ENV=production
 bower install
