@@ -48,6 +48,6 @@ class UsersEditTest < ActionDispatch::IntegrationTest
   test "admin can see role settings" do
     log_in_as @admin
     get edit_user_path(@user)
-    assert_select 'select', count: 1
+    assert_select 'select', count: 2
   end
 end
