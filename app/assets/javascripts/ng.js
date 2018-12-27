@@ -1,6 +1,6 @@
 var morrowindApp = angular.module('morrowindApp',
   ['angular.filter', 'as.sortable', 'siyfion.sfTypeahead',
-    'textAngular', 'perfect_scrollbar', 'angular-bootstrap-select'])
+    'textAngular', 'perfect_scrollbar', 'ui.select', 'ngSanitize'])
     .config(["$httpProvider", function(provider) {
         provider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
     }]);

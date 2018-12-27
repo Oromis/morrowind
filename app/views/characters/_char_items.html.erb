@@ -11,9 +11,9 @@
       <button type="button" class="btn" data-value="generic">Sonst</button>
     </div>
   </div>
-  <div class="row">
-    <div class="col-sm-6">
-      <select class="items-sort form-control selectpicker no-margin" selectpicker=""
+  <div class="flex-row flex-row--centered flex-row--with-spacing">
+    <div class="flex-grow flex-grow--zero-basis">
+      <select class="items-sort form-control no-margin"
               ng-model="itemOrder" title="Sortieren">
         <option value="manual" label="Manuell" selected="selected">Manuell</option>
         <option value="name" label="Nach Namen">Nach Namen</option>
@@ -21,7 +21,7 @@
         <option value="value" label="Nach Wert">Nach Wert</option>
       </select>
     </div>
-    <div class="col-sm-6">
+    <div class="flex-grow flex-grow--zero-basis">
       <label class="checkbox inline" for="hideEmpty">
         <input type="checkbox" ng-model="hideEmpty" id="hideEmpty" />
         <span style="font-size: 15px;">Leere Items verstecken</span>

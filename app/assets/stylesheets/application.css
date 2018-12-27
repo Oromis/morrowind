@@ -11,12 +11,12 @@
  * file per style scope.
  *
  *= require bootstrap/dist/css/bootstrap.min.css
- *= require perfect-scrollbar/min/perfect-scrollbar.min.css
- *= require textAngular/dist/textAngular.css
- *= require bootstrap-select/bootstrap-select.min.css
+ *= require perfect-scrollbar/css/perfect-scrollbar.css
+ *= require textangularjs/dist/textAngular.css
  *
  * Project dependencies
  *= require 'custom'
+ *= require 'general'
  *= require 'charsheet'
  *= require 'item'
  *= require 'ng-sortable'

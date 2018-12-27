@@ -72,7 +72,7 @@ app.controller('CharsheetController', ['$scope', '$http', '$timeout',
       $scope.slotUrl = slotUrl;
       $scope.spellUrl = spellUrl;
       $scope.levelUpUrl = levelUpUrl;
-      $http.get(charUrl).success(charFromServer);
+      $http.get(charUrl).then(res => charFromServer(res.data));
     };
 
     $scope.onCharacterUpdate = function(params) {
@@ -616,7 +616,8 @@ app.controller('CharsheetController', ['$scope', '$http', '$timeout',
     }
 
     function fetchResource(name) {
-      $http.get($scope.resources[name]).success(function(data) {
+      $http.get($scope.resources[name]).then(function(response) {
+        const data = response.data;
         $scope[name] = data;
         if(name == 'item_prototypes') {
           var searchEngine = new Bloodhound({

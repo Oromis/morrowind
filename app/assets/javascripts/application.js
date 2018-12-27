@@ -12,22 +12,22 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap
 
-// Bower packages
+// NPM packages
+//= require bootstrap/dist/js/bootstrap.js
 //= require angular/angular
+//= require angular-sanitize/angular-sanitize.js
+//= require ui-select/dist/select.js
 //= require angular-filter/dist/angular-filter.min
-//= require perfect-scrollbar/min/perfect-scrollbar.min.js
+//= require perfect-scrollbar/dist/perfect-scrollbar.js
 //= require angular-perfect-scrollbar/src/angular-perfect-scrollbar.js
 //= require ng-sortable/dist/ng-sortable.min.js
-//= require typeahead.js/dist/typeahead.bundle.min.js
-//= require angular-typeahead/angular-typeahead.min.js
-//= require textAngular/dist/textAngular-rangy.min.js
-//= require textAngular/dist/textAngular-sanitize.min.js
-//= require textAngular/dist/textAngular.min.js
+//= require typeahead.js/dist/typeahead.bundle.js
+//= require angular-typeahead/dist/angular-typeahead.js
+//= require textangularjs/dist/textAngular-rangy.min.js
+//= require textangularjs/dist/textAngular-sanitize.min.js
+//= require textangularjs/dist/textAngular.min.js
 //= require angular-bootstrap/ui-bootstrap-tpls.min.js
-//= require bootstrap-select/bootstrap-select.min.js
-//= require angular-bootstrap-select/build/angular-bootstrap-select.min.js
 //
 // Application files
 //

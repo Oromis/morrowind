@@ -48,7 +48,8 @@ input, textarea, select, .uneditable-input {
   @include box_sizing;
 }
 
-input.form-control, .bootstrap-select button.btn, textarea.form-control {
+input.form-control,
+textarea.form-control {
   @include morrowind-input;
 }
 
@@ -94,7 +95,9 @@ textarea.form-control {
   }
 }
 
-.selectpicker.btn {
+.selectpicker.btn,
+select.form-control,
+.ui-select-container.dropdown .btn.form-control.ui-select-toggle {
   @include morrowind-input;
   width: 100%;
   float: none;
@@ -118,23 +121,34 @@ textarea.form-control {
     top: 50%;
     right: 6px;
   }
+
+  &.no-margin {
+    margin: 0;
+  }
+}
+
+.ui-select-search.ui-select-search-hidden,
+.ui-select-offscreen {
+  display: none;
 }
 
 ul.selectpicker.dropdown-menu,
+ul.ui-select-choices,
 .char-equip-slot-dropdown {
   @include wooden;
   list-style: none;
   padding: 0;
   border-radius: 8px;
+  width: 100%;
 
-  a {
+  a, .ui-select-choices-row {
     color: white;
     cursor: pointer;
     display: block;
     padding: 3px 20px;
     text-decoration: none;
     text-align: left;
-    &:hover, &:focus, &.as-selected {
+    &:hover, &:focus, &.as-selected, &.selected {
       background-color: transparent;
       border: 0;
       outline: 0;
@@ -144,6 +158,12 @@ ul.selectpicker.dropdown-menu,
       color: white;
     }
   }
+}
+
+.dropdown-menu {
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 
 .char-equip-slot-dropdown {
@@ -211,6 +231,10 @@ ul.selectpicker.dropdown-menu,
       }
     }
   }
+}
+
+.bootstrap-select.form-control {
+  background: none;
 }
 
 #error_explanation {
@@ -334,9 +358,11 @@ form .btn {
   }
 }
 
-.selectpicker span img {
-  width: 24px;
-  height: 24px;
+.selectpicker {
+  span img {
+    width: 24px;
+    height: 24px;
+  }
 }
 
 .btn-group {

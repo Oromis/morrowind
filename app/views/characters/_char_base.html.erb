@@ -1,95 +1,116 @@
 <div class="char-base">
-  <div class="char-portrait">
-    <div class="char-picture">
-      <img id="birthsign-icon" ng-src="{{ char.birthsign.icon }}"
-           alt="{{ char.birthsign.name }}" title="{{ char.birthsign.name }}"/>
-      <img class="fav-attr-icon fav-attr-1" ng-src="{{ char.fav_attribute1.icon }}"
-           alt="{{ char.fav_attribute1.name }}" title="{{ char.fav_attribute1.name }}" />
-      <img class="fav-attr-icon fav-attr-2" ng-src="{{ char.fav_attribute2.icon }}"
-           alt="{{ char.fav_attribute2.name }}" title="{{ char.fav_attribute2.name }}" />
-      <img id="specialization-indicator" ng-if="char.specialization.image"
-           ng-src="{{ char.specialization.image }}"
-           alt="{{ char.specialization.name }}" title="{{ char.specialization.name }}"/>
-      <div id="level-indicator">
-        <div class="level" title="Level" editable="true" number="true" model="char.level">
-          {{ char.level }}
+  <div class="flex-row">
+    <div class="char-portrait">
+      <div class="char-picture">
+        <img id="birthsign-icon" ng-src="{{ char.birthsign.icon }}"
+             alt="{{ char.birthsign.name }}" title="{{ char.birthsign.name }}"/>
+        <img class="fav-attr-icon fav-attr-1" ng-src="{{ char.fav_attribute1.icon }}"
+             alt="{{ char.fav_attribute1.name }}" title="{{ char.fav_attribute1.name }}" />
+        <img class="fav-attr-icon fav-attr-2" ng-src="{{ char.fav_attribute2.icon }}"
+             alt="{{ char.fav_attribute2.name }}" title="{{ char.fav_attribute2.name }}" />
+        <img id="specialization-indicator" ng-if="char.specialization.image"
+             ng-src="{{ char.specialization.image }}"
+             alt="{{ char.specialization.name }}" title="{{ char.specialization.name }}"/>
+        <div id="level-indicator">
+          <div class="level" title="Level" editable="true" number="true" model="char.level">
+            {{ char.level }}
+          </div>
+          <div class="level-count" title="Levelzähler">
+            <span editable="true" number="true" model="char.level_count">{{ char.level_count }}</span>/<%= @character.rule_set.level_count_required %>
+          </div>
         </div>
-        <div class="level-count" title="Levelzähler">
-          <span editable="true" number="true" model="char.level_count">{{ char.level_count }}</span>/<%= @character.rule_set.level_count_required %>
+        <img id="race-icon" ng-src="{{ char.race.icon }}" alt="{{ char.race.name }}" />
+        <div class="level-up-buttons text-center">
+          <button type="button" class="btn btn-primary" id="level-up-btn"
+                  ng-if="char.level_count >= 10 && !char.level_up_mode"
+                  ng-click="initLevelUp()">
+            Level up!
+          </button>
+          <button type="button" class="btn btn-primary"
+                  ng-if="char.level_up_mode && levelUpAttributes.length == 3" ng-click="finishLevelUp()">
+            Fertig!
+          </button>
+          <button type="button" class="btn btn-primary"
+                  ng-if="char.level_up_mode" ng-click="abortLevelUp()">
+            Abbrechen
+          </button>
         </div>
       </div>
-      <img id="race-icon" ng-src="{{ char.race.icon }}" alt="{{ char.race.name }}" />
-      <div class="level-up-buttons text-center">
-        <button type="button" class="btn btn-primary" id="level-up-btn"
-                ng-if="char.level_count >= 10 && !char.level_up_mode"
-                ng-click="initLevelUp()">
-          Level up!
-        </button>
-        <button type="button" class="btn btn-primary"
-                ng-if="char.level_up_mode && levelUpAttributes.length == 3" ng-click="finishLevelUp()">
-          Fertig!
-        </button>
-        <button type="button" class="btn btn-primary"
-                ng-if="char.level_up_mode" ng-click="abortLevelUp()">
-          Abbrechen
-        </button>
-      </div>
+      <h2 class="char-name" data-editable="true" data-model="char.name">
+        {{ char.name }}
+      </h2>
     </div>
-    <h2 class="char-name" data-editable="true" data-model="char.name">
-      {{ char.name }}
-    </h2>
-  </div>
-  <div class="char-base-options">
+    <div class="char-base-options">
     <div ng-show="char.creating">
       <div class="selector-container">
-        <select ng-model="char.race.id" class="races form-control charsheet-select"
-                ng-change="onCharacterUpdate({ race_id: char.race.id })"
-                selectpicker="">
-          <option value="">-- Rasse --</option>
-          <% @character.rule_set.races.each do |race| %>
-            <option value="<%= race.id %>"><%= race.name %></option>
-          <% end %>
-        </select>
+        <ui-select
+          ng-model="char.race"
+          search-enabled="false"
+          on-select="onCharacterUpdate({ race_id: char.race.id })"
+        >
+          <ui-select-match placeholder="-- Rasse --">
+            {{$select.selected.name}}
+          </ui-select-match>
+          <ui-select-choices repeat="item in <%= @character.rule_set.races.map {|r| { id: r.id, name: r.name }}.to_json %> track by item.id">
+            <span ng-bind="item.name"></span>
+          </ui-select-choices>
+        </ui-select>
       </div>
       <div class="selector-container">
-        <select ng-model="char.birthsign.id" class="birthsigns form-control charsheet-select"
-                ng-change="onCharacterUpdate({ birthsign_id: char.birthsign.id })"
-                selectpicker="">
-          <option value="">-- Sternzeichen --</option>
-          <% @character.rule_set.birthsigns.each do |birthsign| %>
-            <option value="<%= birthsign.id %>"><%= birthsign.name %></option>
-          <% end %>
-        </select>
+        <ui-select
+          ng-model="char.birthsign"
+          search-enabled="false"
+          on-select="onCharacterUpdate({ birthsign_id: char.birthsign.id })"
+        >
+          <ui-select-match placeholder="-- Sternzeichen --">
+            {{$select.selected.name}}
+          </ui-select-match>
+          <ui-select-choices repeat="item in <%= @character.rule_set.birthsigns.map {|bs| { id: bs.id, name: bs.name }}.to_json %> track by item.id">
+            <span ng-bind="item.name"></span>
+          </ui-select-choices>
+        </ui-select>
       </div>
       <div class="selector-container">
-        <select ng-model="char.specialization.id" class="specializations form-control charsheet-select"
-                ng-change="onCharacterUpdate({ specialization_id: char.specialization.id })"
-                selectpicker="">
-          <option value="">-- Spezialisierung --</option>
-          <% @character.rule_set.specializations.each do |spec| %>
-            <option value="<%= spec.id %>"><%= spec.name %></option>
-          <% end %>
-        </select>
+        <ui-select
+          ng-model="char.specialization"
+          search-enabled="false"
+          on-select="onCharacterUpdate({ specialization_id: char.specialization.id })"
+        >
+          <ui-select-match placeholder="-- Spezialisierung --">
+            {{$select.selected.name}}
+          </ui-select-match>
+          <ui-select-choices repeat="item in <%= @character.rule_set.specializations.map {|s| { id: s.id, name: s.name }}.to_json %> track by item.id">
+            <span ng-bind="item.name"></span>
+          </ui-select-choices>
+        </ui-select>
       </div>
       <div class="selector-container">
-        <select ng-model="char.fav_attribute1.id" class="attributes form-control charsheet-select"
-                ng-change="onCharacterUpdate({ fav_attribute1_id: char.fav_attribute1.id })"
-                selectpicker="">
-          <option value="">-- Fav. Attribut 1 --</option>
-          <% @character.rule_set.attrs.each do |attr| %>
-            <option value="<%= attr.id %>"><%= attr.name %></option>
-          <% end %>
-        </select>
+        <ui-select
+          ng-model="char.fav_attribute1"
+          search-enabled="false"
+          on-select="onCharacterUpdate({ fav_attribute1_id: char.fav_attribute1.id })"
+        >
+          <ui-select-match placeholder="-- Fav. Attribut 1 --">
+            {{$select.selected.name}}
+          </ui-select-match>
+          <ui-select-choices repeat="item in <%= @character.rule_set.attrs.map {|attr| { id: attr.id, name: attr.name }}.to_json %> track by item.id">
+            <span ng-bind="item.name"></span>
+          </ui-select-choices>
+        </ui-select>
       </div>
       <div class="selector-container">
-        <select ng-model="char.fav_attribute2.id" class="attributes form-control charsheet-select"
-                ng-change="onCharacterUpdate({ fav_attribute2_id: char.fav_attribute2.id })"
-                selectpicker="">
-          <option value="">-- Fav. Attribut 2 --</option>
-          <% @character.rule_set.attrs.each do |attr| %>
-            <option value="<%= attr.id %>"><%= attr.name %></option>
-          <% end %>
-        </select>
+        <ui-select
+          ng-model="char.fav_attribute2"
+          search-enabled="false"
+          on-select="onCharacterUpdate({ fav_attribute2_id: char.fav_attribute2.id })"
+        >
+          <ui-select-match placeholder="-- Fav. Attribut 2 --">
+            {{$select.selected.name}}
+          </ui-select-match>
+          <ui-select-choices repeat="item in <%= @character.rule_set.attrs.map {|attr| { id: attr.id, name: attr.name }}.to_json %> track by item.id">
+            <span ng-bind="item.name"></span>
+          </ui-select-choices>
+        </ui-select>
       </div>
     </div>
     <div ng-if="!char.creating">
@@ -110,7 +131,7 @@
       </div>
     </div>
   </div>
-  <div class="clear"></div>
+  </div>
   <div class="char-status">
     <%= render 'status_bar', attribute: 'health', encumberance: 'encumberance_from_health' %>
     <%= render 'status_bar', attribute: 'stamina', encumberance: 'encumberance_from_stamina' %>

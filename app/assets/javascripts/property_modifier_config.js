@@ -15,8 +15,8 @@ angular.module('morrowindApp').directive('propertyModifierConfig', ['$http', fun
     link: function($scope, element, attrs) {
       var dataArrived = 1;
       $scope.modifiers = $scope.mods;
-      $http.get($scope.propUrl).success(function(data) {
-        $scope.properties = data;
+      $http.get($scope.propUrl).then(function(response) {
+        $scope.properties = response.data;
           if(++dataArrived >= 2) {
             $scope.updateAbbreviations($scope);
           }

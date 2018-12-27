@@ -31,6 +31,10 @@ $skill-value-width: 30px;
     position: relative;
     z-index: 20;
 
+    .selector-container {
+      margin-bottom: 8px;
+    }
+
     .char-portrait {
       display: inline-block;
       float: left;
@@ -119,7 +123,7 @@ $skill-value-width: 30px;
     }
 
     .char-base-options {
-      width: 100%;
+      flex-grow: 1;
 
       .selector-container, .display-container {
         text-align: right;
@@ -137,7 +141,7 @@ $skill-value-width: 30px;
         margin-bottom: 10px;
       }
 
-      .charsheet-select:not(.selectpicker) {
+      .charsheet-select:not(.selectpicker):not(.dropdown-toggle) {
         color: transparent;
         background-color: transparent;
         border-color: transparent;

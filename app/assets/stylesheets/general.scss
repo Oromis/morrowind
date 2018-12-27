@@ -1,0 +1,28 @@
+.flex-row {
+  display: flex;
+  flex-direction: row;
+
+  &.flex-row--centered {
+    align-items: center;
+  }
+
+  &.flex-row--with-spacing {
+    & > * {
+      &:not(:first-child) {
+        padding-left: 8px;
+      }
+
+      &:not(:last-child) {
+        padding-right: 8px;
+      }
+    }
+  }
+}
+
+.flex-grow {
+  flex-grow: 1;
+
+  &.flex-grow--zero-basis {
+    flex-basis: 0;
+  }
+}
