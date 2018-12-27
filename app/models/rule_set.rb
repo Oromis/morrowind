@@ -187,7 +187,8 @@ class RuleSet < ActiveRecord::Base
           {abbr: 'hand_to_hand_damage_hp', name: 'Faustkampfschaden gegen HP', formula: 'fau*0.1'},
 
           # Laufweg
-          {abbr: 'speed', name: 'Laufweg', formula: 'speed_buff+sch/3.0+ath/5-encumberance*5', order: 10},
+          {abbr: 'speed', name: 'Laufweg', formula: 'speed_buff+1+sch/12.0-encumberance', order: 10},
+          {abbr: 'speed_2', name: 'Laufweg 2', formula: 'speed_buff+speed*ath/40-encumberance', order: 11},
 
           # Initiative
           {abbr: 'initiative', name: 'Initiative', formula: 'sch/5.0+initiative_roll-encumberance*4', order: 10},
