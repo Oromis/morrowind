@@ -168,6 +168,14 @@ class Character < ActiveRecord::Base
     end
   end
 
+  def clumsiness
+    # raise self.slots.select { |slot| slot.primary_type == :armor }.inspect
+    self.slots
+        .select { |slot| slot.primary_type == 'armor' }
+        .inject(0) { |sum, slot| sum + (slot.item ? slot.item.clumsiness : 0) }
+        .floor
+  end
+
   def level_up(attributes)
     # Add attribute points
     attributes.each do |attr|
@@ -220,6 +228,7 @@ class Character < ActiveRecord::Base
       'wounds' => wounds,
       'armor_buff' => armor_buff.to_f,
       'damage_incoming' => damage_incoming,
+      'clumsiness' => clumsiness,
 
       'rolled_damage_left' => rolled_damage_left,
       'rolled_damage_right' => rolled_damage_right,
