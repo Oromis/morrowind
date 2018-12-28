@@ -88,6 +88,12 @@
                    {},
                    class: 'selectpicker form-control', selectpicker: '',
                    'ng-model' => 'item.armor_type' %>
+
+      <%= f.label :clumsiness %>
+      <%= f.text_field :clumsiness, class: 'form-control',
+                       'ng-pattern' => '/^[+\-]?\d+(\.(\d+)*)?$/',
+                       placeholder: 'Klobigkeit',
+                       'ng-model' => 'item.clumsiness' %>
     </div> 
     <div ng-class="{hidden: !isWearable(item.type)}">
       <%= f.label :slot %>

@@ -74,6 +74,6 @@ class ItemPrototypesController < ApplicationController
       params.require(:item_prototype).permit(:name, :image, :rule_set_id,
                                              :type, :category, :desc, :value,
                                              :weight, :range, :damage, :speed,
-                                             :two_handed, :armor, :armor_type, :slot)
+                                             :two_handed, :armor, :clumsiness, :armor_type, :slot)
     end
 end

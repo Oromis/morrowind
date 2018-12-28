@@ -143,7 +143,7 @@ class RuleSet < ActiveRecord::Base
                   order: 10},
           # Damage received
           {abbr: 'hp_loss', name: 'HP Verlust', formula:
-                 '[damage_incoming-total_armor,damage_incoming*0.3].max', order: 20},
+                 '[damage_incoming-total_armor,damage_incoming*(1.0/3.0)].max', order: 20},
 
           # Langschwert
           {abbr: 'law_attack_base', name: 'Langschwert Attacke Basis', formula: 'str+law+dex'},

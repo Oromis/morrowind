@@ -13,6 +13,7 @@ class ItemPrototype < ActiveRecord::Base
   validates :range, numericality: true, allow_nil: true
   validates :speed, numericality: true, allow_nil: true
   validates :armor, numericality: true, allow_nil: true
+  validates :clumsiness, numericality: true, allow_nil: true
 
   validates_attachment_content_type :image, content_type: /\Aimage/
 

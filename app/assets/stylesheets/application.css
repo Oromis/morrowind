@@ -21,5 +21,6 @@
  *= require 'item'
  *= require 'ng-sortable'
  *= require 'loading-anim'
+ *= require 'header'
  *= require_self
  */

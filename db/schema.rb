@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160605130153) do
+ActiveRecord::Schema.define(version: 20181228100736) do
 
   create_table "abilities", force: :cascade do |t|
     t.string   "name"
@@ -107,7 +107,7 @@ ActiveRecord::Schema.define(version: 20160605130153) do
   add_index "characters_spells", ["spell_id"], name: "index_characters_spells_on_spell_id"
 
   create_table "item_prototypes", force: :cascade do |t|
-    t.string   "name",                           null: false
+    t.string   "name",                             null: false
     t.integer  "type",               default: 0
     t.string   "category"
     t.string   "desc"
@@ -123,10 +123,11 @@ ActiveRecord::Schema.define(version: 20160605130153) do
     t.boolean  "two_handed"
     t.decimal  "armor"
     t.integer  "slot"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.integer  "rule_set_id"
     t.integer  "armor_type",         default: 0
+    t.decimal  "clumsiness",         default: 0.0
   end
 
   add_index "item_prototypes", ["rule_set_id"], name: "index_item_prototypes_on_rule_set_id"
@@ -152,6 +153,7 @@ ActiveRecord::Schema.define(version: 20160605130153) do
     t.integer  "condition",    default: 100
     t.integer  "armor_type",   default: 0
     t.integer  "arrow_dmg",    default: 0
+    t.decimal  "clumsiness",   default: 0.0
   end
 
   create_table "properties", force: :cascade do |t|

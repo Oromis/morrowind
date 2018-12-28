@@ -196,7 +196,7 @@ class CharactersController < ApplicationController
       params.require(:item).permit(
           :id, :name, :desc, :quantity, :weight, :damage, :range, :armor, :slot,
           :container, :speed, :value, :type, :index, :prototype_id, :condition,
-          :armor_type, :arrow_dmg, :_destroy)
+          :armor_type, :arrow_dmg, :clumsiness, :_destroy)
     end
 
     def logged_in_user

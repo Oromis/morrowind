@@ -96,6 +96,9 @@ class ItemTest < ActiveSupport::TestCase
   test 'type propagation' do
     propagation_test :type, 'accessory'
   end
+  test 'clumsiness propagation' do
+    propagation_test :clumsiness, 1.5
+  end
 
   def propagation_test(prop, test_value)
     assert_not_equal @dep.prototype[prop], test_value, 'Setup error: Identical test values!'

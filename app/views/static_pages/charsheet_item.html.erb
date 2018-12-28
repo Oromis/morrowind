@@ -3,6 +3,8 @@
   <input class="item-name form-control" type="text" ng-model="item.name"
          sf-typeahead="true" options="typeaheadOptions" datasets="itemPrototypes" placeholder="Name" />
   <%= prop_input 'weight.png', 'item.weight', alt: 'Gewicht', class: 'item-value' %>
+  <%= prop_input 'armor.png', 'item.armor', alt: 'Rüstung', class: 'item-value',
+                 show: 'item.type == "armor"' %>
 
   <select class="item-type form-control selectpicker" selectpicker=""
           ng-model="item.type">
@@ -46,7 +48,7 @@
                  show: 'item.type == "ranged_weapon" || item.type == "melee_weapon"' %>
   <%= prop_input 'condition.png', 'item.condition', alt: 'Zustand', class: 'item-value',
                  show: 'item.type == "ranged_weapon" || item.type == "melee_weapon"' %>
-  <%= prop_input 'armor.png', 'item.armor', alt: 'Rüstung', class: 'item-value',
+  <%= prop_input 'clumsiness.png', 'item.clumsiness', alt: 'Klobigkeit', class: 'item-value',
                  show: 'item.type == "armor"' %>
 
   <textarea class="item-desc form-control" ng-model="item.desc" placeholder="Beschreibung">

@@ -12,5 +12,6 @@ json.array! @item_prototypes do |item|
   json.range number_to_human(item.range)
   json.armor number_to_human(item.armor)
   json.armor_type item.armor_type
+  json.clumsiness number_to_human(item.clumsiness) if item.clumsiness > 0
   json.slot item.slot
 end

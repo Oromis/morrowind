@@ -11,4 +11,5 @@ json.speed number_to_human(@item_prototype.speed)
 json.range number_to_human(@item_prototype.range)
 json.armor number_to_human(@item_prototype.armor)
 json.armor_type @item_prototype.armor_type
+json.clumsiness number_to_human(@item_prototype.clumsiness) if @item_prototype.clumsiness > 0
 json.slot @item_prototype.slot

@@ -91,6 +91,7 @@ de:
         damage: Schaden
         speed: Geschwindigkeit
         armor: Rüstung
+        clumsiness: Klobigkeit
         range: Reichweite
         types: 
           generic: Sonstiges

@@ -15,8 +15,8 @@ class Item < ActiveRecord::Base
   enum slot: [ :head, :chest, :legs, :arms, :shoulders, :feet, :hand, :back, :hip, :finger, :neck ]
   enum armor_type: [ :unarmored, :light_armor, :medium_armor, :heavy_armor ]
 
-  attr_localized :weight, :range, :speed, :armor
-  prototype_accessor :name, :weight, :value, :range, :speed, :damage, :armor
+  attr_localized :weight, :range, :speed, :armor, :clumsiness
+  prototype_accessor :name, :weight, :value, :range, :speed, :damage, :armor, :clumsiness
   prototype_enum_accessor :slot, Item.slots
   prototype_enum_accessor :type, Item.types
   prototype_enum_accessor :armor_type, Item.armor_types
@@ -30,6 +30,7 @@ class Item < ActiveRecord::Base
   validates :range, numericality: true, allow_nil: true
   validates :speed, numericality: true, allow_nil: true
   validates :armor, numericality: true, allow_nil: true
+  validates :clumsiness, numericality: true, allow_nil: true
 
   # This is a special relationship for an item. If any of the fields in this item are
   # nil, the corresponding value of the prototype is returned (if it is defined, not
@@ -106,6 +107,7 @@ class Item < ActiveRecord::Base
     hash['range'] = range.to_f if range
     hash['armor'] = armor.to_f if armor
     hash['speed'] = speed.to_f if speed
+    hash['clumsiness'] = clumsiness.to_f if clumsiness
     hash['image'] = prototype.image.url(:thumb) if prototype && prototype.image.exists?
     hash
   end

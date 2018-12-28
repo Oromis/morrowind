@@ -54,4 +54,18 @@ class ItemPrototypeTest < ActiveSupport::TestCase
     assert_not @item.weapon?
     assert @item.wearable?
   end
+
+  test 'clumsiness' do
+    @item.clumsiness = nil
+    assert @item.valid?
+
+    @item.clumsiness = 1
+    assert @item.valid?
+
+    @item.clumsiness = 1.5
+    assert @item.valid?
+
+    @item.clumsiness = 'test'
+    assert_not @item.valid?
+  end
 end
