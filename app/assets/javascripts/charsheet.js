@@ -72,7 +72,7 @@ app.controller('CharsheetController', ['$scope', '$http', '$timeout',
       $scope.slotUrl = slotUrl;
       $scope.spellUrl = spellUrl;
       $scope.levelUpUrl = levelUpUrl;
-      $http.get(charUrl).then(res => charFromServer(res.data));
+      $http.get(charUrl).then(function(res) { return charFromServer(res.data) });
     };
 
     $scope.onCharacterUpdate = function(params) {
