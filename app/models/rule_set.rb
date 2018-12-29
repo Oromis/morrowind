@@ -157,6 +157,10 @@ class RuleSet < ActiveRecord::Base
           {abbr: 'axt_attack_base', name: 'Axt Attacke Basis', formula: 'str+kon+axt'},
           {abbr: 'axt_parry_base', name: 'Axt Parade Basis', formula: 'str+sch+ath'},
 
+          # Seil & Kettenwaffen
+          {abbr: 'suk_attack_base', name: 'Seil & Ketten Attacke Basis', formula: 'str+dex+suk'},
+          {abbr: 'suk_parry_base', name: 'Seil & Ketten Parade Basis', formula: 'dex+kon+suk'},
+
           # Blunt Weapon
           {abbr: 'st_w_attack_base', name: 'Stumpfe Waffe Attacke Basis', formula: 'str+kon+st_w'},
           {abbr: 'st_w_parry_base', name: 'Stumpfe Waffe Parade Basis', formula: 'str+kon+ath'},
