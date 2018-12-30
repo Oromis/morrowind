@@ -20,16 +20,15 @@ class Race < ActiveRecord::Base
     self.property_modifiers.where(property_id: property.id).take
   end
 
-  def as_json(mode, options = {})
-    case mode
-      when :summary
-        {
-          'id' => id,
-          'name' => name,
-          'icon' => image.exists? ? image.url(:normal) : nil,
-        }
-      else
-        super options
+  def as_json(options = {})
+    if options[:mode] == :summary
+      {
+        'id' => id,
+        'name' => name,
+        'icon' => image.exists? ? image.url(:normal) : nil,
+      }
+    else
+      super options
     end
   end
 end

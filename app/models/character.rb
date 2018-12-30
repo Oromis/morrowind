@@ -245,10 +245,10 @@ class Character < ActiveRecord::Base
       'month' => month,
 
       'race' => race && Rails.cache.fetch("json_race_#{race.id}") do
-        race.as_json :summary
+        race.as_json mode: :summary
       end,
       'birthsign' => birthsign && Rails.cache.fetch("json_birthsign_#{birthsign.id}") do
-        birthsign.as_json :summary
+        birthsign.as_json mode: :summary
       end,
       'specialization' => specialization && Rails.cache.fetch("json_specialization_#{specialization.id}") do
         specialization.as_json
