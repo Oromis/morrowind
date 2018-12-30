@@ -38,18 +38,19 @@ class CharactersController < ApplicationController
     respond_to do |format|
       format.html { render layout: 'charsheet' }
       format.json { render json: char_to_json(@character) }
+      format.pdf { render :show }
     end
   end
 
   def update
-    t_update = 0
-    t_render = 0
-    total = Benchmark.measure do
-      success = false
-      t_update = Benchmark.measure do
+    # t_update = 0
+    # t_render = 0
+    # total = Benchmark.measure do
+    #   success = false
+      # t_update = Benchmark.measure do
         success = @character.update_attributes(char_params)
-      end
-      t_render = Benchmark.measure do
+      # end
+      # t_render = Benchmark.measure do
       if success
         respond_to do |format|
           format.html { redirect_to @character }
@@ -61,11 +62,11 @@ class CharactersController < ApplicationController
           format.json { render json: char_to_json(@character), status: 500 }
         end
       end
-      end
-    end
-    logger.warn("##### Update: #{(t_update.real*1000).to_i}ms")
-    logger.warn("##### Render: #{(t_render.real*1000).to_i}ms")
-    logger.warn("##### Update + Render: #{(total.real*1000).to_i}ms")
+      # end
+    # end
+    # logger.warn("##### Update: #{(t_update.real*1000).to_i}ms")
+    # logger.warn("##### Render: #{(t_render.real*1000).to_i}ms")
+    # logger.warn("##### Update + Render: #{(total.real*1000).to_i}ms")
   end
 
   def destroy
