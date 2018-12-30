@@ -353,49 +353,49 @@ class Character < ActiveRecord::Base
 
     # Recalculates the values of ALL (!) properties of this character
     def update_properties
-      t_init = 0, t_mod = 0, t_formula = 0, t_formula_mod = 0, t_post_init = 0
-      t_update_properties = Benchmark.measure do
+      # t_init = 0, t_mod = 0, t_formula = 0, t_formula_mod = 0, t_post_init = 0
+      # t_update_properties = Benchmark.measure do
         # Reset values for everything except formulas
-        t_init = Benchmark.measure do
+        # t_init = Benchmark.measure do
           character_properties.reject { |p| p.is_a?(CharacterFormula) }.each do |p|
             p.init(self)
           end
-        end
+        # end
 
         # Apply modifiers to attributes, skills and resistances (formulas later)
         mods = []
-        t_mod = Benchmark.measure do
+        # t_mod = Benchmark.measure do
           mods << race.property_modifiers if race
           mods << birthsign.property_modifiers if birthsign
           mods.flatten!
           mods.reject { |m| m.property.is_a?(Formula) }.each(&method(:apply_modifier))
-        end
+        # end
 
         # Now start to process formulas
-        t_formula = Benchmark.measure do
+        # t_formula = Benchmark.measure do
           character_properties.select { |p| p.is_a?(CharacterFormula) }.each do |f|
             f.init(self)
           end
-        end
+        # end
 
         # Apply modifiers to formulas
-        t_formula_mod = Benchmark.measure do
+        # t_formula_mod = Benchmark.measure do
           mods.select { |m| m.property.is_a?(Formula) }.each(&method(:apply_modifier))
-        end
+        # end
 
-        t_post_init = Benchmark.measure do
+        # t_post_init = Benchmark.measure do
           character_properties.each do |prop|
             prop.post_init(self)
           end
-        end
-      end
+        # end
+      # end
 
-      logger.warn("##    Init: #{(t_init.real*1000).to_i}ms")
-      logger.warn("##    Mofifiers: #{(t_mod.real*1000).to_i}ms")
-      logger.warn("##    Formula: #{(t_formula.real*1000).to_i}ms")
-      logger.warn("##    Formula Modifiers: #{(t_formula_mod.real*1000).to_i}ms")
-      logger.warn("##    Post Init: #{(t_post_init.real*1000).to_i}ms")
-      logger.warn("###   Update Properties: #{(t_update_properties.real*1000).to_i}ms")
+      # logger.warn("##    Init: #{(t_init.real*1000).to_i}ms")
+      # logger.warn("##    Mofifiers: #{(t_mod.real*1000).to_i}ms")
+      # logger.warn("##    Formula: #{(t_formula.real*1000).to_i}ms")
+      # logger.warn("##    Formula Modifiers: #{(t_formula_mod.real*1000).to_i}ms")
+      # logger.warn("##    Post Init: #{(t_post_init.real*1000).to_i}ms")
+      # logger.warn("###   Update Properties: #{(t_update_properties.real*1000).to_i}ms")
     end
 
     def apply_modifier(mod)
