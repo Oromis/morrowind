@@ -254,9 +254,8 @@ DEPENDENCIES
   oj_mimic_json
   paperclip (~> 4.3)
   pg (= 0.17.1)
-  rails (~> 4.2.11)
   prawn-rails
-  rails (= 4.2.4)
+  rails (~> 4.2.11)
   rails-i18n
   rails_12factor (= 0.0.2)
   roo (~> 2.3.0)

@@ -5,7 +5,7 @@
     <% end %>
     <h3><%= name %></h3>
   <% end %>
-  <% if pdf %>
+  <% if defined?(pdf) && pdf %>
     <%= link_to 'PDF', character_path(target, format: :pdf), class: 'btn', target: '_blank' %>
   <% end %>
   <% if delete %>
