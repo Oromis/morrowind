@@ -1,4 +1,4 @@
-angular.module('morrowindApp').directive('numberInput', function ($filter) {
+angular.module('morrowindApp').directive('numberInput', ['$filter', function ($filter) {
   return {
     require: '?ngModel',
     link: function (scope, elem, attrs, ctrl) {
@@ -17,4 +17,4 @@ angular.module('morrowindApp').directive('numberInput', function ($filter) {
       });
     }
   };
-});
+}]);
