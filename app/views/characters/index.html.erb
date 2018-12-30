@@ -2,7 +2,9 @@
 <% @characters.each do |c| %>
   <%= render 'shared/minitile', target: c, name: c.name,
              image: c.race.try(:image).try(:url, :small),
-             delete: true %>
+             delete: true,
+             pdf: true
+  %>
 <% end %>
 <div class="actions">
   <%= link_to "Neuer Charakter", 'characters/new', class: 'btn' %>

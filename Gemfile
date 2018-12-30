@@ -33,6 +33,9 @@ gem 'faker', '~> 1.4'
 # Reading excel files
 gem 'roo', '~> 2.3.0'
 
+# Generating PDFs
+gem 'prawn-rails'
+
 # For dumping the database into a file
 gem 'yaml_db'
 
