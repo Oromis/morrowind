@@ -295,7 +295,7 @@ class Character < ActiveRecord::Base
       end,
 
       'slots' => slots.map {|slot| slot.as_json },
-      'spells' => spells.map {|spell| spell.as_json self }
+      'spells' => spells.map {|spell| spell.as_json char: self }
     }
     formulas.each do |formula|
       json[formula.property.abbr] = formula.points
