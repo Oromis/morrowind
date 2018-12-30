@@ -399,7 +399,7 @@ app.controller('CharsheetController', ['$scope', '$http', '$timeout',
     postDigest(function() {
       if(Object.keys(charChangelog).length > 0) {
         // Something changed -> Update the server
-        console.log(JSON.stringify(charChangelog, null, 2));
+        // console.log(JSON.stringify(charChangelog, null, 2));
         $scope.onCharacterUpdate(charChangelog);
         charChangelog = {};
       }
@@ -445,9 +445,9 @@ app.controller('CharsheetController', ['$scope', '$http', '$timeout',
         watchesSetUp = true;
       }
 
-      var now = $scope.now();
-      console.log("Processing time: " + Math.floor(now - $scope.requestEnd) + "ms");
-      console.log("Total time: " + Math.floor(now - $scope.requestStart) + "ms");
+      // var now = $scope.now();
+      // console.log("Processing time: " + Math.floor(now - $scope.requestEnd) + "ms");
+      // console.log("Total time: " + Math.floor(now - $scope.requestStart) + "ms");
     }
 
     function sortAttributes() {

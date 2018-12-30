@@ -36,7 +36,8 @@ class Spell < ActiveRecord::Base
 
   default_scope { order(:school_id, :name) }
 
-  def as_json(char)
+  def as_json(options = {})
+    char = options[:char]
     hash = {
       'id' => id,
       'name' => name,

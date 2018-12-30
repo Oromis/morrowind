@@ -173,8 +173,8 @@ class RuleSet < ActiveRecord::Base
           {abbr: 'fau_attack_base', name: 'Faustkampf Attacke Basis', formula: 'sch+kon+fau'},
           {abbr: 'fau_parry_base', name: 'Faustkampf Parade Basis', formula: 'sch+fau+acr'},
 
-          # Throwing
-          {abbr: 'wer_attack_base', name: 'Werfen Attacke Basis', formula: 'dex+sch+wer'},
+          # Throwing weapons (now governed by juggling)
+          {abbr: 'jgl_attack_base', name: 'Taschenspielerei Attacke Basis', formula: 'dex+sch+jgl'},
 
           # Marksman
           {abbr: 'mark_attack_base', name: 'Schießkunst Attacke Basis', formula: 'dex+sch+mark'},

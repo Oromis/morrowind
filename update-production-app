@@ -2,7 +2,7 @@
 
 git pull
 bundle install
-rake db:migrate RAILS_ENV=production
+bundle exec rake db:migrate RAILS_ENV=production
 npm install
-rake assets:precompile RAILS_ENV=production
-touch tmp/restart.txt
+bundle exec rake assets:precompile RAILS_ENV=production
+sudo service nginx restart

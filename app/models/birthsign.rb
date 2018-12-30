@@ -16,16 +16,15 @@ class Birthsign < ActiveRecord::Base
 
   default_scope { order(name: :asc) }
 
-  def as_json(mode, options = {})
-    case mode
-      when :summary
-        {
-          'id' => id,
-          'name' => name,
-          'icon' => image.exists? ? image.url(:small) : nil
-        }
-      else
-        super options
+  def as_json(options = {})
+    if options[:mode] == :summary
+      {
+        'id' => id,
+        'name' => name,
+        'icon' => image.exists? ? image.url(:small) : nil
+      }
+    else
+      super options
     end
   end
 end

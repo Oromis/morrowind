@@ -6,7 +6,8 @@ angular.module('morrowindApp').factory('ajaxInterceptor', ['$rootScope', '$timeo
       --requests;
       if(requests == 0) {
         // Last request finished -> Hide loading animation
-        $('#ajax-loading-indicator').css('opacity', 0);
+        var loadingIndicator = document.getElementById('ajax-loading-indicator');
+        loadingIndicator.style.opacity = '0';
         $rootScope.communicating = false;
       }
     }
@@ -14,7 +15,8 @@ angular.module('morrowindApp').factory('ajaxInterceptor', ['$rootScope', '$timeo
       request: function(config) {
         if(requests == 0) {
           // Show loading animation
-          $('#ajax-loading-indicator').css('opacity', 1);
+          var loadingIndicator = document.getElementById('ajax-loading-indicator');
+          loadingIndicator.style.opacity = '1';
           $rootScope.communicating = true;
           $rootScope.requestStart = $rootScope.now();
         }

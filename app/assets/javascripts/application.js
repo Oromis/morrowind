@@ -31,7 +31,6 @@
 //
 // Application files
 //
-//= require common
 //= require ng
 //= require popover
 //= require button-group
