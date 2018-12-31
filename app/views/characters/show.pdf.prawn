@@ -201,7 +201,7 @@ prawn_document do |pdf|
   ], column_widths: { 1 => col_width, 2 => col_width }, &method(:h_table))
 
   # Combat skills
-  pdf.move_down 7.mm
+  pdf.move_down 3.mm
   pdf.table([
       %w(\  Punkte Off. Def. Attacke Parade Attacke-Attr Parade-Attr),
       *char.skills
@@ -218,7 +218,7 @@ prawn_document do |pdf|
   end
 
   # Attack / Parry formulas
-  pdf.move_down 5.mm
+  pdf.move_down 2.mm
   pdf.formatted_text [ {
       text: "Attacke = Attacke-Attr / #{(1 / RuleSet.combat_value_factor).round} + Off - #{RuleSet.encumberance_factor(:attack)} * BEH",
       **PdfHelper::FORMULA_FORMAT
@@ -229,7 +229,7 @@ prawn_document do |pdf|
   } ], align: :right
 
   # Equipped weapons
-  pdf.move_down 5.mm
+  pdf.move_down 3.mm
   pdf.table([
       %w(Waffe Tempo Fix d6 Zustand Stärke-Faktor),
       [*format_weapon_slot(slots[:right_hand]), format_dec(RuleSet.strength_factor_offset + char.str * RuleSet.strength_factor_gain)],
