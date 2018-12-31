@@ -67,11 +67,13 @@ Rails.application.configure do
   host = 'morrowind.bauske.org'
   config.action_mailer.default_url_options = { host: host }
   ActionMailer::Base.smtp_settings = {
-    :address           => 'localhost',
-    :port              => '25',
-    :authentication    => :plain,
-    :domain            => 'morrowind.bauske.org',
-    :enable_starttls_auto => true
+      user_name: 'apikey',
+      password: ENV['SENDGRID_PASSWORD'],
+      domain: 'morrowind.bauske.org',
+      address: 'smtp.sendgrid.net',
+      port: 587,
+      authentication: :plain,
+      enable_starttls_auto: true
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
