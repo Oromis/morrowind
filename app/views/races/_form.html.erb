@@ -11,9 +11,10 @@
   <%= f.file_field :image, class: 'form-control' %>
 
   <script type="text/javascript">
-    window.race = <%= @race.to_json(mode: :details,
-      include: { property_modifiers: {}, abilities: { include: :property_modifiers }}, 
-      collaborators: true).html_safe %>;
+    window.race = <%= Oj.dump(@race.as_json(
+      include: { property_modifiers: {}, abilities: { include: :property_modifiers }},
+      collaborators: true)).html_safe
+    %>;
   </script>
   <div ng-controller="RaceFormController" ng-init="init()">
     <h2>Passive Eigenschaften</h2>
