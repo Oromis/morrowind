@@ -11,7 +11,10 @@ module PdfHelper
   COLOR_SHOCK = 'FFFFCC'
   COLOR_DISEASE = 'FFCCCC'
 
-  SIZE_SMALL = 10
+  SIZE_TINY = 9
+  SIZE_SMALL = 12
+
+  FORMULA_FORMAT = { styles: [:italic], size: PdfHelper::SIZE_SMALL }
 
   # Table styling
   def heading_table(table)
@@ -34,6 +37,8 @@ module PdfHelper
   def value_table(table)
     table.cells.align = :center
     table.cells.padding = PADDING
+    table.cells.height = 18
+    table.cells.overflow = :shrink_to_fit
     table.row(0).borders = []
   end
 
@@ -57,7 +62,7 @@ module PdfHelper
   def annotation_style(cells)
     cells.border_width = 0
     cells.background_color = nil
-    cells.size = PdfHelper::SIZE_SMALL
+    cells.size = PdfHelper::SIZE_TINY
     cells.font_style = :italic
   end
 
@@ -114,6 +119,26 @@ module PdfHelper
         skill.points_defensive.floor,
         skill.attack.floor + RuleSet.encumberance_factor(:attack) * char.encumberance,
         skill.parry.floor + RuleSet.encumberance_factor(:parry) * char.encumberance,
+        [
+            skill.property.attack_prop_1&.abbr&.upcase,
+            skill.property.attack_prop_2&.abbr&.upcase,
+            skill.property.attack_prop_3&.abbr&.upcase
+        ].select { |a| not a.nil? }.join('+'),
+        [
+            skill.property.parry_prop_1&.abbr&.upcase,
+            skill.property.parry_prop_2&.abbr&.upcase,
+            skill.property.parry_prop_3&.abbr&.upcase
+        ].select { |a| not a.nil? }.join('+'),
+    ]
+  end
+
+  def format_weapon_slot(slot)
+    [
+        slot.item&.name,
+        slot.item&.speed,
+        slot.item&.min_damage,
+        slot.item&.d6_damage,
+        format_perc(slot.item&.condition),
     ]
   end
 end

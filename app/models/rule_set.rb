@@ -17,6 +17,14 @@ class RuleSet < ActiveRecord::Base
     1.0 / 25.0
   end
 
+  def self.strength_factor_offset
+    0.5
+  end
+
+  def self.strength_factor_gain
+    0.01
+  end
+
   # --------------------------------------------------------------------------------
   # ActiveRecord settings
   # --------------------------------------------------------------------------------

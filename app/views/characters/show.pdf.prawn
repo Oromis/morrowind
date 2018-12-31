@@ -174,7 +174,7 @@ prawn_document do |pdf|
       [{ content: '', colspan: 5 }, 'Ges.', char.total_armor.floor, '(ARMOR)']
   ],
       width: pdf.bounds.width,
-      column_widths: {0 => col_width + 2, 2 => col_width, 3 => col_width, 4 => col_width, 5 => col_width, 6 => col_width }
+      column_widths: {0 => col_width + 2, 2 => col_width, 3 => col_width, 4 => col_width, 5 => col_width, 6 => col_width, 7 => col_width * 1.5 }
   ) do |table|
     table_2d table
     table.column(0).padding = [PdfHelper::PADDING, PdfHelper::PADDING + 1, PdfHelper::PADDING, 0]
@@ -188,7 +188,10 @@ prawn_document do |pdf|
   # Incoming damage
   pdf.float do
     pdf.move_down 7.mm
-    pdf.text 'HP-Verlust = ceil( max( DMG / 3, DMG - ARMOR ) )', align: :right
+    pdf.formatted_text [ {
+        text: 'HP-Verlust = ceil( max( DMG / 3, DMG - ARMOR ) )',
+        **PdfHelper::FORMULA_FORMAT
+    } ], align: :right
   end
 
   # Evasion
@@ -209,6 +212,33 @@ prawn_document do |pdf|
   ]) do |table|
     table_2d table
     table.columns(1..5).width = col_width
+    table.columns(-2..-1).width = col_width * 1.8
     annotation_style table.row(-1)
+    annotation_style table.columns(-2..-1)
+  end
+
+  # Attack / Parry formulas
+  pdf.move_down 5.mm
+  pdf.formatted_text [ {
+      text: "Attacke = Attacke-Attr / #{(1 / RuleSet.combat_value_factor).round} + Off - #{RuleSet.encumberance_factor(:attack)} * BEH",
+      **PdfHelper::FORMULA_FORMAT
+  } ], align: :right
+  pdf.formatted_text [ {
+      text: "Parade = Parade-Attr / #{(1 / RuleSet.combat_value_factor).round} + Def - #{RuleSet.encumberance_factor(:parry)} * BEH",
+      **PdfHelper::FORMULA_FORMAT
+  } ], align: :right
+
+  # Equipped weapons
+  pdf.move_down 5.mm
+  pdf.table([
+      %w(Waffe Tempo Fix d6 Zustand Stärke-Faktor),
+      [*format_weapon_slot(slots[:right_hand]), format_dec(RuleSet.strength_factor_offset + char.str * RuleSet.strength_factor_gain)],
+      [''] * 5 + [{ content: "#{RuleSet.strength_factor_offset} + STR * #{RuleSet.strength_factor_gain}", rowspan: 3 }],
+      format_weapon_slot(slots[:right_hand]),
+      [''] * 5,
+  ], column_widths: [col_width * 3, col_width, col_width * 0.6, col_width * 0.6, col_width, col_width * 2]) do |table|
+    value_table table
+    table.column(0).align = :left
+    table.rows(1..-1).border_width = 2
   end
 end

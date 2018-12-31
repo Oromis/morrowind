@@ -76,6 +76,15 @@ class Item < ActiveRecord::Base
     dmg
   end
 
+  # Number of d6 dice that need to be thrown to determine actual weapon damage
+  def d6_damage
+    dmg = 0
+    if (match = damage.match /\A\s*\d+(\s*\+\s*(\d*)[dw]6)?\s*\Z/)
+      dmg = (match[2] || 1).to_i
+    end
+    dmg
+  end
+
   def value=(val)
     if val.is_a? String and val.ends_with? 'k'
       val = val[0..-2].to_i * 1000
