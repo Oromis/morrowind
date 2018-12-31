@@ -31,6 +31,7 @@ en:
         flash: "Please check your email to activate your account."
         confirm: "Account activated"
         error: "Invalid activation link"
+        success_locked: "Email verified, but your account is locked. Ask an admin to unlock it for you."
   sessions:
     login:
       login: "Log in"

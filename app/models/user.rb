@@ -55,6 +55,10 @@ class User < ActiveRecord::Base
     update_columns(activated: true, activated_at: Time.zone.now)
   end
 
+  def lock!(locked = true)
+    update_column :locked, locked
+  end
+
   def send_activation_email
     UserMailer.account_activation(self).deliver_now
   end

@@ -6,13 +6,18 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:session][:email].downcase)
     if user && user.authenticate(params[:session][:password])
       if user.activated?
-        log_in user
-        if params[:session][:remember_me] == '1'
-          remember user
+        if user.locked?
+          flash[:warning] = I18n.t 'sessions.login.locked'
+          redirect_to root_url
         else
-         forget user
+          log_in user
+          if params[:session][:remember_me] == '1'
+            remember user
+          else
+            forget user
+          end
+          redirect_back_or user_characters_path user
         end
-        redirect_back_or user_characters_path user
       else
         flash[:warning] = I18n.t 'sessions.login.not_activated'
         redirect_to root_url

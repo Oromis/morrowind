@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181231132519) do
+ActiveRecord::Schema.define(version: 20181231152333) do
 
   create_table "abilities", force: :cascade do |t|
     t.string   "name"
@@ -307,6 +307,7 @@ ActiveRecord::Schema.define(version: 20181231132519) do
     t.string   "reset_digest"
     t.datetime "reset_sent_at"
     t.string   "theme"
+    t.boolean  "locked",            default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

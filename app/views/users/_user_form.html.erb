@@ -20,9 +20,14 @@
            {},
            class: 'selectpicker form-control', selectpicker: '' %>
 
-  <% if current_user && current_user.admin? && !@user.new_record? %>
+  <% if current_user&.admin? && !@user.new_record? %>
     <%= f.label :role %>
     <%= f.select :role, User.roles.keys.to_a, {}, class: 'form-control', selectpicker: '' %>
+
+    <%= f.label :locked, class: 'checkbox inline' do %>
+      <%= f.check_box :locked %>
+      <span>Benutzer gesperrt</span>
+    <% end %>
   <% end %>
 
   <%= f.submit "Speichern", class: "btn btn-primary centered-button", style: "width: 150px" %>

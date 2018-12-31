@@ -30,6 +30,7 @@ de:
       account_activation:
         flash: "Bitte schaue in deinem Email-Postfach nach, um deinen Account zu aktivieren."
         confirm: "Account aktiviert"
+        success_locked: 'Email verifiziert, aber dein Account ist noch gesperrt. Bitte einen Admin, ihn freizuschalten.'
         error: "Ungültiger Aktivierungslink"
   sessions:
     login:
@@ -37,6 +38,7 @@ de:
       logout: "Ausloggen"
       remember_checkbox: "Mich auf diesem Rechner speichern"
       not_activated: "Account nicht aktiviert. Prüfe dein Email-Postfach!"
+      locked: "Dein Account ist gesperrt und muss zunächst von einem Administrator freigegeben werden."
       invalid: "Ungülige Email-Addresse oder Passwort"
       forgot_password: "(Passwort vergessen?)"
     signup:

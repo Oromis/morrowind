@@ -40,13 +40,15 @@
               <% rules = @rule_set || RuleSet.latest %>
               <% if rules.try(:id) %>
                 <ul class="dropdown-menu">
-                  <li><%= link_to 'Rassen', rule_set_races_path(rules), target: '_blank' %></li>
-                  <li><%= link_to 'Sternzeichen', rule_set_birthsigns_path(rules), target: '_blank' %></li>
-                  <li><%= link_to 'Attribute', rule_set_attributes_path(rules), target: '_blank' %></li>
-                  <li><%= link_to 'Skills', rule_set_skills_path(rules), target: '_blank' %></li>
-                  <li><%= link_to 'Resistenzen', rule_set_resistances_path(rules), target: '_blank' %></li>
-                  <li><%= link_to 'Items', rule_set_item_prototypes_path(rules), target: '_blank' %></li>
-                  <li><%= link_to 'Zaubersprüche', rule_set_spells_path(rules), target: '_blank' %></li>
+                  <li><%= link_to 'Rassen', rule_set_races_path(rules), target: link_mode %></li>
+                  <li><%= link_to 'Sternzeichen', rule_set_birthsigns_path(rules), target: link_mode %></li>
+                  <li><%= link_to 'Attribute', rule_set_attributes_path(rules), target: link_mode %></li>
+                  <li><%= link_to 'Skills', rule_set_skills_path(rules), target: link_mode %></li>
+                  <li><%= link_to 'Resistenzen', rule_set_resistances_path(rules), target: link_mode %></li>
+                  <li><%= link_to 'Items', rule_set_item_prototypes_path(rules), target: link_mode %></li>
+                  <% if current_user&.has_role? :gm %>
+                    <li><%= link_to 'Zaubersprüche', rule_set_spells_path(rules), target: link_mode %></li>
+                  <% end %>
                 </ul>
               <% end %>
             </li>

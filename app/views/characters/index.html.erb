@@ -6,6 +6,13 @@
              pdf: true
   %>
 <% end %>
-<div class="actions">
-  <%= link_to "Neuer Charakter", 'characters/new', class: 'btn' %>
-</div>
+<% if current_user&.role == 'guest' %>
+  <div class="actions">
+    Du bist als Gast angemeldet. Es steht dir frei, die Informationstabellen (oben rechts) einzusehen,
+    aber aktuell darfst du keinen eigenen Charakter erstellen.
+  </div>
+<% else %>
+  <div class="actions">
+    <%= link_to "Neuer Charakter", 'characters/new', class: 'btn' %>
+  </div>
+<% end %>

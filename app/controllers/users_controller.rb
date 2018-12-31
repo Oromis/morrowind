@@ -18,6 +18,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @user.locked = true
     if @user.save
       @user.send_activation_email
       flash[:info] = I18n.t('users.create.account_activation.flash')
@@ -49,8 +50,8 @@ class UsersController < ApplicationController
 
   private
     def user_params
-      if current_user && current_user.admin?
-        params.require(:user).permit(:name, :email, :password, :password_confirmation, :theme, :role)
+      if current_user&.admin?
+        params.require(:user).permit(:name, :email, :password, :password_confirmation, :theme, :role, :locked)
       else
         params.require(:user).permit(:name, :email, :password, :password_confirmation, :theme)
       end
