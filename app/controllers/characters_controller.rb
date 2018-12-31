@@ -1,4 +1,6 @@
 class CharactersController < ApplicationController
+  helper PdfHelper
+
   before_action :logged_in_user
   before_action :set_character, only: [ :show, :update, :destroy, :skill, :items, :slot_changed, :spell, :level_up ]
   before_action :permitted_user, except: :all_index

@@ -101,9 +101,9 @@ class CharacterSkill < CharacterProperty
 
       case property.weapon_skill_mode
         when 'only_offensive'
-          [battle_points.round, 0]
+          [battle_points.floor, 0]
         when 'only_defensive'
-          [0, battle_points.round]
+          [0, battle_points.floor]
         else
           max_difference = 4
           while offensive + defensive > total
