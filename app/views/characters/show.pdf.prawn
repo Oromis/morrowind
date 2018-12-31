@@ -205,7 +205,7 @@ prawn_document do |pdf|
            .select { |skill| skill.property.weapon_skill? }
            .sort { |a, b| a.order <=> b.order }
            .map { |skill| format_combat_skill skill, char },
-      [{ content: '', colspan: 4 }, '-2 BEH', '-2 BEH'],
+      [{ content: '', colspan: 4 }, '-2 BEH', '-1 BEH'],
   ]) do |table|
     table_2d table
     table.columns(1..5).width = col_width

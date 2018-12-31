@@ -112,8 +112,8 @@ module PdfHelper
         skill.battle_points.floor,
         skill.points_offensive.floor,
         skill.points_defensive.floor,
-        skill.attack.floor + 2 * char.encumberance,
-        skill.parry.floor + 2 * char.encumberance,
+        skill.attack.floor + RuleSet.encumberance_factor(:attack) * char.encumberance,
+        skill.parry.floor + RuleSet.encumberance_factor(:parry) * char.encumberance,
     ]
   end
 end

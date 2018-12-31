@@ -1,4 +1,25 @@
 class RuleSet < ActiveRecord::Base
+  # --------------------------------------------------------------------------------
+  # Constants affecting some calculations in the system.
+  # These constants should probably be moved to the database as properties of a
+  # RuleSet.
+  # --------------------------------------------------------------------------------
+
+  def self.encumberance_factor(key)
+    case key
+      when :attack then 2
+      when :parry then 1
+      else 0
+    end
+  end
+
+  def self.combat_value_factor
+    1.0 / 25.0
+  end
+
+  # --------------------------------------------------------------------------------
+  # ActiveRecord settings
+  # --------------------------------------------------------------------------------
   after_initialize :init_formulas
 
   validates :version, presence: true
@@ -144,43 +165,6 @@ class RuleSet < ActiveRecord::Base
           # Damage received
           {abbr: 'hp_loss', name: 'HP Verlust', formula:
                  '[damage_incoming-total_armor,damage_incoming*(1.0/3.0)].max', order: 20},
-
-          # Langschwert
-          {abbr: 'law_attack_base', name: 'Langschwert Attacke Basis', formula: 'str+law+dex'},
-          {abbr: 'law_parry_base', name: 'Langschwert Parade Basis', formula: 'str+sch+ath'},
-
-          # Kurzwaffe
-          {abbr: 'kwa_attack_base', name: 'Kurzwaffe Attacke Basis', formula: 'kwa+dex+sch'},
-          {abbr: 'kwa_parry_base', name: 'Kurzwaffe Parade Basis', formula: 'int+dex+sch'},
-
-          # Axe
-          {abbr: 'axt_attack_base', name: 'Axt Attacke Basis', formula: 'str+kon+axt'},
-          {abbr: 'axt_parry_base', name: 'Axt Parade Basis', formula: 'str+sch+ath'},
-
-          # Seil & Kettenwaffen
-          {abbr: 'suk_attack_base', name: 'Seil & Ketten Attacke Basis', formula: 'str+dex+suk'},
-          {abbr: 'suk_parry_base', name: 'Seil & Ketten Parade Basis', formula: 'dex+kon+suk'},
-
-          # Blunt Weapon
-          {abbr: 'st_w_attack_base', name: 'Stumpfe Waffe Attacke Basis', formula: 'str+kon+st_w'},
-          {abbr: 'st_w_parry_base', name: 'Stumpfe Waffe Parade Basis', formula: 'str+kon+ath'},
-
-          # Speer
-          {abbr: 'spe_attack_base', name: 'Speed Attacke Basis', formula: 'dex+kon+spe'},
-          {abbr: 'spe_parry_base', name: 'Speer Parade Basis', formula: 'dex+kon+acr'},
-
-          # Hand-to-Hand
-          {abbr: 'fau_attack_base', name: 'Faustkampf Attacke Basis', formula: 'sch+kon+fau'},
-          {abbr: 'fau_parry_base', name: 'Faustkampf Parade Basis', formula: 'sch+fau+acr'},
-
-          # Throwing weapons (now governed by juggling)
-          {abbr: 'jgl_attack_base', name: 'Taschenspielerei Attacke Basis', formula: 'dex+sch+jgl'},
-
-          # Marksman
-          {abbr: 'mark_attack_base', name: 'Schießkunst Attacke Basis', formula: 'dex+sch+mark'},
-
-          # Blocking
-          {abbr: 'blo_parry_base', name: 'Blocken Parade Basis', formula: 'dex+kon+blo'},
 
           # Evasion
           {abbr: 'evasion', name: 'Ausweichen', formula:

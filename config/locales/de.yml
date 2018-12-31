@@ -147,6 +147,8 @@ de:
         specialization_id: Spezialisierung
         check1_id: "Probe 1 Attribut"
         check2_id: "Probe 2 Attribut"
+        attack_prop_1_id: "Formelelemente Attacke"
+        parry_prop_1_id: "Formelelemente Parade"
         order: Sortierung
         weapon_skill_mode: Verteilung der Punkte
         weapon_skill_modes:

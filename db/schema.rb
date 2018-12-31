@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181230210446) do
+ActiveRecord::Schema.define(version: 20181231132519) do
 
   create_table "abilities", force: :cascade do |t|
     t.string   "name"
@@ -177,6 +177,12 @@ ActiveRecord::Schema.define(version: 20181230210446) do
     t.string   "formula"
     t.boolean  "weapon_skill",      default: false
     t.integer  "weapon_skill_mode", default: 0
+    t.integer  "attack_prop_1_id"
+    t.integer  "attack_prop_2_id"
+    t.integer  "attack_prop_3_id"
+    t.integer  "parry_prop_1_id"
+    t.integer  "parry_prop_2_id"
+    t.integer  "parry_prop_3_id"
   end
 
   add_index "properties", ["abbr"], name: "index_properties_on_abbr"

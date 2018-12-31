@@ -82,6 +82,12 @@ class Character < ActiveRecord::Base
     @properties_by_abbr[abbr.to_s]
   end
 
+  # Retrieves the character's current value of a given property (attribute, skill, resistance)
+  def property_points(property)
+    prop = !property.nil? && character_properties.find { |p| p.property.id == property.id }
+    prop ? prop.points : 0
+  end
+
   # Changes a character skill by the specified amount. Also modifies multipliers and
   # level count
   # @param skill_id [Integer] The id of the CharacterSkill to change

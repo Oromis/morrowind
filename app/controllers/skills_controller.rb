@@ -14,9 +14,12 @@ class SkillsController < PropertiesController
     end
 
     def property_params
-      params.require(:skill).permit(:name, :abbr, :icon, :rule_set_id, 
-                                    :attribute_id, :specialization_id,
-                                    :school_of_magic, :check1_id, :check2_id,
-                                    :order, :weapon_skill, :weapon_skill_mode)
+      params.require(:skill).permit(:name, :abbr, :icon, :rule_set_id,
+          :attribute_id, :specialization_id,
+          :school_of_magic, :check1_id, :check2_id,
+          :order, :weapon_skill, :weapon_skill_mode,
+          :attack_prop_1_id, :attack_prop_2_id, :attack_prop_3_id,
+          :parry_prop_1_id, :parry_prop_2_id, :parry_prop_3_id,
+      )
     end
 end

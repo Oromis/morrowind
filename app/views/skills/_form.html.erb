@@ -28,16 +28,16 @@
 
     <div ng-show="school">
       <%= f.label :check1_id %>
-      <%= f.select :check1_id, 
-          @rule_set.attrs.map {|c| [c.name, c.id, { :'data-content' => "<img src='#{c.icon.url(:thumb)}'> #{c.name}" }] },
+      <%= f.select :check1_id,
+          @rule_set.attrs.map {|c| [c.name, c.id] },
           {},
-          class: 'selectpicker form-control', selectpicker: '' %>
+          class: 'selectpicker form-control' %>
 
       <%= f.label :check2_id %>
-      <%= f.select :check2_id, 
-          @rule_set.attrs.map {|c| [c.name, c.id, { :'data-content' => "<img src='#{c.icon.url(:thumb)}'> #{c.name}" }] },
+      <%= f.select :check2_id,
+          @rule_set.attrs.map {|c| [c.name, c.id] },
           {},
-          class: 'selectpicker form-control', selectpicker: '' %>
+          class: 'selectpicker form-control' %>
     </div>
 
     <%= f.label :weapon_skill, class: 'checkbox inline' do %>
@@ -45,7 +45,14 @@
       <span>Dies ist ein Kampfskill</span>
     <% end %>
 
-    <div ng-show="weapon_skill">
+    <%#
+      grouped_options_for_select({
+          'Attribute' => @rule_set.attrs.map {|c| [c.name, c.id] },
+          'Skills' => @rule_set.skills.map {|c| [c.name, c.id] },
+      }, f.object.check1_id),
+    %>
+
+    <div ng-show="weapon_skill" ng-init="skill_mode = '<%= @property.weapon_skill_mode %>';">
       <%= f.label :weapon_skill_mode %>
       <%= f.select :weapon_skill_mode,
                    options_for_select(
@@ -54,7 +61,61 @@
                        end,
                        selected: @property.weapon_skill_mode),
                    {},
-                   class: 'selectpicker form-control', selectpicker: '' %>
+                   class: 'selectpicker form-control', 'ng-model' => 'skill_mode' %>
+
+      <div ng-show="skill_mode != 'only_defensive'">
+        <%= f.label :attack_prop_1_id %>
+        <div class="flex-row flex-row--with-spacing">
+          <%= f.select :attack_prop_1_id,
+              grouped_options_for_select({
+                  'Attribute' => @rule_set.attrs.map {|c| [c.name, c.id] },
+                  'Skills' => @rule_set.skills.map {|c| [c.name, c.id] },
+              }, f.object.attack_prop_1_id, prompt: '-- Bitte auswählen --'),
+              {},
+              class: 'selectpicker form-control' %>
+          <%= f.select :attack_prop_2_id,
+              grouped_options_for_select({
+                  'Attribute' => @rule_set.attrs.map {|c| [c.name, c.id] },
+                  'Skills' => @rule_set.skills.map {|c| [c.name, c.id] },
+              }, f.object.attack_prop_2_id, prompt: '-- Bitte auswählen --'),
+              {},
+              class: 'selectpicker form-control' %>
+          <%= f.select :attack_prop_3_id,
+              grouped_options_for_select({
+                  'Attribute' => @rule_set.attrs.map {|c| [c.name, c.id] },
+                  'Skills' => @rule_set.skills.map {|c| [c.name, c.id] },
+              }, f.object.attack_prop_3_id, prompt: '-- Bitte auswählen --'),
+              {},
+              class: 'selectpicker form-control' %>
+        </div>
+      </div>
+
+      <div ng-show="skill_mode != 'only_offensive'">
+        <%= f.label :parry_prop_1_id %>
+        <div class="flex-row flex-row--with-spacing">
+          <%= f.select :parry_prop_1_id,
+              grouped_options_for_select({
+                  'Attribute' => @rule_set.attrs.map {|c| [c.name, c.id] },
+                  'Skills' => @rule_set.skills.map {|c| [c.name, c.id] },
+              }, f.object.parry_prop_1_id, prompt: '-- Bitte auswählen --'),
+              {},
+              class: 'selectpicker form-control' %>
+          <%= f.select :parry_prop_2_id,
+              grouped_options_for_select({
+                  'Attribute' => @rule_set.attrs.map {|c| [c.name, c.id] },
+                  'Skills' => @rule_set.skills.map {|c| [c.name, c.id] },
+              }, f.object.parry_prop_2_id, prompt: '-- Bitte auswählen --'),
+              {},
+              class: 'selectpicker form-control' %>
+          <%= f.select :parry_prop_3_id,
+              grouped_options_for_select({
+                  'Attribute' => @rule_set.attrs.map {|c| [c.name, c.id] },
+                  'Skills' => @rule_set.skills.map {|c| [c.name, c.id] },
+              }, f.object.parry_prop_3_id, prompt: '-- Bitte auswählen --'),
+              {},
+              class: 'selectpicker form-control' %>
+        </div>
+      </div>
     </div>
   </div>
 

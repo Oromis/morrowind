@@ -18,16 +18,24 @@ class CharacterSkill < CharacterProperty
     end
   end
 
-  def post_init(character)
+  def post_init(char)
     if property.weapon_skill?
       # Calculate attack and parry values
       if property.offensive?
-        self.attack = character.send(property.abbr.to_s + '_attack_base') / 25.0 +
-            points_offensive + character.offensive_buff - (character.encumberance * 2.0)
+        self.attack = (char.property_points(property.attack_prop_1) +
+            char.property_points(property.attack_prop_2) +
+            char.property_points(property.attack_prop_3)) *
+            RuleSet.combat_value_factor +
+            points_offensive + char.offensive_buff -
+            (RuleSet.encumberance_factor(:attack) * char.encumberance)
       end
       if property.defensive?
-        self.parry = character.send(property.abbr.to_s + '_parry_base') / 25.0 +
-            points_defensive + character.defensive_buff - character.encumberance
+        self.parry = (char.property_points(property.parry_prop_1) +
+            char.property_points(property.parry_prop_2) +
+            char.property_points(property.parry_prop_3)) *
+            RuleSet.combat_value_factor +
+            points_defensive + char.defensive_buff -
+            (RuleSet.encumberance_factor(:parry) * char.encumberance)
       end
     end
   end
