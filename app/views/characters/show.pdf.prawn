@@ -17,10 +17,25 @@ prawn_document do |pdf|
   pdf.table([%w(Name Rasse Sternzeichen Zunft),
       [char.name, char.race&.name, char.birthsign&.name, char.specialization&.name]],
       width: 135.mm,
-      &method(:heading_table)
-  )
+  ) do |table|
+    heading_table table
+    table.column(0).width = 30.mm
+    table.column(1).width = 40.mm
+  end
 
-  pdf.move_down 8.mm
+  pdf.move_down 5.mm
+
+  pdf.float do
+    char.race.abilities.each do |ability|
+      pdf.table([[ability.name], [ability.desc]],
+          position: 30.mm,
+          width: 40.mm,
+      ) do |table|
+        invisible_table table
+      end
+    end
+  end
+
   pdf.table([['Favor Attr. 1'], [char.fav_attribute1&.name]],
       width: 30.mm,
       &method(:heading_table)
@@ -139,12 +154,12 @@ prawn_document do |pdf|
       [{ content: 'Resistenzen', colspan: char.resistances.length }],
       %w(Feuer Eis Gift Blitz Krankh. Magie),
       [
-          format_perc(char.r_fire),
-          format_perc(char.r_frost),
-          format_perc(char.r_poison),
-          format_perc(char.r_shock),
-          format_perc(char.r_disease),
-          format_perc(char.r_magicka),
+          format_perc(char.r_fire, empty_if_zero: true),
+          format_perc(char.r_frost, empty_if_zero: true),
+          format_perc(char.r_poison, empty_if_zero: true),
+          format_perc(char.r_shock, empty_if_zero: true),
+          format_perc(char.r_disease, empty_if_zero: true),
+          format_perc(char.r_magicka, empty_if_zero: true),
       ]
   ], column_widths: [col_width] * char.resistances.length) do |table|
     table.cells.align = :center
@@ -228,8 +243,28 @@ prawn_document do |pdf|
       **PdfHelper::FORMULA_FORMAT
   } ], align: :right
 
-  # Equipped weapons
   pdf.move_down 3.mm
+
+  # Unarmed combat
+  pdf.float do
+    pdf.table([
+        ['Faustkampf'],
+        ['Stamina | FK / 2'],
+        [char.hand_to_hand_damage_stamina.floor],
+        ['Trefferp. | FK / 10'],
+        [char.hand_to_hand_damage_hp.floor],
+    ], position: :right, width: col_width * 2) do |table|
+      value_table table
+      table.rows(1..2).background_color = PdfHelper::COLOR_STA
+      table.rows(3..4).background_color = PdfHelper::COLOR_HP
+      table.rows(1).border_width = 0
+      table.rows(2).border_width = 2
+      table.rows(3).border_width = 0
+      table.rows(4).border_width = 2
+    end
+  end
+
+  # Equipped weapons
   pdf.table([
       %w(Waffe Tempo Fix d6 Zustand Stärke-Faktor),
       [*format_weapon_slot(slots[:right_hand]), format_dec(RuleSet.strength_factor_offset + char.str * RuleSet.strength_factor_gain)],

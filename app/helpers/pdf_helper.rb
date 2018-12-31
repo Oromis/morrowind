@@ -24,6 +24,13 @@ module PdfHelper
     table.row(1).font_style = :bold
   end
 
+  def invisible_table(table)
+    table.cells.border_width = 0
+    table.cells.align = :center
+    table.cells.padding = PADDING
+    table.row(0).font_style = :bold
+  end
+
   def counter_box(table)
     heading_table table
     table.row(1).padding = [11, 10, 0]
@@ -87,8 +94,12 @@ module PdfHelper
     '%0.2f' % val
   end
 
-  def format_perc(perc)
-    perc.floor.to_s + '%'
+  def format_perc(perc, options = {})
+    if perc == 0 && options[:empty_if_zero]
+      ''
+    else
+      perc.floor.to_s + '%'
+    end
   end
 
   def format_armor_slot(slot, key, char)
