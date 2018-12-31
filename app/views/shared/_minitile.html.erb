@@ -1,15 +1,17 @@
 <div class="minitile">
-  <%= link_to target do %>
+  <%= link_to target, class: 'minitile__main' do %>
     <% if image %>
       <%= image_tag image %>
     <% end %>
     <h3><%= name %></h3>
   <% end %>
-  <% if defined?(pdf) && pdf %>
-    <%= link_to 'PDF', character_path(target, format: :pdf), class: 'btn', target: '_blank' %>
-  <% end %>
-  <% if delete %>
-    <%= link_to "Löschen", target, method: :delete, class: 'btn',
-                data: { confirm: "Bist du dir ganz sicher, dass du #{name} löschen möchtest?" } %>
-  <% end %>
+  <div class="flex-row">
+    <% if defined?(pdf) && pdf %>
+      <%= link_to 'PDF', character_path(target, format: :pdf), class: 'btn', target: '_blank' %>
+    <% end %>
+    <% if delete %>
+      <%= link_to "Löschen", target, method: :delete, class: 'btn',
+                  data: { confirm: "Bist du dir ganz sicher, dass du #{name} löschen möchtest?" } %>
+    <% end %>
+  </div>
 </div>
