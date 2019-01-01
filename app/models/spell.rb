@@ -59,7 +59,7 @@ class Spell < ActiveRecord::Base
     hash['min_effect'] = min_effect.to_f if min_effect
     hash['max_effect'] = max_effect.to_f if max_effect
     hash['duration'] = duration if duration
-    hash['range'] = range_as_string if range_as_string
+    hash['range'] = range_in_m if range_in_m
     hash
   end
 end
