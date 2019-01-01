@@ -37,7 +37,7 @@
             <%= prop_tag_server 'mana.png', spell.mana_cost, alt: "Manakosten" %>
           </div>
           <div class="spell-props range">
-            <%= prop_tag_server 'range.png', spell.range_in_ft, alt: "Reichweite" %>
+            <%= prop_tag_server 'range.png', spell.range_as_string, alt: "Reichweite" %>
           </div>
           <div class="spell-props effect">
             <% effect = "#{number_to_human(spell.min_effect)} - #{number_to_human(spell.max_effect)}" unless

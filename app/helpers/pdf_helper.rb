@@ -11,8 +11,13 @@ module PdfHelper
   COLOR_SHOCK = 'FFFFCC'
   COLOR_DISEASE = 'FFCCCC'
 
+  COLOR_GOOD = '006100'
+  COLOR_BAD = '9C0006'
+
   SIZE_TINY = 9
   SIZE_SMALL = 12
+
+  CELL_HEIGHT = 18
 
   FORMULA_FORMAT = { styles: [:italic], size: PdfHelper::SIZE_SMALL }
 
@@ -44,7 +49,7 @@ module PdfHelper
   def value_table(table)
     table.cells.align = :center
     table.cells.padding = PADDING
-    table.cells.height = 18
+    table.cells.height = CELL_HEIGHT
     table.cells.overflow = :shrink_to_fit
     table.row(0).borders = []
   end
@@ -91,13 +96,17 @@ module PdfHelper
     annotation_style table.column(2)
   end
 
+  def list_table(table)
+    value_table table
+  end
+
   # Formatters
   def format_modifier(val)
     '|' * val
   end
 
   def format_dec(val)
-    '%0.2f' % val
+    number_with_precision val, precision: 2, strip_insignificant_zeros: true
   end
 
   def format_perc(perc, options = {})
@@ -169,6 +178,18 @@ module PdfHelper
         skill.property.name,
         (char.property_points(skill.property) * RuleSet.check_target_factor).floor,
         (char.property_points(skill.property) * RuleSet.check_target_factor).floor,
+    ]
+  end
+
+  def format_spell(spell, char)
+    [
+        [spell.name, spell.desc].compact.join(': '),
+        spell.school.name,
+        spell.mana_cost,
+        format_dec(spell.range_in_m),
+        [spell.min_effect&.floor, spell.max_effect&.floor].compact.join('-'),
+        spell.effect(char.property_points spell.school),
+        (spell.handicap != 0 ? spell.handicap : ''),
     ]
   end
 

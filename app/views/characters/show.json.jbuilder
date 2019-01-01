@@ -194,7 +194,7 @@ json.spells char.spells do |spell|
   json.max_effect number_to_human(spell.max_effect)
   json.effect spell.effect(char.send(spell.school.abbr))
   json.duration spell.duration
-  json.range spell.range_in_ft
+  json.range spell.range_as_string
   json.icon spell.image.url(:thumb) if spell.image.exists?
   json.school do
     json.abbr spell.school.abbr

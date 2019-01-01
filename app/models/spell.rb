@@ -21,10 +21,16 @@ class Spell < ActiveRecord::Base
 
   enum range: { melee: 0, support: 1, attack: 2 }
 
-  def range_in_ft
-    ft = { 'melee' => 5, 'support' => 15, 'attack' => 20 }[range]
-    return nil unless ft
-    ft.to_s + ' ft'
+  def range_in_m
+    { 'melee' => 2.1, 'support' => 6.5, 'attack' => 11 }[range]
+  end
+
+  def range_as_string
+    range = range_in_m
+    unless range.nil?
+      range = "#{range} m"
+    end
+    range
   end
 
   def effect(school_value)
@@ -53,7 +59,7 @@ class Spell < ActiveRecord::Base
     hash['min_effect'] = min_effect.to_f if min_effect
     hash['max_effect'] = max_effect.to_f if max_effect
     hash['duration'] = duration if duration
-    hash['range'] = range_in_ft if range_in_ft
+    hash['range'] = range_as_string if range_as_string
     hash
   end
 end

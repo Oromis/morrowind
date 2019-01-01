@@ -301,6 +301,7 @@ prawn_document do |pdf|
 
   pdf.start_new_page
 
+  # Magic & chanting checks
   pdf.table([
       ['Magie & Gesang', 'Probe 1', '', 'Probe 2', '', 'Probe 3', '', 'Ausgleich'],
       *char.skills
@@ -315,5 +316,46 @@ prawn_document do |pdf|
     check_labels.align = :left
     check_labels.border_width = 1
     annotation_style table.rows(-1)
+  end
+
+  # Spell book
+  spell_table_widths = { 1 => 25.mm, 2 => 9.mm, 3 => 9.mm, 4 => 14.mm, 5 => 9.mm, 6 => 9.mm }
+  spell_table_cols = 7
+  pdf.table([
+      ['Spruch', 'Schule',
+          { image: Rails.root.join('app/assets/images/mana.png'), image_height: 14, image_width: 14, position: :center },
+          { image: Rails.root.join('app/assets/images/range.png'), image_height: 14, image_width: 14, position: :center },
+          { image: Rails.root.join('app/assets/images/magic.png'), image_height: 14, image_width: 14, position: :center },
+          'Atm',
+          { image: Rails.root.join('app/assets/images/handicap.png'), image_height: 14, image_width: 14, position: :center },
+      ],
+      *char.spells
+           .group_by { |spell| spell.school.id }
+           .map { |_,spells| spells }
+           .sort { |a,b| a.first.school.order <=> b.first.school.order }
+           .map { |entry| entry.map { |spell| format_spell spell, char } << ([''] * spell_table_cols) }
+           .flatten(1)
+  ],
+      column_widths: spell_table_widths,
+      width: pdf.bounds.width,
+      header: true
+  ) do |table|
+    list_table table
+    table.column(0).align = :left
+    non_empty_handicap = table.column(6).filter { |cell| !cell.content.blank? }
+    non_empty_handicap.filter { |cell| cell.content.to_f > 0 }.text_color = PdfHelper::COLOR_BAD
+    non_empty_handicap.filter { |cell| cell.content.to_f < 0 }.text_color = PdfHelper::COLOR_GOOD
+  end
+
+  # Fill the remaining space on the page with a blank table
+  pdf.move_down -PdfHelper::CELL_HEIGHT
+  remaining_cells = (pdf.cursor / PdfHelper::CELL_HEIGHT).floor
+  if remaining_cells > 0
+    pdf.table(
+        remaining_cells.times.map { [''] * spell_table_cols },
+        column_widths: spell_table_widths,
+        width: pdf.bounds.width,
+        &method(:list_table)
+    )
   end
 end
