@@ -158,4 +158,27 @@ module PdfHelper
         format_perc(slot.item&.condition),
     ]
   end
+
+  def format_school_of_magic(skill, char)
+    [
+        map_school_name(skill.property.name),
+        skill.property.check1&.name,
+        (char.property_points(skill.property.check1) * RuleSet.check_target_factor).floor,
+        skill.property.check2&.name,
+        (char.property_points(skill.property.check2) * RuleSet.check_target_factor).floor,
+        skill.property.name,
+        (char.property_points(skill.property) * RuleSet.check_target_factor).floor,
+        (char.property_points(skill.property) * RuleSet.check_target_factor).floor,
+    ]
+  end
+
+  private
+
+  def map_school_name(name)
+    if name == 'Redekunst'
+      'Gesang'
+    else
+      name
+    end
+  end
 end

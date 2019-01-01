@@ -294,4 +294,26 @@ prawn_document do |pdf|
     table.column(0).align = :left
     table.rows(1..-1).border_width = 2
   end
+
+  # -----------------------------------------------------------------------------------------------------
+  # New Page: Magic
+  # -----------------------------------------------------------------------------------------------------
+
+  pdf.start_new_page
+
+  pdf.table([
+      ['Magie & Gesang', 'Probe 1', '', 'Probe 2', '', 'Probe 3', '', 'Ausgleich'],
+      *char.skills
+           .select { |s| s.property.school_of_magic? }
+           .sort { |a,b| a.property.order <=> b.property.order }
+           .map { |skill| format_school_of_magic skill, char },
+      [{ content: '', colspan: 7 }, 'skill / 5 - 2 BEH'],
+  ], column_widths: [col_width * 2, *([col_width * 2, col_width * 0.5] * 3), col_width * 1.5]) do |table|
+    table_2d table
+    table.row(0).column(0).font_style = :bold
+    check_labels = table.column(1..5).filter { |c| [1, 3, 5].include? c.column }
+    check_labels.align = :left
+    check_labels.border_width = 1
+    annotation_style table.rows(-1)
+  end
 end
