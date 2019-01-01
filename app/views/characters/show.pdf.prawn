@@ -20,19 +20,26 @@ prawn_document do |pdf|
   ) do |table|
     heading_table table
     table.column(0).width = 30.mm
-    table.column(1).width = 40.mm
+    table.column(1..2).width = 40.mm
   end
 
   pdf.move_down 5.mm
 
+  # Abilities
   pdf.float do
     char.race.abilities.each do |ability|
       pdf.table([[ability.name], [ability.desc]],
           position: 30.mm,
-          width: 40.mm,
-      ) do |table|
-        invisible_table table
-      end
+          width: 50.mm, &method(:invisible_table)
+      )
+    end
+  end
+  pdf.float do
+    char.birthsign.abilities.each do |ability|
+      pdf.table([[ability.name], [ability.desc]],
+          position: 80.mm,
+          width: 50.mm, &method(:invisible_table)
+      )
     end
   end
 
@@ -88,6 +95,17 @@ prawn_document do |pdf|
   ],
       &method(:property_table)
   )
+
+  # LvL-up
+  pdf.move_down 5.mm
+  pdf.table([
+      ['LvL-Up: Modis', 'Attributspunkte'],
+      [0, 1],
+      ['1-4', 2],
+      ['5-7', 3],
+      ['8-9', 4],
+      ['10+', 5],
+  ], &method(:info_table))
 
   # -----------------------------------------------------------------------------------------------------
   # New Page: Combat

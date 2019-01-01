@@ -27,7 +27,7 @@ module PdfHelper
   def invisible_table(table)
     table.cells.border_width = 0
     table.cells.align = :center
-    table.cells.padding = PADDING
+    table.cells.padding = PADDING * 2
     table.row(0).font_style = :bold
   end
 
@@ -47,6 +47,12 @@ module PdfHelper
     table.cells.height = 18
     table.cells.overflow = :shrink_to_fit
     table.row(0).borders = []
+  end
+
+  def info_table(table)
+    value_table table
+    table.width = 220
+    table.row(0).font_style = :bold
   end
 
   def property_table(table)

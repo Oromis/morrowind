@@ -11,9 +11,9 @@
   <%= f.file_field :image, class: 'form-control' %>
 
   <script type="text/javascript">
-    window.birthsign = <%= @birthsign.to_json(mode: :details,
+    window.birthsign = <%= Oj.dump(@birthsign.as_json(
       include: { property_modifiers: {}, abilities: { include: :property_modifiers }},
-            collaborators: true).html_safe %>;
+            collaborators: true)).html_safe %>;
   </script>
   <div ng-controller="BirthsignFormController" ng-init="init()">
     <h2>Passive Eigenschaften</h2>
