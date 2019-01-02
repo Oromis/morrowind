@@ -392,6 +392,8 @@ prawn_document do |pdf|
       table.cells.font_style = :bold
     end
 
+    pdf.move_down 5.mm
+
     pdf.table([
         %w(Gegenstand Anz Gew Ges),
         *(grouped_items[container[0]] || [])
@@ -407,6 +409,7 @@ prawn_document do |pdf|
     ) do |table|
       list_table table
       table.column(0).align = :left
+      table.row(0).font_style = :bold
     end
 
     # Fill the remaining space on the page with a blank table

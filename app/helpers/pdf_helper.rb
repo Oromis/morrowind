@@ -197,8 +197,8 @@ module PdfHelper
     [
         item.name,
         item.quantity,
-        item.weight,
-        item.total_weight,
+        format_dec(item.weight),
+        format_dec(item.total_weight),
     ]
   end
 
