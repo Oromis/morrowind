@@ -215,7 +215,7 @@ class Character < ActiveRecord::Base
   # reasons. Together with caching, this method takes just over 80ms to render a
   # character in production (compared to north of 300ms for jbuilder).
   def as_json
-    grouped_items = items.group_by {|i| i.container }
+    grouped_items = items.group_by(&:container)
 
     json = {
       'id' => id,

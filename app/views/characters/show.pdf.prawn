@@ -358,4 +358,67 @@ prawn_document do |pdf|
         &method(:list_table)
     )
   end
+
+  # -----------------------------------------------------------------------------------------------------
+  # New Page: Inventory
+  # -----------------------------------------------------------------------------------------------------
+
+  grouped_items = char.items.group_by(&:container)
+  item_table_cols = 4
+  item_table_widths = { 1 => col_width, 2 => col_width, 3 => col_width }
+
+  Item.containers.each do |container|
+    pdf.start_new_page
+
+    pdf.float do
+      key = "#{container[0]}_weight"
+      pdf.table([[ 'Gewicht', char.respond_to?(key) ? char.send(key).to_f : nil ]], position: :center) do |table|
+        h_table table
+        table.columns(1).width = col_width * 1.5
+      end
+    end
+
+    pdf.float do
+      key = "max_#{container[0]}_weight"
+      desc = "#{RuleSet.container_factor container[0]} * #{RuleSet.container_abbr(container[0]).upcase}"
+      pdf.table([[ 'Max', char.respond_to?(key) ? char.send(key) : nil, desc]], position: :right) do |table|
+        h_table table
+        table.columns(1).width = col_width * 1.5
+      end
+    end
+
+    pdf.table([[ I18n.t("activerecord.attributes.item.container.#{container[0]}") ]]) do |table |
+      h_table table
+      table.cells.font_style = :bold
+    end
+
+    pdf.table([
+        %w(Gegenstand Anz Gew Ges),
+        *(grouped_items[container[0]] || [])
+             .group_by(&:type)
+             .map { |_,items| items }
+             .map { |items| items.sort { |a,b| a.index <=> b.index } }
+             .map { |entry| entry.map { |item| format_item item, char } << ([''] * item_table_cols) }
+             .flatten(1)
+    ],
+        column_widths: item_table_widths,
+        width: pdf.bounds.width,
+        header: true
+    ) do |table|
+      list_table table
+      table.column(0).align = :left
+    end
+
+    # Fill the remaining space on the page with a blank table
+    pdf.move_down -PdfHelper::CELL_HEIGHT
+    remaining_cells = (pdf.cursor / PdfHelper::CELL_HEIGHT).floor
+    if remaining_cells > 0
+      pdf.table(
+          remaining_cells.times.map { [''] * item_table_cols },
+          column_widths: item_table_widths,
+          width: pdf.bounds.width,
+          &method(:list_table)
+      )
+    end
+  end
 end

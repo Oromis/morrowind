@@ -29,6 +29,20 @@ class RuleSet < ActiveRecord::Base
     0.2
   end
 
+  def self.container_factor(container)
+    case container
+      when 'backpack' then 3.5
+      else 2.5
+    end
+  end
+
+  def self.container_abbr(container)
+    case container
+      when 'backpack' then :str
+      else :kon
+    end
+  end
+
   # --------------------------------------------------------------------------------
   # ActiveRecord settings
   # --------------------------------------------------------------------------------

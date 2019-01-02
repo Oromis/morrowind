@@ -193,6 +193,15 @@ module PdfHelper
     ]
   end
 
+  def format_item(item, char)
+    [
+        item.name,
+        item.quantity,
+        item.weight,
+        item.total_weight,
+    ]
+  end
+
   private
 
   def map_school_name(name)

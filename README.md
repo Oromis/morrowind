@@ -7,7 +7,7 @@ The Elder Scrolls III: Morrowind by Bethesda Softworks LLC.
 Development started in early 2015.
 
 On the server side, it's based on Ruby on Rails (an awesome piece of software running on an awesome language). 
-The web frontend uses AngularJS (yes, the old one) - Angular 2 wasn't around yet and I haven't ported it over.
+The web frontend uses AngularJS (yes, the old one) - Angular 2 wasn't around yet and I haven't ported it over (yet?).
 
 The charsheet service is hosted on https://morrowind.bauske.org.
 
