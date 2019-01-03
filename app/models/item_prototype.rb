@@ -47,8 +47,8 @@ class ItemPrototype < ActiveRecord::Base
       logger.info '### Importing Items! ###'
       logger.info '##  Armor ... ###'
       import_armor(charsheet.sheet('Rüstkammer'), rule_set)
-      # logger.info '##  Weapons ... ###'
-      # import_weapons(charsheet.sheet('Waffenkammer'), rule_set)
+      logger.info '##  Weapons ... ###'
+      import_weapons(charsheet.sheet('Waffenkammer'), rule_set)
       # logger.info '##  Misc ... ###'
       # import_misc(charsheet.sheet('Krämerladen'), rule_set)
       logger.info '### Item Import finished! ###'
@@ -98,8 +98,8 @@ class ItemPrototype < ActiveRecord::Base
   end
 
   def self.import_weapons(sheet, rule_set)
-    ranges = [OpenStruct.new(col: 1, start_row: 1, end_row: sheet.last_row),
-              OpenStruct.new(col: 9, start_row: 1, end_row: sheet.last_row)]
+    ranges = [OpenStruct.new(col: 2, start_row: 2, end_row: sheet.last_row),
+              OpenStruct.new(col: 11, start_row: 2, end_row: sheet.last_row)]
     ranges.each do |range|
       category = ''
       type = :melee_weapon
@@ -115,27 +115,31 @@ class ItemPrototype < ActiveRecord::Base
             two_handed = category.downcase.start_with?('2h')
           else
             # Normal weapon
-            item = ItemPrototype.new
+            item = (rule_set.item_prototypes.find_by(name: name) or ItemPrototype.new)
             if category == 'Pfeile' && !name.downcase.include?('pfeil')
               name += 'pfeil'
             end
             item.name = name
+            item.desc = nil
             item.category = category
             item.type = type
             item.weight = sheet.cell(row, range.col + 1)
-            item.value = sheet.cell(row, range.col + 3)
+            value = sheet.cell(row, range.col + 3)
+            if value.is_a? Numeric
+              item.value = value
+            end
             item.damage = sheet.cell(row, range.col + 4)
             item.speed = sheet.cell(row, range.col + 5)
             item.two_handed = two_handed
             item.slot = :hand
 
             if category == 'Wurfwaffen'
-              item.desc = 'Kann Zauber abfangen: Probe auf (Schnelligkeit|Geschicklichkeit|Werfen)'
+              item.desc = 'Kann Zauber abfangen: Probe auf (Schnelligkeit|Geschicklichkeit|Taschenspielerei)'
             end
 
             range_or_bonus = sheet.cell(row, range.col + 6)
             if range_or_bonus
-              if (match = range_or_bonus.match(/(\d+)ft/i))
+              if (match = range_or_bonus.match(/(\d+)m$/i))
                 item.range = match.captures[0].to_i
                 # There might be another column after the range with a weapon bonus
                 format_bonus sheet.cell(row, range.col + 7), item
