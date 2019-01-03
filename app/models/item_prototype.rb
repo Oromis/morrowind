@@ -47,24 +47,25 @@ class ItemPrototype < ActiveRecord::Base
       logger.info '### Importing Items! ###'
       logger.info '##  Armor ... ###'
       import_armor(charsheet.sheet('Rüstkammer'), rule_set)
-      logger.info '##  Weapons ... ###'
-      import_weapons(charsheet.sheet('Waffenkammer'), rule_set)
-      logger.info '##  Misc ... ###'
-      import_misc(charsheet.sheet('Krämerladen'), rule_set)
+      # logger.info '##  Weapons ... ###'
+      # import_weapons(charsheet.sheet('Waffenkammer'), rule_set)
+      # logger.info '##  Misc ... ###'
+      # import_misc(charsheet.sheet('Krämerladen'), rule_set)
       logger.info '### Item Import finished! ###'
     end
   end
 
   def self.import_armor(sheet, rule_set)
-    ranges = [OpenStruct.new(col: 2, start_row: 3, end_row: sheet.last_row, armor_type: :light_armor),
-              OpenStruct.new(col: 9, start_row: 3, end_row: sheet.last_row, armor_type: :medium_armor),
-              OpenStruct.new(col: 16, start_row: 3, end_row: sheet.last_row, armor_type: :heavy_armor)]
+    ranges = [OpenStruct.new(col: 2, start_row: 5, end_row: sheet.last_row, armor_type: :light_armor),
+              OpenStruct.new(col: 10, start_row: 5, end_row: sheet.last_row, armor_type: :medium_armor),
+              OpenStruct.new(col: 18, start_row: 5, end_row: sheet.last_row, armor_type: :heavy_armor)]
     ranges.each do |range|
       (range.start_row..range.end_row).each do |row|
         name = sheet.cell(row, range.col)
-        if name && name.strip.length > 0
+        weight = sheet.cell(row, range.col + 1)
+        if name && name.strip.length > 0 && weight.is_a?(Numeric)
           name = normalize_name name
-          item = ItemPrototype.new
+          item = (rule_set.item_prototypes.find_by(name: name) or ItemPrototype.new)
           parts = name.split /\s+/
           type = parts[-1]
           category = parts[0..-2].join(' ')
@@ -72,16 +73,19 @@ class ItemPrototype < ActiveRecord::Base
           item.name = name
           item.type = :armor
           item.armor_type = range.armor_type
-          item.weight = sheet.cell(row, range.col + 1)
+          item.weight = weight
           item.value = sheet.cell(row, range.col + 3)
-          item.armor = sheet.cell(row, range.col + 4)
-          item.slot = @@slot_map[type.downcase]
-
-          format_bonus sheet.cell(row, range.col + 5), item
-
-          if item.weight == 0
-            item.weight = 0.1
+          armor = sheet.cell(row, range.col + 4)
+          if (match = armor.to_s.match(/(\d+)\+(\d+)/))
+            armor = match[1].to_i + match[2].to_i
+            item.desc = "-#{match[2]} Rüstung, bei Schaden > Gesamtrüstung"
+          else
+            item.desc = nil
           end
+          item.armor = armor
+          item.slot = SLOT_MAP[type.downcase]
+
+          format_bonus sheet.cell(row, range.col + 6), item
 
           unless item.slot
             logger.warn "Excel row did not match Item! Name: #{name} -> Type: #{type}"
@@ -107,7 +111,7 @@ class ItemPrototype < ActiveRecord::Base
           if sheet.cell(row, range.col + 1).nil?
             # This is a category heading
             category = name
-            type = @@ranged_weapon_categories.include?(category) ? :ranged_weapon : :melee_weapon
+            type = RANGED_WEAPON_CATEGORIES.include?(category) ? :ranged_weapon : :melee_weapon
             two_handed = category.downcase.start_with?('2h')
           else
             # Normal weapon
@@ -181,7 +185,7 @@ class ItemPrototype < ActiveRecord::Base
                   name = parts.join(' ')
                 end
               when 'Kleidung u. Zubehör'
-                item.slot = @@slot_map[name.split(' ')[-1].downcase]
+                item.slot = SLOT_MAP[name.split(' ')[-1].downcase]
               else
             end
 
@@ -197,7 +201,7 @@ class ItemPrototype < ActiveRecord::Base
             next unless weight.is_a?(Numeric) && value.is_a?(Numeric) # Item must have a weight
 
             item.weight = weight
-            item.type = @@category_type_map[category.downcase]
+            item.type = CATEGORY_TYPE_MAP[category.downcase]
             item.value = value
             item.category = category
 
@@ -216,27 +220,34 @@ class ItemPrototype < ActiveRecord::Base
 
   def self.save_item(item, rule_set)
     item.rule_set = rule_set
-    if rule_set.item_prototypes.where(name: item.name).count == 0
-      # New item
+    if item.new_record?
       logger.info "New Item! #{item.name} (#{item.type})"
-      item.save!
+    else
+      logger.info "Edited Item! #{item.name} (#{item.type})"
     end
+    item.save!
   end
 
   def self.format_bonus(bonus, item)
     if bonus
       if (match = bonus.match(/P\+(\d+)/i))
         bonus = "Parade +#{match.captures[0]}"
+      elsif (match = bonus.match(/Klobig\.\s*(\d+([.,]\d+)?)/))
+        item.clumsiness = match[1].sub(',', '.').to_f
+        bonus = nil
       end
-      if item.desc
-        item.desc += ', ' + bonus
-      else
-        item.desc = bonus
+
+      unless bonus.nil?
+        if item.desc
+          item.desc += ', ' + bonus
+        else
+          item.desc = bonus
+        end
       end
     end
   end
 
-  @@slot_map = {
+  SLOT_MAP = {
       'kürass' => :chest,
       'helm' => :head,
       'schultern' => :shoulders,
@@ -245,9 +256,10 @@ class ItemPrototype < ActiveRecord::Base
       'stulpen' => :arms,
       'armstulpen' => :arms,
       'schild' => :hand,
+      'holzschild' => :hand,
       'turmschild' => :hand,
-      'handschuhe' => :hand,
-      'handschuh' => :hand,
+      'handschuhe' => :arms,
+      'handschuh' => :arms,
       'hemd' => :chest,
       'stiefel' => :feet,
       'schuppenhemd' => :chest,
@@ -260,7 +272,7 @@ class ItemPrototype < ActiveRecord::Base
       'waffengurt' => :hip
   }
 
-  @@trinket_category_map = {
+  TRINKET_CATEGORY_MAP = {
       'gewöhnlicher' => 'Gewöhnliche Accessoires',
       'gewöhnliche' => 'Gewöhnliche Accessoires',
       'gewöhnliches' => 'Gewöhnliche Accessoires',
@@ -275,9 +287,9 @@ class ItemPrototype < ActiveRecord::Base
       'exquisites' => 'Exquisite Accessoires',
   }
 
-  @@ranged_weapon_categories = %w(Bögen Pfeile Wurfwaffen)
+  RANGED_WEAPON_CATEGORIES = %w(Bögen Pfeile Wurfwaffen)
 
-  @@category_type_map = {
+  CATEGORY_TYPE_MAP = {
       'rauschmittel' => :consumable,
       'spezialtraenke' => :consumable,
       'lesestoff' => :consumable,
