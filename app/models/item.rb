@@ -1,7 +1,7 @@
 # noinspection RubyClassVariableUsageInspection
 class Item < ActiveRecord::Base
   # All field names that are delegated to the prototype are saved here
-  @@prototype_fields = [:name, :weight, :value, :range, :speed, :damage, :armor, :slot, :type, :armor_type]
+  @@prototype_fields = [:name, :weight, :value, :range, :speed, :damage, :armor, :slot, :type, :armor_type, :clumsiness]
 
   extend ItemHelper
 

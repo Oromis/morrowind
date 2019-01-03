@@ -1,5 +1,5 @@
 <script type="text/javascript">
-  window.item = <%= @item_prototype.to_json(collaborators: true).html_safe %>;
+  window.item = <%= Oj.dump(@item_prototype.as_json(collaborators: true)).html_safe %>;
 </script>
 <div ng-controller="ItemFormCtrl" ng-init="init()">
   <%= form_for [@rule_set, @item_prototype] do |f| %>

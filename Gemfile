@@ -24,7 +24,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Rails server libs
 gem 'rails-i18n'
 gem 'breadcrumbs_on_rails', '~> 2.3'
-gem 'paperclip', '~> 4.3'
+gem 'paperclip', '~> 5.3'
 gem 'bcrypt', '~> 3.1'
 gem 'faker', '~> 1.4'
 
