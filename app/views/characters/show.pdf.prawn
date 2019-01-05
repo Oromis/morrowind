@@ -2,9 +2,54 @@
 prawn_document do |pdf|
   char = @character
 
+  pdf.font_families.update("Planewalker" => {
+      :normal => Rails.root.join("app/assets/fonts/planewalker-webfont.ttf").to_s
+  })
+
+  # -----------------------------------------------------------------------------------------------------
+  # First page: Cover sheet
+  # -----------------------------------------------------------------------------------------------------
+
+  pdf.image Rails.root.join('app/assets/images/logo.png'), position: :right, width: 30
+
+  pdf.move_down 55.mm
+  pdf.font 'Planewalker', size: 36 do
+    pdf.text "Morrowind PnP", align: :center
+  end
+
+  pdf.move_down 20.mm
+  pdf.font_size 20 do
+    pdf.text "Character Sheet", align: :center
+  end
+
+  pdf.move_down 5.mm
+  pdf.text "Version #{char.rule_set.version}", align: :center
+
+  pdf.move_down 50.mm
+  pdf.font 'Planewalker', size: 36 do
+    pdf.text char.name, align: :center
+  end
+
+  render_bottom_origin(
+      [{ text: DateTime.now.strftime("%d.%m.%Y") }],
+      width: pdf.bounds.width, valign: :bottom, align: :right, document: pdf
+  )
+
+  render_bottom_origin(
+      [
+        { text: "Creator\n", styles: [:bold] },
+        { text: "Arian Lorenz\n\n" },
+        { text: "Programmer\n", styles: [:bold] },
+        { text: "David Bauske" },
+      ],
+      width: pdf.bounds.width, valign: :bottom, align: :left, document: pdf
+  )
+
   # -----------------------------------------------------------------------------------------------------
   # New Page: Basic Info, attributes, skills
   # -----------------------------------------------------------------------------------------------------
+
+  pdf.start_new_page
 
   # Render Level box
   pdf.float do

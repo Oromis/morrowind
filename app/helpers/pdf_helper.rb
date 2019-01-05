@@ -202,6 +202,13 @@ module PdfHelper
     ]
   end
 
+  def render_bottom_origin(text, options)
+    box = Prawn::Text::Formatted::Box.new(text, { at: [0, 200], **options })
+    box.render(dry_run: true)
+    box = Prawn::Text::Formatted::Box.new(text, { at: [0, box.height], **options })
+    box.render
+  end
+
   private
 
   def map_school_name(name)
