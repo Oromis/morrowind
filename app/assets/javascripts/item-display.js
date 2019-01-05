@@ -8,8 +8,4 @@ app.controller('ItemDisplayCtrl', ['$scope', '$window', '$http',
         });
         $scope.baseUrl = baseUrl;
       };
-
-      $scope.onClick = function(item) {
-        $window.location.href= $scope.baseUrl + "/item_prototypes/" + item.id + "/edit";
-      };
     }]);

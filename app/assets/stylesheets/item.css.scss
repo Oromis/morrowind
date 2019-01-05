@@ -39,6 +39,10 @@ item-editor {
   }
 
   @include clickable;
+
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 .prop-input {

@@ -23,8 +23,11 @@
     <div class="item-category" ng-repeat="(category, itemList) in items | filter:filter | groupBy: 'category'"
          ng-if="$index % columns.length == i">
       <h3>{{ category == 'null' ? '- Sonstiges -' : category }}</h3>
-      <div class="item" ng-repeat="item in itemList" <%= current_user.has_role?(:gm) ? 'ng-click="onClick(item)" data-clickable="true"'.html_safe : 'data-clickable="false"'.html_safe %>
-           popover="true" data-popover-title="item.name" data-popover-content="item.desc" data-popover-condition="item.desc">
+      <a class="item"
+         ng-repeat="item in itemList"
+         <%= current_user.has_role?(:gm) ? 'href="{{ baseUrl + \'/item_prototypes/\' + item.id + \'/edit\' }}" data-clickable="true"'.html_safe : 'data-clickable="false"'.html_safe %>
+         popover="true" data-popover-title="item.name" data-popover-content="item.desc" data-popover-condition="item.desc"
+      >
         <img ng-src="{{ item.image }}" class="image" ng-if="!!item.image" />
         <%= prop_tag 'weight.png', 'item.weight', alt: "Gewicht" %>
         <h4>{{ item.name }}</h4>
@@ -38,7 +41,7 @@
           <span class="ellipsis" ng-if="!!item.desc">{{ item.desc }}</span>
           <div class="clear"></div>
         </div>
-      </div>
+      </a>
     </div>
   </div>
 </div>

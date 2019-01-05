@@ -1,4 +1,4 @@
-angular.module("morrowindApp").directive('itemEditor', ['$http', function($http) {
+angular.module("morrowindApp").directive('itemEditor', ['$http', '$timeout', function($http, $timeout) {
   return {
     restrict: 'EA',
     scope: {
@@ -20,7 +20,7 @@ angular.module("morrowindApp").directive('itemEditor', ['$http', function($http)
       scope.editor = element.find('.item-editor');
 
       scope.editor.keypress(function(event) {
-        if(event.which == 13) { // Enter
+        if(event.which === 13) { // Enter
           scope.confirm();
           event.stopPropagation();
         }
@@ -106,6 +106,13 @@ angular.module("morrowindApp").directive('itemEditor', ['$http', function($http)
         if(newVal._element != null) {
           scope.editor.css('top', $(newVal._element).position().top - 40);
           delete newVal._element;
+        }
+
+        if (newVal.name == null || newVal.name === '') {
+          var nameInput = element.find('.item-name');
+          $timeout(function() {
+            nameInput.focus();
+          });
         }
       });
 
