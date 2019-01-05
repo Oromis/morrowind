@@ -22,7 +22,7 @@
   <div class="col-md-4" ng-repeat="i in columns">
     <div class="item-category" ng-repeat="(category, itemList) in items | filter:filter | groupBy: 'category'"
          ng-if="$index % columns.length == i">
-      <h3>{{ category }}</h3>
+      <h3>{{ category == 'null' ? '- Sonstiges -' : category }}</h3>
       <div class="item" ng-repeat="item in itemList" <%= current_user.has_role?(:gm) ? 'ng-click="onClick(item)" data-clickable="true"'.html_safe : 'data-clickable="false"'.html_safe %>
            popover="true" data-popover-title="item.name" data-popover-content="item.desc" data-popover-condition="item.desc">
         <img ng-src="{{ item.image }}" class="image" ng-if="!!item.image" />

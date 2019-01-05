@@ -20,7 +20,7 @@ class ItemPrototype < ActiveRecord::Base
   belongs_to :rule_set
   has_many :items, dependent: :nullify, foreign_key: 'prototype_id'
 
-  enum type: { generic: 0, melee_weapon: 1, ranged_weapon: 2, armor: 3, consumable: 4, accessory: 5 }
+  enum type: { generic: 0, melee_weapon: 1, ranged_weapon: 2, armor: 3, consumable: 4, accessory: 5, }
   enum slot: [ :head, :chest, :legs, :arms, :shoulders, :feet, :hand, :back, :hip, :finger, :neck ]
   enum armor_type: [ :unarmored, :light_armor, :medium_armor, :heavy_armor ]
 
@@ -49,8 +49,8 @@ class ItemPrototype < ActiveRecord::Base
       import_armor(charsheet.sheet('Rüstkammer'), rule_set)
       logger.info '##  Weapons ... ###'
       import_weapons(charsheet.sheet('Waffenkammer'), rule_set)
-      # logger.info '##  Misc ... ###'
-      # import_misc(charsheet.sheet('Krämerladen'), rule_set)
+      logger.info '##  Misc ... ###'
+      import_misc(charsheet.sheet('Krämerladen'), rule_set)
       logger.info '### Item Import finished! ###'
     end
   end
@@ -171,8 +171,6 @@ class ItemPrototype < ActiveRecord::Base
             category = name
           else
             # Normal Item
-            item = ItemPrototype.new
-
             case category
               when 'Spezialtraenke'
                 unless name.downcase.include?('trank')
@@ -188,13 +186,17 @@ class ItemPrototype < ActiveRecord::Base
                   parts[1] += 'trank'
                   name = parts.join(' ')
                 end
-              when 'Kleidung u. Zubehör'
-                item.slot = SLOT_MAP[name.split(' ')[-1].downcase]
               else
+                # Intentionally empty
             end
 
+            item = (rule_set.item_prototypes.find_by(name: name) or ItemPrototype.new)
             item.name = name
             weight = sheet.cell(row, range.col + 1)
+
+            if category == 'Kleidung u. Zubehör'
+              item.slot = SLOT_MAP[name.split(' ')[-1].downcase]
+            end
 
             if range.effect
               item.desc = sheet.cell(row, range.col + 2)
@@ -207,7 +209,7 @@ class ItemPrototype < ActiveRecord::Base
             item.weight = weight
             item.type = CATEGORY_TYPE_MAP[category.downcase]
             item.value = value
-            item.category = category
+            item.category = CATEGORY_NAME_MAP[category.downcase] || category
 
             save_item item, rule_set
           end
@@ -306,6 +308,23 @@ class ItemPrototype < ActiveRecord::Base
       'währung' => :generic,
       'handwerkszeug' => :generic,
       'fahrzeuge' => :generic,
-      'kleidung u. zubehör' => :accessory
+      'kleidung u. zubehör' => :accessory,
+      'veränderung' => :consumable,
+      'beschwörung' => :consumable,
+      'zerstörung' => :consumable,
+      'illusion' => :consumable,
+      'mystik' => :consumable,
+      'wiederherstellung' => :consumable,
+      'fallen und bomben' => :consumable,
+      'protesen und stützutensilien' => :generic,
+  }
+
+  CATEGORY_NAME_MAP = {
+      'veränderung' => 'Spruchrolle Veränderung',
+      'beschwörung' => 'Spruchrolle Beschwörung',
+      'zerstörung' => 'Spruchrolle Zerstörung',
+      'illusion' => 'Spruchrolle Illusion',
+      'mystik' => 'Spruchrolle Mystik',
+      'wiederherstellung' => 'Spruchrolle Wiederherstellung',
   }
 end
