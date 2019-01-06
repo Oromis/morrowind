@@ -80,6 +80,7 @@ module PdfHelper
   def annotation_style(cells)
     cells.border_width = 0
     cells.background_color = nil
+    cells.height = 12
     cells.size = PdfHelper::SIZE_TINY
     cells.font_style = :italic
   end

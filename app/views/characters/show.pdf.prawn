@@ -183,10 +183,23 @@ prawn_document do |pdf|
           format_dec(char.speed_2 + 3 * char.encumberance),
       ],
       [
-          { content: '', colspan: 9 },
+          '< 21', '1 BEH',
+          { content: '', colspan: 2 },
+          '< 90', '1 BEH',
+          { content: '', colspan: 3 },
           '-1 BEH',
           '-3 BEH',
-      ]
+      ],
+      [
+          '< 11', '3 BEH',
+          { content: '', colspan: 2 },
+          '< 50', '3 BEH',
+      ],
+      [
+          '< 6', '6 BEH',
+          { content: '', colspan: 2 },
+          '< 20', '6 BEH',
+      ],
   ],
       width: pdf.bounds.width,
       column_widths: [col_width] * col_count
@@ -197,12 +210,13 @@ prawn_document do |pdf|
     table.columns(4..5).background_color = PdfHelper::COLOR_STA
     table.columns(6..8).background_color = PdfHelper::COLOR_MAGICKA
     table.row(2).border_width = 2
-    annotation_style table.row(3)
+    annotation_style table.row(3..5)
   end
+
+  pdf.move_down 2.mm
 
   # Initiative, wounds, encumbrance
   pdf.float do
-    pdf.move_down 7.mm
     pdf.table([
         ['Initiative', format_dec(char.initiative + 2 * char.encumberance), '-2 BEH'],
         ['Verwundungen', char.wounds.floor, ''],
@@ -238,7 +252,7 @@ prawn_document do |pdf|
   end
 
   # Armor
-  pdf.move_down 2 * 7.mm
+  pdf.move_down 6.mm
   slots = char.slot_map
   pdf.table([
       %w(\  Rüstungsteil Rüstart Skill Faktor Wert Eff.Wert \ ),
