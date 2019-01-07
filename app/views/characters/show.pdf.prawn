@@ -346,7 +346,7 @@ prawn_document do |pdf|
       %w(Waffe Tempo Fix d6 Zustand Stärke-Faktor),
       [*format_weapon_slot(slots[:right_hand]), format_dec(RuleSet.strength_factor_offset + char.str * RuleSet.strength_factor_gain)],
       [''] * 5 + [{ content: "#{RuleSet.strength_factor_offset} + STR * #{RuleSet.strength_factor_gain}", rowspan: 3 }],
-      format_weapon_slot(slots[:right_hand]),
+      format_weapon_slot(slots[:left_hand]),
       [''] * 5,
   ], column_widths: [col_width * 3, col_width, col_width * 0.6, col_width * 0.6, col_width, col_width * 2]) do |table|
     value_table table
