@@ -178,7 +178,7 @@ class Character < ActiveRecord::Base
     # raise self.slots.select { |slot| slot.primary_type == :armor }.inspect
     self.slots
         .select { |slot| slot.primary_type == 'armor' }
-        .inject(0) { |sum, slot| sum + (slot.item ? slot.item.clumsiness : 0) }
+        .inject(0) { |sum, slot| sum + (slot.item&.clumsiness).to_i }
         .floor
   end
 
