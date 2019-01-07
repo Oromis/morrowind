@@ -111,10 +111,8 @@ module PdfHelper
   end
 
   def format_perc(perc, options = {})
-    if (perc.nil? || perc == 0) && options[:empty_if_zero]
+    if perc.nil? || (perc == 0 && options[:empty_if_zero])
       ''
-    elsif perc.nil?
-      '-'
     else
       perc.floor.to_s + '%'
     end
