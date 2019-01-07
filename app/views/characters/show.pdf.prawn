@@ -262,7 +262,7 @@ prawn_document do |pdf|
       ['Beine', *format_armor_slot(slots[:legs], :legs, char)],
       ['Stiefel', *format_armor_slot(slots[:feet], :feet, char)],
       ['Stulpen', *format_armor_slot(slots[:arms], :arms, char)],
-      ['Schild', *format_armor_slot(slots[:shield_hand], :shield_hand, char)],
+      ['Schild', *format_armor_slot(slots[:shield_hand], :shield_hand, char, 'armor_shield')],
       [{ content: '', colspan: 5 }, 'Ges.', char.total_armor.floor, '(ARMOR)']
   ],
       width: pdf.bounds.width,

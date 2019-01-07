@@ -118,7 +118,7 @@ module PdfHelper
     end
   end
 
-  def format_armor_slot(slot, key, char)
+  def format_armor_slot(slot, key, char, formula = nil)
     [
         slot.item&.name,
         case slot.item&.armor_type
@@ -134,7 +134,7 @@ module PdfHelper
           else 0.1
         end,
         char.armor_value(key).floor,
-        format_dec(char.send("armor_#{key.to_s}"))
+        format_dec(char.send(formula || "armor_#{key.to_s}"))
     ]
   end
 
