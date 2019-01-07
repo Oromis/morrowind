@@ -1,11 +1,11 @@
 <div class="char-spells" ng-init="spellPage = 0">
   <div class="flex-row flex-row--with-spacing char-spells-heading">
-    <h3 class="flex-grow">Mein Zauberbuch</h3>
+    <h3 class="flex-grow">{{ char.schools[spellPage].abbr == 'red' ? 'Mein Liederbuch' : 'Mein Zauberbuch' }}</h3>
     <div class="flex-grow">
       <div ng-show="spells">
         <input id="new-spell-field" class="new-spell form-control" type="text" ng-model="newSpell"
                sf-typeahead="true" data-options="{highlight:true}"
-               data-datasets="spellsEngine" placeholder="Neuer Zauberspruch..." />
+               data-datasets="spellsEngine" placeholder="Neuer Zauber / Lied" />
       </div>
     </div>
   </div>

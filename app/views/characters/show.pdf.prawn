@@ -381,7 +381,7 @@ prawn_document do |pdf|
   spell_table_widths = { 1 => 25.mm, 2 => 9.mm, 3 => 9.mm, 4 => 14.mm, 5 => 9.mm, 6 => 9.mm }
   spell_table_cols = 7
   pdf.table([
-      ['Spruch', 'Schule',
+      ['Spruch / Lied', 'Schule',
           { image: Rails.root.join('app/assets/images/mana.png'), image_height: 14, image_width: 14, position: :center },
           { image: Rails.root.join('app/assets/images/range.png'), image_height: 14, image_width: 14, position: :center },
           { image: Rails.root.join('app/assets/images/magic.png'), image_height: 14, image_width: 14, position: :center },
