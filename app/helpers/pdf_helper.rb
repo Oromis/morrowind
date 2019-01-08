@@ -56,17 +56,26 @@ module PdfHelper
 
   def info_table(table)
     value_table table
-    table.width = 220
+    table.width = 230
     table.row(0).font_style = :bold
   end
 
   def property_table(table)
     value_table table
-    table.width = 220
+    table.width = 230
     table.row(0).font_style = :bold
-    table.column(0).align = :left
-    table.column(1..-1).border_width = 2
-    table.column(1..-1).width = 20.mm
+    table.column(-3).align = :left
+    table.column(-2..-1).border_width = 2
+    table.column(-2..-1).width = 20.mm
+  end
+
+  def skill_table(table, skills)
+    property_table table
+    table.column(0).width = 10
+    skills.each_with_index  do |skill, index|
+      color = skill.property.attr.color
+      table.column(0).row(index + 1).style.background_color = color ? color[1..-1] : nil
+    end
   end
 
   def table_2d(table)

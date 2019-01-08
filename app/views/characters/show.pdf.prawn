@@ -102,44 +102,53 @@ prawn_document do |pdf|
   # Other skills
   pdf.float do
     # Other skills
-    pdf.table([%w(Andere\ Skills Wert Modi.),
-        *char.skills
-             .select { |skill| skill.skill_type == 'other' }
-             .sort { |a, b| a.order <=> b.order }
-             .map { |skill| [skill.property.name, skill.points.floor, format_modifier(skill.multiplier)] }
+    other_skills = char.skills
+              .select { |skill| skill.skill_type == 'other' }
+              .sort { |a, b| a.order <=> b.order }
+    pdf.table([%w(\  Andere\ Skills Wert Modi.),
+        *other_skills
+             .map { |skill| ['', skill.property.name, skill.points.floor, format_modifier(skill.multiplier)] }
     ],
-        position: :right,
-        &method(:property_table)
-    )
+        position: :right
+    ) do |table|
+      skill_table table, other_skills
+    end
   end
 
   # Attributes
-  pdf.table([%w(Attribut Wert Modi.),
-      *char.character_attributes.map { |attr| [attr.property.name, attr.points.floor, format_modifier(attr.multiplier)] }],
-      &method(:property_table)
-  )
+  pdf.table([%w(\  Attribut Wert Modi.),
+      *char.character_attributes.map { |attr| ['', attr.property.name, attr.points.floor, format_modifier(attr.multiplier)] }]
+  ) do |table|
+    property_table table
+    table.column(0).width = 10
+    char.character_attributes.each_with_index  do |attr, index|
+      table.column(0).row(index + 1).style.background_color = attr.property.color ? attr.property.color[1..-1] : nil
+    end
+  end
 
   # Major skills
   pdf.move_down 5.mm
-  pdf.table([%w(Hauptskill Wert Modi.),
-      *char.skills
-           .select { |skill| skill.skill_type == 'major' }
-           .sort { |a, b| a.order <=> b.order }
-           .map { |skill| [skill.property.name, skill.points.floor, format_modifier(skill.multiplier)] }
-  ],
-      &method(:property_table)
-  )
+  major_skills = char.skills
+            .select { |skill| skill.skill_type == 'major' }
+            .sort { |a, b| a.order <=> b.order }
+  pdf.table([%w(\  Hauptskill Wert Modi.),
+      *major_skills
+           .map { |skill| ['', skill.property.name, skill.points.floor, format_modifier(skill.multiplier)] }
+  ]) do |table|
+    skill_table table, major_skills
+  end
 
   # Minor skills
   pdf.move_down 5.mm
-  pdf.table([%w(Nebenskills Wert Modi.),
-      *char.skills
-           .select { |skill| skill.skill_type == 'minor' }
-           .sort { |a, b| a.order <=> b.order }
-           .map { |skill| [skill.property.name, skill.points.floor, format_modifier(skill.multiplier)] }
-  ],
-      &method(:property_table)
-  )
+  minor_skills = char.skills
+            .select { |skill| skill.skill_type == 'minor' }
+            .sort { |a, b| a.order <=> b.order }
+  pdf.table([%w(\  Nebenskills Wert Modi.),
+      *minor_skills
+           .map { |skill| ['', skill.property.name, skill.points.floor, format_modifier(skill.multiplier)] }
+  ]) do |table|
+    skill_table table, minor_skills
+  end
 
   # LvL-up
   pdf.move_down 5.mm

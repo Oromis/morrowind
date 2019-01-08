@@ -20,6 +20,6 @@ class AttributesController < PropertiesController
 
     def property_params
       params.require(:attribute).permit(:name, :abbr, :default_value, :rule_set_id,
-                                        :icon, :order)
+                                        :icon, :color, :order)
     end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181231152333) do
+ActiveRecord::Schema.define(version: 20190108191133) do
 
   create_table "abilities", force: :cascade do |t|
     t.string   "name"
@@ -158,31 +158,32 @@ ActiveRecord::Schema.define(version: 20181231152333) do
 
   create_table "properties", force: :cascade do |t|
     t.string   "type"
-    t.string   "name",                              null: false
-    t.string   "abbr",                              null: false
-    t.integer  "order",             default: 0
+    t.string   "name",                                           null: false
+    t.string   "abbr",                                           null: false
+    t.integer  "order",                          default: 0
     t.string   "icon_file_name"
     t.string   "icon_content_type"
     t.integer  "icon_file_size"
     t.datetime "icon_updated_at"
     t.integer  "rule_set_id"
-    t.integer  "default_value",     default: 40
+    t.integer  "default_value",                  default: 40
     t.integer  "attribute_id"
     t.integer  "specialization_id"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.boolean  "school_of_magic",   default: false
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.boolean  "school_of_magic",                default: false
     t.integer  "check1_id"
     t.integer  "check2_id"
     t.string   "formula"
-    t.boolean  "weapon_skill",      default: false
-    t.integer  "weapon_skill_mode", default: 0
+    t.boolean  "weapon_skill",                   default: false
+    t.integer  "weapon_skill_mode",              default: 0
     t.integer  "attack_prop_1_id"
     t.integer  "attack_prop_2_id"
     t.integer  "attack_prop_3_id"
     t.integer  "parry_prop_1_id"
     t.integer  "parry_prop_2_id"
     t.integer  "parry_prop_3_id"
+    t.string   "color",             limit: 1000
   end
 
   add_index "properties", ["abbr"], name: "index_properties_on_abbr"

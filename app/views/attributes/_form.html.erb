@@ -10,6 +10,9 @@
   <%= f.label :default_value %>
   <span class="help">Der Standartwert für dieses Attribut für neue Charactere. Zieht Rassen, Spezialisierungen und Sternzeichen nicht ins Kalkül.</span>
   <%= f.text_field :default_value, placeholder: 'bisher immer 40', class: 'form-control' %>
+
+  <%= f.label :color %>
+  <%= f.color_field :color, class: 'form-control' %>
   
   <%= render 'shared/property_form', f: f %>
 <% end %>
