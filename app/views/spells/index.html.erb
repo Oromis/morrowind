@@ -40,9 +40,7 @@
             <%= prop_tag_server 'range.png', spell.range_as_string, alt: "Reichweite" %>
           </div>
           <div class="spell-props effect">
-            <% effect = "#{number_to_human(spell.min_effect)} - #{number_to_human(spell.max_effect)}" unless
-                (spell.min_effect.nil? || spell.max_effect.nil?) %>
-            <%= prop_tag_server 'magic.png', effect, alt: "Effektstärke" %>
+            <%= prop_tag_server 'magic.png', format_spell_effect(spell), alt: "Effektstärke" %>
           </div>
           <div class="spell-props handicap">
             <%= prop_tag_server 'handicap.png', spell.handicap, alt: "Erschwernis" %>

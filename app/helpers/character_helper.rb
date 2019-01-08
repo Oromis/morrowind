@@ -50,7 +50,8 @@ module CharacterHelper
         "<div class=\"property-value\" " +
           (options[:editable] ? "data-editable=\"true\" data-model=\"#{model}\" data-number=\"true\"" : '') +
           (options[:on_confirm] ? "on-confirm=\"#{options[:on_confirm]}\"" : '') +
-        ">#{value} #{options[:unit]}</div>" +
+          (options[:value_as_html] ? "ng-bind-html=\"#{value}\"" : '') +
+        ">#{options[:value_as_html] ? '' : value} #{options[:unit]}</div>" +
       '</div>').html_safe
   end
 end

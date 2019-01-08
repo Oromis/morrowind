@@ -109,6 +109,14 @@ app.controller('CharsheetController', ['$scope', '$http', '$timeout',
       }
     };
 
+    $scope.formatSpellEffect = function(spell) {
+      var result = `${spell.effect}`;
+      if (spell.min_effect !== spell.max_effect) {
+        result += ` <small>(${spell.min_effect}-${spell.max_effect})</small>`
+      }
+      return result;
+    };
+
     $scope.editingItem = nullItem;
 
     $scope.addItem = function(container, type, event) {

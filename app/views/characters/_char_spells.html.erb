@@ -75,8 +75,8 @@
             <%= character_property_minimal 'duration.png', 'spell.duration', title: 'Dauer in Runden' %>
           </div>
           <div class="column-effect">
-            <%= character_property_minimal 'magic.png', '{{spell.effect}} <small>({{spell.min_effect}}-{{spell.max_effect}})</small>',
-                                           title: 'Effektstärke', condition: 'spell.effect', raw_model: true %>
+            <%= character_property_minimal 'magic.png', 'formatSpellEffect(spell)',
+                title: 'Effektstärke', condition: 'spell.effect', raw_model: true, value_as_html: true %>
           </div>
           <div class="reveal-buttons">
             <div class="btn-group">
