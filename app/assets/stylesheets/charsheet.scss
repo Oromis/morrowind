@@ -85,12 +85,12 @@ $skill-value-width: 30px;
       #level-indicator {
         position: absolute;
         z-index: 2;
-        left: 160px;
-        top: 0;
-        $size: 54px;
+        left: 149px;
+        top: -10px;
+        $size: 64px;
         width: $size;
         height: $size;
-        background-image: image-url('laurel-wreath-small.png');
+        background-image: image-url('level-counter.png');
         background-size: 100% 100%;
 
         .level {
