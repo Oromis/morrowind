@@ -19,10 +19,10 @@ class Spell < ActiveRecord::Base
   belongs_to :school, class_name: 'Skill'
   has_and_belongs_to_many :characters
 
-  enum range: { melee: 0, support: 1, attack: 2 }
+  enum range: { melee: 0, support: 1, attack: 2, song: 3 }
 
   def range_in_m
-    { 'melee' => 2.1, 'support' => 6.5, 'attack' => 11 }[range]
+    { 'melee' => 2.1, 'support' => 6.5, 'attack' => 11, 'song' => 5 }[range]
   end
 
   def range_as_string
