@@ -14,7 +14,7 @@
          ng-show="$index == spellPage">
       <h3 class="spell-school-heading">
         <span class="gradient-line gradient-line-left"></span>
-        {{ school.name }}
+        {{ school.abbr == 'red' ? 'Gesang' : school.name }}
         <span class="gradient-line gradient-line-right"></span>
       </h3>
       <div class="spell-school-checks">
