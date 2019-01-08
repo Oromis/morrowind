@@ -37,4 +37,10 @@
     class: 'selectpicker form-control', selectpicker: '' %>
 
   <%= f.submit 'Speichern', class: 'btn' %>
+  <% unless @spell.new_record? %>
+    <%= link_to 'Löschen', rule_set_spell_path(@rule_set, @spell),
+        method: :delete,
+        data: { confirm: "Willst du wirklich den Zauberspruch #{@spell.name} löschen?" },
+        class: 'btn' %>
+  <% end %>
 <% end %>
