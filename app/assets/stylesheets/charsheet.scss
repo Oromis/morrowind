@@ -642,7 +642,7 @@ $skill-value-width: 30px;
 
 .editable-edit-box.form-control {
   position: absolute;
-  z-index: 100;
+  z-index: 2000;
   width: 100px;
   border-radius: 6px;
   @include shadowed;
