@@ -1,7 +1,7 @@
 <h1>Charaktere von <%= @user.name %></h1>
 <% @characters.each do |c| %>
   <%= render 'shared/minitile', target: c, name: c.name,
-             image: c.race.try(:image).try(:url, :small),
+             image: c.image.exists? ? c.try(:image).try(:url, :small) : c.race.try(:image).try(:url, :small),
              delete: true,
              pdf: true
   %>

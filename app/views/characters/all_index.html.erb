@@ -5,7 +5,7 @@
       <%= render 'shared/minitile',
                  target: char,
                  name: char.name,
-                 image: char.race.try(:image).try(:url, :small),
+                 image: char.image.exists? ? char.try(:image).try(:url, :small) : char.race.try(:image).try(:url, :small),
                  delete: false,
                  pdf: true
       %>
