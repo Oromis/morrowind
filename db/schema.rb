@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190108191133) do
+ActiveRecord::Schema.define(version: 20190110185404) do
 
   create_table "abilities", force: :cascade do |t|
     t.string   "name"
@@ -93,6 +93,10 @@ ActiveRecord::Schema.define(version: 20190108191133) do
     t.string   "location",            default: ""
     t.integer  "day",                 default: 1
     t.string   "month",               default: "morgenstern"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   add_index "characters", ["race_id"], name: "index_characters_on_race_id"

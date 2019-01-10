@@ -178,7 +178,7 @@ class CharactersController < ApplicationController
     def char_params
       params.require(:character).permit(
           :name, :race_id, :rule_set_id, :birthsign_id,
-          :specialization_id,
+          :specialization_id, :image, :delete_image,
           :fav_attribute1_id, :fav_attribute2_id,
           :health, :mana, :stamina,
           :mana_mult_buff, :wounds,

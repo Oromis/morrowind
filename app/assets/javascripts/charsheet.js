@@ -182,6 +182,10 @@ app.controller('CharsheetController', ['$scope', '$http', '$timeout',
       });
     };
 
+    $scope.submitImageForm = function(event) {
+      console.log(event);
+    };
+
     $scope.skillControlListeners = {
       accept: function (sourceItemScope, destScope) {
         var max = parseInt(destScope.element.attr('data-max')) || 0;

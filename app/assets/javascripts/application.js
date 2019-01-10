@@ -48,3 +48,4 @@
 //= require interceptors
 //= require filters.js
 //= require directives
+//= require char-image

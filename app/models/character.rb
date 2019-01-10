@@ -4,6 +4,11 @@ class Character < ActiveRecord::Base
   before_save :on_save
   after_initialize :on_load
 
+  has_attached_file :image
+  validates_attachment_content_type :image, content_type: /\Aimage/
+  attr_accessor :delete_image
+  before_validation { image.clear if delete_image == '1' }
+
   belongs_to :user
   belongs_to :rule_set
 

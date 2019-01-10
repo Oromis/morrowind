@@ -47,10 +47,24 @@ $skill-value-width: 30px;
         text-align: center;
         position: relative;
       }
+      .char-image-label {
+        margin-bottom: 0;
+        cursor: pointer;
+        display: flex;
+        flex-direction: row-reverse;
+      }
+      .char-image-delete-btn {
+        position: absolute;
+        z-index: 5;
+        top: -22px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
       #race-icon {
         position: relative;
         z-index: 1;
-        left: 30px;
+        height: 150px;
+        margin-right: 1px;
       }
       #birthsign-icon {
         position: absolute;
@@ -85,8 +99,8 @@ $skill-value-width: 30px;
       #level-indicator {
         position: absolute;
         z-index: 2;
-        left: 149px;
-        top: -10px;
+        left: 10px;
+        bottom: 3px;
         $size: 64px;
         width: $size;
         height: $size;

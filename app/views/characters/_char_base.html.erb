@@ -1,16 +1,9 @@
 <div class="char-base">
   <div class="flex-row">
     <div class="char-portrait">
-      <div class="char-picture">
+      <div class="char-picture" ng-init="imageHover = false" ng-mouseover="imageHover = true" ng-mouseleave="imageHover = false">
         <img id="birthsign-icon" ng-src="{{ char.birthsign.icon }}"
              alt="{{ char.birthsign.name }}" title="{{ char.birthsign.name }}"/>
-        <img class="fav-attr-icon fav-attr-1" ng-src="{{ char.fav_attribute1.icon }}"
-             alt="{{ char.fav_attribute1.name }}" title="{{ char.fav_attribute1.name }}" />
-        <img class="fav-attr-icon fav-attr-2" ng-src="{{ char.fav_attribute2.icon }}"
-             alt="{{ char.fav_attribute2.name }}" title="{{ char.fav_attribute2.name }}" />
-        <img id="specialization-indicator" ng-if="char.specialization.image"
-             ng-src="{{ char.specialization.image }}"
-             alt="{{ char.specialization.name }}" title="{{ char.specialization.name }}"/>
         <div id="level-indicator">
           <div class="level" title="Level" editable="true" number="true" model="char.level">
             {{ char.level }}
@@ -19,7 +12,21 @@
             <span editable="true" number="true" model="char.level_count">{{ char.level_count }}</span>/<%= @character.rule_set.level_count_required %>
           </div>
         </div>
-        <img id="race-icon" ng-src="{{ char.race.icon }}" alt="{{ char.race.name }}" />
+        <label for="character_image" class="char-image-label">
+          <% if @character.image.exists? %>
+            <%= image_tag @character.image.url, id: 'race-icon' %>
+          <% else %>
+            <img id="race-icon" ng-src="{{ char.race.icon }}" alt="{{ char.race.name }}" />
+          <% end %>
+        </label>
+        <% if @character.image.exists? %>
+          <button type="button" class="btn char-image-delete-btn" ng-show="imageHover">Bild Löschen</button>
+        <% end %>
+        <%= form_for @character, html: { id: 'char-image-form' } do |f| %>
+          <%= f.file_field :image, class: 'hidden char-image-field' %>
+          <%= f.hidden_field :delete_image, class: 'char-image-delete-field' %>
+          <%= f.submit "Speichern", class: 'hidden' %>
+        <% end %>
         <div class="level-up-buttons text-center">
           <button type="button" class="btn btn-primary" id="level-up-btn"
                   ng-if="char.level_count >= 10 && !char.level_up_mode"
