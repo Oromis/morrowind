@@ -4,5 +4,12 @@
     <%= check_box_tag :color_attributes, '1', true %>
     <span>Attribute und zugehörige Skills farblich markieren</span>
   <% end %>
+
+  <%= label_tag :item_group_spacing, 'Leerzeilen zwischen Itemgruppen im Inventar' %>
+  <%= number_field_tag :item_group_spacing, '1', min: 0, max: 50, class: 'form-control' %>
+
+  <%= label_tag :spell_group_spacing, 'Leerzeilen zwischen Zaubersprüchen im Zauberbuch' %>
+  <%= number_field_tag :spell_group_spacing, '1', min: 0, max: 50, class: 'form-control' %>
+
   <button type="submit" class="btn">PDF generieren</button>
 <% end %>

@@ -403,7 +403,7 @@ prawn_document do |pdf|
            .group_by { |spell| spell.school.id }
            .map { |_,spells| spells }
            .sort { |a,b| a.first.school.order <=> b.first.school.order }
-           .map { |entry| entry.map { |spell| format_spell spell, char } << ([''] * spell_table_cols) }
+           .map { |entry| entry.map { |spell| format_spell spell, char } + ([[''] * spell_table_cols] * @spell_group_spacing) }
            .flatten(1)
   ],
       column_widths: spell_table_widths,
@@ -470,7 +470,7 @@ prawn_document do |pdf|
              .group_by(&:type)
              .map { |_,items| items }
              .map { |items| items.sort { |a,b| a.index <=> b.index } }
-             .map { |entry| entry.map { |item| format_item item, char } << ([''] * item_table_cols) }
+             .map { |entry| entry.map { |item| format_item item, char } + ([[''] * item_table_cols] * @item_group_spacing) }
              .flatten(1)
     ],
         column_widths: item_table_widths,

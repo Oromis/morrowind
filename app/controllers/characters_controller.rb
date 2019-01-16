@@ -176,6 +176,10 @@ class CharactersController < ApplicationController
 
   def export
     @use_colored_attributes = export_params[:color_attributes]
+    @item_group_spacing = export_params[:item_group_spacing].to_i
+    @spell_group_spacing = export_params[:spell_group_spacing].to_i
+
+    @filename = "#{@character.name} - Charsheet.pdf"
 
     respond_to do |format|
       format.html { render :export }
@@ -212,7 +216,7 @@ class CharactersController < ApplicationController
     end
 
     def export_params
-      params.permit(:color_attributes)
+      params.permit(:color_attributes, :item_group_spacing, :spell_group_spacing)
     end
 
     def logged_in_user
