@@ -17,13 +17,16 @@ module PdfHelper
   SIZE_TINY = 9
   SIZE_SMALL = 12
 
+  HEADING_CELL_HEIGHT = 18
   CELL_HEIGHT = 18
 
   FORMULA_FORMAT = { styles: [:italic], size: PdfHelper::SIZE_SMALL }
 
   # Table styling
   def heading_table(table)
+    table.cells.overflow = :shrink_to_fit
     table.cells.align = :center
+    table.cells.height = HEADING_CELL_HEIGHT
     table.cells.padding = PADDING
     table.row(0).borders = []
     table.row(1).font_style = :bold
@@ -69,12 +72,14 @@ module PdfHelper
     table.column(-2..-1).width = 20.mm
   end
 
-  def skill_table(table, skills)
+  def skill_table(table, skills, colored_attributes)
     property_table table
-    table.column(0).width = 10
-    skills.each_with_index  do |skill, index|
-      color = skill.property.attr.color
-      table.column(0).row(index + 1).style.background_color = color ? color[1..-1] : nil
+    if colored_attributes
+      table.column(0).width = 10
+      skills.each_with_index  do |skill, index|
+        color = skill.property.attr.color
+        table.column(0).row(index + 1).style.background_color = color ? color[1..-1] : nil
+      end
     end
   end
 
@@ -217,6 +222,10 @@ module PdfHelper
     box.render(dry_run: true)
     box = Prawn::Text::Formatted::Box.new(text, { at: [0, box.height], **options })
     box.render
+  end
+
+  def color_column
+    @use_colored_attributes ? [''] : []
   end
 
   private

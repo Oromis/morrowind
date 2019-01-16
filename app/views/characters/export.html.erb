@@ -1,0 +1,8 @@
+<h1>PDF-Generator: <%= @character.name %></h1>
+<%= form_tag export_character_path(@character, format: :pdf), method: :get, target: '_blank' do %>
+  <%= label_tag :color_attributes, class: 'checkbox inline' do %>
+    <%= check_box_tag :color_attributes, '1', true %>
+    <span>Attribute und zugehörige Skills farblich markieren</span>
+  <% end %>
+  <button type="submit" class="btn">PDF generieren</button>
+<% end %>

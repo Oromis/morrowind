@@ -2,7 +2,7 @@ class CharactersController < ApplicationController
   helper PdfHelper
 
   before_action :logged_in_user
-  before_action :set_character, only: [ :show, :update, :destroy, :skill, :items, :slot_changed, :spell, :level_up ]
+  before_action :set_character, only: [ :show, :update, :destroy, :skill, :items, :slot_changed, :spell, :level_up, :export ]
   before_action :permitted_user, except: :all_index
   before_action :write_allowed, only: [ :new, :create, :update, :destroy, :skill, :items, :slot_changed, :spell, :level_up ]
 
@@ -174,6 +174,15 @@ class CharactersController < ApplicationController
     end
   end
 
+  def export
+    @use_colored_attributes = export_params[:color_attributes]
+
+    respond_to do |format|
+      format.html { render :export }
+      format.pdf { render :export }
+    end
+  end
+
   private
     def char_params
       params.require(:character).permit(
@@ -200,6 +209,10 @@ class CharactersController < ApplicationController
           :id, :name, :desc, :quantity, :weight, :damage, :range, :armor, :slot,
           :container, :speed, :value, :type, :index, :prototype_id, :condition,
           :armor_type, :arrow_dmg, :clumsiness, :_destroy)
+    end
+
+    def export_params
+      params.permit(:color_attributes)
     end
 
     def logged_in_user

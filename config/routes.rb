@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     put 'slot' => 'characters#slot_changed', on: :member
     put 'spell' => 'characters#spell', on: :member
     post 'level_up' => 'characters#level_up', on: :member
+    get 'export' => 'characters#export', on: :member
   end
   get 'characters' => 'characters#all_index'
 

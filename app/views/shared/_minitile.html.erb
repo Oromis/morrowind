@@ -7,7 +7,7 @@
   <% end %>
   <div class="flex-row">
     <% if defined?(pdf) && pdf %>
-      <%= link_to 'PDF', character_path(target, format: :pdf), class: 'btn', target: '_blank' %>
+      <%= link_to 'PDF', export_character_path(target), class: 'btn' %>
     <% end %>
     <% if delete %>
       <%= link_to "Löschen", target, method: :delete, class: 'btn',
