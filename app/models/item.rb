@@ -67,7 +67,7 @@ class Item < ActiveRecord::Base
 
   def min_damage
     dmg = 0
-    if (match = damage.match /\A\s*(\d+)(\s*\+\s*\d+[dw]\d+(\/\d+))?\s*\Z/)
+    if (match = damage.match /\A\s*(\d+)(\s*\+?\s*\d+[dw]\d+(\/\d+)?)?\s*\Z/)
       dmg = match[1].to_i
     end
     if ranged_weapon?
@@ -79,8 +79,11 @@ class Item < ActiveRecord::Base
   # Number of d6 dice that need to be thrown to determine actual weapon damage
   def d6_damage
     dmg = 0
-    if (match = damage.match /\A\s*\d+(\s*\+\s*(\d*)[dw]6(\/\d+))?\s*\Z/)
-      dmg = (match[2] || 1).to_i
+    if (match = damage.match /\A\s*\d*(\s*\+?\s*(\d*)[dw]6(\/\d+)?)\s*\Z/)
+      dmg = (match[2].blank? ? 1 : match[2]).to_i
+      unless match[3].nil?
+        dmg = "#{dmg}#{match[3]}"
+      end
     end
     dmg
   end

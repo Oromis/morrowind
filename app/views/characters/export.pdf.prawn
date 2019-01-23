@@ -361,8 +361,10 @@ prawn_document do |pdf|
       [''] * 5,
   ], column_widths: [col_width * 3, col_width, col_width * 0.6, col_width * 0.6, col_width, col_width * 2]) do |table|
     value_table table
+    annotations = table.rows(2).columns(-1)
     table.column(0).align = :left
     table.rows(1..-1).border_width = 2
+    annotation_style annotations
   end
 
   # -----------------------------------------------------------------------------------------------------
