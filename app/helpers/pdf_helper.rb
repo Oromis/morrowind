@@ -211,10 +211,10 @@ module PdfHelper
   def format_item(item, char)
     text = item.name
     unless item.desc.blank?
-      text = "#{text} - #{item.desc}"
+      text = "#{text} - #{item.desc}".truncate(100)
     end
     [
-        text.truncate(100),
+        text,
         item.quantity,
         format_dec(item.weight),
         format_dec(item.total_weight),
