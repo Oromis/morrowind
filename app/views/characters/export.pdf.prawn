@@ -189,7 +189,7 @@ prawn_document do |pdf|
           char.max_stamina.floor,
           '',
           char.max_mana.floor,
-          char.mana_mult.floor,
+          char.mana_mult,
           format_dec(char.speed + char.encumberance),
           format_dec(char.speed_2 + 3 * char.encumberance),
       ],
