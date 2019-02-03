@@ -41,7 +41,7 @@ module PdfHelper
 
   def counter_box(table)
     heading_table table
-    table.row(1).padding = [11, 10, 0]
+    table.row(1).padding = [11, 0, 0]
     table.row(1).size = 6.mm
     table.row(1).font_style = :normal
     table.row(1).height = 15.mm
