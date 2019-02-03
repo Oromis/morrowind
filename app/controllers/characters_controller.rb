@@ -243,7 +243,7 @@ class CharactersController < ApplicationController
       end
 
       unless current_user?(@user) || current_user.has_role?(:gm)
-        flash[:danger] = 'An fremden Characteren herumzudoktern ist verboten!'
+        flash[:danger] = 'An fremden Charakteren herumzudoktern ist verboten!'
         redirect_to root_url, status: 403
       end
     end

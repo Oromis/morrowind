@@ -27,7 +27,7 @@
           <li><%= link_to 'Kontakt', contact_path %></li>
           <% if logged_in? %>
             <% if current_user.has_role?(:user) %>
-              <li><%= link_to 'Meine Charactere', user_characters_path(current_user) %></li>
+              <li><%= link_to 'Meine Charaktere', user_characters_path(current_user) %></li>
             <% end %>
             <% if current_user.has_role?(:gm) %>
               <li><%= link_to 'Alle Charaktere', characters_path %></li>
