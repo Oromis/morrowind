@@ -47,7 +47,9 @@ Rails.application.routes.draw do
 
   get 'login' =>    'sessions#new'
   post 'login' =>   'sessions#create'
-  get 'logout' =>'sessions#destroy'
+  get 'logout' => 'sessions#destroy'
+  post 'auth' => 'sessions#auth'
+  post 'verify' => 'sessions#verify'
 
   get 'templates/property_modifier_config' => 'static_pages#property_modifier_config'
   get 'templates/ability_config' => 'static_pages#ability_config'
