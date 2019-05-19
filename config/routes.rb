@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     put 'spell' => 'characters#spell', on: :member
     post 'level_up' => 'characters#level_up', on: :member
     get 'export' => 'characters#export', on: :member
+    post 'clone' => 'characters#clone', on: :member
   end
   get 'characters' => 'characters#all_index'
 

@@ -9,6 +9,7 @@
     <% if defined?(pdf) && pdf %>
       <%= link_to 'PDF', export_character_path(target), class: 'btn' %>
     <% end %>
+    <%= link_to 'Klonen', clone_character_path(target), class: 'btn', method: :post %>
     <% if delete %>
       <%= link_to "Löschen", target, method: :delete, class: 'btn',
                   data: { confirm: "Bist du dir ganz sicher, dass du #{name} löschen möchtest?" } %>

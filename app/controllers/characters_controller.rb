@@ -2,9 +2,9 @@ class CharactersController < ApplicationController
   helper PdfHelper
 
   before_action :logged_in_user
-  before_action :set_character, only: [ :show, :update, :destroy, :skill, :items, :slot_changed, :spell, :level_up, :export ]
+  before_action :set_character, only: [ :show, :update, :destroy, :skill, :items, :slot_changed, :spell, :level_up, :export, :clone ]
   before_action :permitted_user, except: :all_index
-  before_action :write_allowed, only: [ :new, :create, :update, :destroy, :skill, :items, :slot_changed, :spell, :level_up ]
+  before_action :write_allowed, only: [ :new, :create, :update, :destroy, :skill, :items, :slot_changed, :spell, :level_up, :clone ]
 
   layout 'with_sidebar'
 
@@ -187,6 +187,16 @@ class CharactersController < ApplicationController
     end
   end
 
+  def clone
+    p "Starting to clone"
+    copy = @character.deep_copy
+    unless copy.save
+      flash[:danger] = 'Klonen fehlgeschlagen :/'
+    end
+
+    redirect_to request.referer
+  end
+
   private
     def char_params
       params.require(:character).permit(
@@ -241,6 +251,8 @@ class CharactersController < ApplicationController
         flash[:danger] = 'Kein Benutzer feststellbar!'
         redirect_to root_url, status: 403
       end
+
+      p @character
 
       unless current_user?(@user) || current_user.has_role?(:gm)
         flash[:danger] = 'An fremden Charakteren herumzudoktern ist verboten!'

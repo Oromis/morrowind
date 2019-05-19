@@ -314,6 +314,43 @@ class Character < ActiveRecord::Base
     json
   end
 
+  def deep_copy
+    result = dup
+    result.name += ' (Klon)'
+    result.setup_slots
+    result.character_properties = self.character_properties.map(&:dup)
+    result.items = self.items.map do |item|
+      copy = item.dup
+      self.slots.each do |original_slot|
+        if original_slot.item.object_id == item.object_id
+          result.slot_map[original_slot.identifier.to_sym].item = copy
+        end
+      end
+      copy
+    end
+    result
+  end
+
+  def setup_slots
+    required_slots = [
+        { name: 'Kopf', key: :head, identifier: :head, primary_type: :armor },
+        { name: 'Schultern', key: :shoulders, identifier: :shoulders, primary_type: :armor },
+        { name: 'Arme', key: :arms, identifier: :arms, primary_type: :armor },
+        { name: 'Oberkörper', key: :chest, identifier: :chest, primary_type: :armor },
+        { name: 'Rechte Hand', key: :hand, identifier: :right_hand, primary_type: :melee_weapon },
+        { name: 'Linke Hand', key: :hand, identifier: :left_hand, primary_type: :melee_weapon },
+        { name: 'Schild', key: :hand, identifier: :shield_hand, primary_type: :armor },
+        { name: 'Beine', key: :legs, identifier: :legs, primary_type: :armor },
+        { name: 'Füße', key: :feet, identifier: :feet, primary_type: :armor },
+    ]
+    required_slots.each do |new_slot|
+      unless slots.index {|slot| slot.name == new_slot[:name]}
+        new_slot[:character] = self
+        slots.new(new_slot)
+      end
+    end
+  end
+
   private
     def on_load
       if creating?
@@ -423,25 +460,5 @@ class Character < ActiveRecord::Base
       end
       self.backpack_weight = weights[:backpack]
       self.body_weight = weights[:body]
-    end
-
-    def setup_slots
-      required_slots = [
-          { name: 'Kopf', key: :head, identifier: :head, primary_type: :armor },
-          { name: 'Schultern', key: :shoulders, identifier: :shoulders, primary_type: :armor },
-          { name: 'Arme', key: :arms, identifier: :arms, primary_type: :armor },
-          { name: 'Oberkörper', key: :chest, identifier: :chest, primary_type: :armor },
-          { name: 'Rechte Hand', key: :hand, identifier: :right_hand, primary_type: :melee_weapon },
-          { name: 'Linke Hand', key: :hand, identifier: :left_hand, primary_type: :melee_weapon },
-          { name: 'Schild', key: :hand, identifier: :shield_hand, primary_type: :armor },
-          { name: 'Beine', key: :legs, identifier: :legs, primary_type: :armor },
-          { name: 'Füße', key: :feet, identifier: :feet, primary_type: :armor },
-      ]
-      required_slots.each do |new_slot|
-        unless slots.index {|slot| slot.name == new_slot[:name]}
-          new_slot[:character] = self
-          slots.new(new_slot)
-        end
-      end
     end
 end
