@@ -229,7 +229,7 @@ prawn_document do |pdf|
   # Initiative, wounds, encumbrance
   pdf.float do
     pdf.table([
-        ['Initiative', format_dec(char.initiative + 2 * char.encumberance), '-2 BEH'],
+        ['Initiative', format_dec(char.initiative - char.initiative_roll + 2 * char.encumberance), '-2 BEH'],
         ['Verwundungen', char.wounds.floor, ''],
         ['Behinderung (BEH)', char.encumberance.floor, '']
     ],
