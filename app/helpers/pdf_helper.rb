@@ -147,7 +147,7 @@ module PdfHelper
           when :shoulders then 0.2
           else 0.1
         end,
-        char.armor_value(key).floor,
+        char.slot_map[key].item&.armor || 0,
         format_dec(char.send(formula || "armor_#{key.to_s}"))
     ]
   end
