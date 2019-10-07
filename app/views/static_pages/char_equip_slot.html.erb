@@ -52,9 +52,14 @@
               <%= character_property 'dice.png', 'W6-Schaden', 'char.rolled_damage_right',
                                      small: true, embedded: true, editable: true %>
             </div>
-            <%= character_property 'damage.png', 'Eff.Schaden',
-                                   'slot.identifier == "left_hand" ? char.left_weapon_damage : char.right_weapon_damage',
-                                   small: true, embedded: true %>
+            <div ng-if="slot.identifier == 'left_hand'">
+              <%= character_property 'damage.png', 'Eff. Schaden', 'char.left_weapon_damage',
+                                     small: true, embedded: true %>
+            </div>
+            <div ng-if="slot.identifier == 'right_hand'">
+              <%= character_property 'damage.png', 'Eff. Schaden', 'char.right_weapon_damage',
+                  small: true, embedded: true %>
+            </div>
           </div>
         </div>
       </div>
