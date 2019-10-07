@@ -205,7 +205,7 @@ class RuleSet < ActiveRecord::Base
           {abbr: 'speed_2', name: 'Laufweg 2', formula: 'speed_buff+speed*ath/40-encumberance', order: 11},
 
           # Initiative
-          {abbr: 'initiative', name: 'Initiative', formula: 'sch/5.0+initiative_roll-encumberance*4', order: 10},
+          {abbr: 'initiative', name: 'Initiative', formula: 'sch/5.0+initiative_roll-encumberance*2', order: 10},
       ]
       required_formulas.each do |req|
         if formula_by_abbr(req[:abbr]).nil?
