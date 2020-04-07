@@ -126,7 +126,7 @@ class RuleSet < ActiveRecord::Base
     def init_formulas
       required_formulas = [
           {abbr: 'start_health', name: 'Start TP', formula: 'str+kon/2' },
-          {abbr: 'max_stamina', name: 'Max Stamina', formula: 'str+wil+dex+kon', order: 0 },
+          {abbr: 'max_stamina', name: 'Max Stamina', formula: 'str+wil+dex+kon-50*wounds_torso-50*wounds_belly', order: 0 },
           {abbr: 'mana_mult', name: 'Magicka Multiplier', formula: '1+mana_mult_buff-0.5*wounds_head', order: 1 },
           {abbr: 'max_mana', name: 'Max Magicka', formula: '(int*mana_mult).floor', order: 10},
           {abbr: 'hp_per_lvl', name: 'TP / Level', formula: 'kon/10' },
@@ -194,7 +194,7 @@ class RuleSet < ActiveRecord::Base
 
           # Evasion
           {abbr: 'evasion', name: 'Ausweichen', formula:
-                 'evasion_buff+[(sch+dex+2*acr)/20,0].max-clumsiness'},
+                 'evasion_buff+[(sch+dex+2*acr)/20,0].max-clumsiness-2*encumberance-2*wounds_head-wounds_torso-2*wounds_belly-3*wounds_leg'},
 
           # Hand-to-hand damage
           {abbr: 'hand_to_hand_damage_stamina', name: 'Faustkampfschaden gegen Ausdauer', formula: 'fau/2'},
