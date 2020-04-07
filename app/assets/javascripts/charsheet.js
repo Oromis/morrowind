@@ -26,6 +26,7 @@ app.controller('CharsheetController', ['$scope', '$http', '$timeout',
     var watchedParams = ['name', 'health', 'stamina', 'mana',
       'location', 'day', 'month',
       'mana_mult_buff', 'wounds', 'rolled_damage_right',
+      'wounds_head', 'wounds_arm', 'wounds_torso', 'wounds_belly', 'wounds_leg',
       'rolled_damage_left', 'armor_buff', 'damage_incoming',
       'offensive_buff', 'defensive_buff', 'evasion_buff', 'max_health',
       'speed_buff', 'initiative_roll', 'notes', 'level', 'level_count'];

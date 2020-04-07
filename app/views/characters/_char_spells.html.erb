@@ -50,7 +50,7 @@
           <div class="check-column-value">
             <%= character_property 'magic.png',
                                    'Ausgleichspunkte',
-                                   'Math.floor(school.points / 5) - char.encumberance * 2' %>
+                                   'Math.floor(school.points / 5) - char.encumberance * 2 - char.wounds_head * 4 - char.wounds_arm - char.wounds_belly * 3' %>
           </div>
           <div></div>
         </div>

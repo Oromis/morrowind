@@ -87,7 +87,7 @@ class RuleSet < ActiveRecord::Base
   end
 
   # Returns an array containing arrays of arrays. First nest is sorted
-  # by type, second by categeory, third contains actual ItemPrototypes
+  # by type, second by category, third contains actual ItemPrototypes
   # sorted by slot and name
   def items_by_type
     items_by_types = Hash.new { |h,k| h[k] =
@@ -127,7 +127,7 @@ class RuleSet < ActiveRecord::Base
       required_formulas = [
           {abbr: 'start_health', name: 'Start TP', formula: 'str+kon/2' },
           {abbr: 'max_stamina', name: 'Max Stamina', formula: 'str+wil+dex+kon', order: 0 },
-          {abbr: 'mana_mult', name: 'Magicka Multiplier', formula: '1+mana_mult_buff', order: 1 },
+          {abbr: 'mana_mult', name: 'Magicka Multiplier', formula: '1+mana_mult_buff-0.5*wounds_head', order: 1 },
           {abbr: 'max_mana', name: 'Max Magicka', formula: '(int*mana_mult).floor', order: 10},
           {abbr: 'hp_per_lvl', name: 'TP / Level', formula: 'kon/10' },
 
@@ -194,15 +194,15 @@ class RuleSet < ActiveRecord::Base
 
           # Evasion
           {abbr: 'evasion', name: 'Ausweichen', formula:
-                 'evasion_buff+[(sch+dex+2*acr)/20,0].max'},
+                 'evasion_buff+[(sch+dex+2*acr)/20,0].max-clumsiness'},
 
           # Hand-to-hand damage
           {abbr: 'hand_to_hand_damage_stamina', name: 'Faustkampfschaden gegen Ausdauer', formula: 'fau/2'},
           {abbr: 'hand_to_hand_damage_hp', name: 'Faustkampfschaden gegen HP', formula: 'fau*0.1'},
 
           # Laufweg
-          {abbr: 'speed', name: 'Laufweg', formula: 'speed_buff+1+sch/12.0-encumberance', order: 10},
-          {abbr: 'speed_2', name: 'Laufweg 2', formula: 'speed_buff+speed*ath/40-encumberance', order: 11},
+          {abbr: 'speed', name: 'Laufweg', formula: 'speed_buff+1+sch/12.0-encumberance-wounds_torso-wounds_belly-2*wounds_leg', order: 10},
+          {abbr: 'speed_2', name: 'Laufweg 2', formula: 'speed_buff+speed*ath/40-encumberance-wounds_torso-wounds_belly-2*wounds_leg', order: 11},
 
           # Initiative
           {abbr: 'initiative', name: 'Initiative', formula: 'sch/5.0+initiative_roll-encumberance*2', order: 10},

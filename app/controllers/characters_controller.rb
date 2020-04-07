@@ -205,6 +205,7 @@ class CharactersController < ApplicationController
           :fav_attribute1_id, :fav_attribute2_id,
           :health, :mana, :stamina,
           :mana_mult_buff, :wounds,
+          :wounds_head, :wounds_arm, :wounds_torso, :wounds_belly, :wounds_leg,
           :rolled_damage_left, :rolled_damage_right,
           :armor_buff, :damage_incoming,
           :offensive_buff, :defensive_buff, :evasion_buff,

@@ -27,7 +27,11 @@ class CharacterSkill < CharacterProperty
             char.property_points(property.attack_prop_3)) *
             RuleSet.combat_value_factor +
             points_offensive + char.offensive_buff -
-            (RuleSet.encumberance_factor(:attack) * char.encumberance)
+            (RuleSet.encumberance_factor(:attack) * char.encumberance) -
+            (char.wounds_head * 3) -
+            (char.wounds_arm * 2) -
+            char.wounds_belly -
+            char.wounds_leg
       end
       if property.defensive?
         self.parry = (char.property_points(property.parry_prop_1) +
@@ -35,7 +39,10 @@ class CharacterSkill < CharacterProperty
             char.property_points(property.parry_prop_3)) *
             RuleSet.combat_value_factor +
             points_defensive + char.defensive_buff -
-            (RuleSet.encumberance_factor(:parry) * char.encumberance)
+            (RuleSet.encumberance_factor(:parry) * char.encumberance) -
+            char.wounds_head -
+            char.wounds_arm -
+            char.wounds_torso
       end
     end
   end

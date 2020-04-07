@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190203122026) do
+ActiveRecord::Schema.define(version: 20200406194749) do
 
   create_table "abilities", force: :cascade do |t|
     t.string   "name"
@@ -97,6 +97,11 @@ ActiveRecord::Schema.define(version: 20190203122026) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.integer  "wounds_head",         default: 0
+    t.integer  "wounds_arm",          default: 0
+    t.integer  "wounds_torso",        default: 0
+    t.integer  "wounds_belly",        default: 0
+    t.integer  "wounds_leg",          default: 0
   end
 
   add_index "characters", ["race_id"], name: "index_characters_on_race_id"
