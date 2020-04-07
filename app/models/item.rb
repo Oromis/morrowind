@@ -22,7 +22,7 @@ class Item < ActiveRecord::Base
   prototype_enum_accessor :armor_type, Item.armor_types
 
   validates :quantity, numericality: { greater_than_or_equal_to: 0 }
-  validates :weight, numericality: { greater_than: 0 }, allow_nil: true
+  validates :weight, numericality: true, allow_nil: true
   validates :value, numericality: { only_integer: true }, allow_nil: true
 
   validates :character, presence: true
