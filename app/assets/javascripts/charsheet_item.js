@@ -27,7 +27,7 @@ angular.module("morrowindApp").directive('itemEditor', ['$http', '$timeout', fun
       });
 
       scope.confirm = function() {
-        if(typeof scope.item.weight === 'number') {
+        if(scope.item.prototype_id != null || typeof scope.item.weight === 'number') {
           scope.onChange({item: scope.item});
           backup(scope.item);
         }
