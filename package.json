@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/Oromis/morrowind#readme",
   "dependencies": {
-    "angular": "^1.7.9",
+    "angular": "^1.8.0",
     "angular-bootstrap": "^0.12.2",
     "angular-filter": "^0.5.17",
     "angular-perfect-scrollbar": "^0.2.0",
